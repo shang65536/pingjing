@@ -17,7 +17,7 @@ public class CentrlaEnterprises extends Model<CentrlaEnterprises> {
         StringBuilder sql = new StringBuilder();
         sql.append(" select id ,CompanyName from set_centrlaenterprises where 1=1 ");
         if (param != null) {
-            sql.append("    sql.append(CompanyName like '%" + param + "%'");
+            sql.append(" and CompanyName like '%" + param + "%'");
         }
         sql.append(" order by OrderIndex");
         return this.find(sql.toString());

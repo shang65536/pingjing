@@ -28,6 +28,10 @@ import com.ccoa.admin.set.Template;
 import com.ccoa.admin.set.TemplateController;
 import com.ccoa.admin.set.WinningList;
 import com.ccoa.admin.set.WinningListController;
+import com.ccoa.area.Area;
+import com.ccoa.area.AreaController;
+import com.ccoa.centralenterprises.CentrlaEnterprises;
+import com.ccoa.centralenterprises.CentrlaEnterprisesController;
 import com.ccoa.company.Company;
 import com.ccoa.company.CompanyController;
 import com.ccoa.customawards.Baseinfo;
@@ -100,6 +104,11 @@ public class AppConfig extends JFinalConfig {
 	 */
 	public void configRoute(Routes me) {
 		me.add("/", IndexController.class, "/index");	// 第三个参数为该Controller的视图存放路径
+
+		areaRoute(me);
+
+		centralenertprises(me);
+
 		//添加后台路由
         adminRoute(me);
         //添加企业路由
@@ -118,7 +127,28 @@ public class AppConfig extends JFinalConfig {
         expertzjkRoute(me);
         //首页路由
         indexRoute(me);
+
+
 	}
+
+	/**
+	 * 地区路由
+	 * @param me
+	 */
+	public  void areaRoute(Routes me)
+	{
+		me.add("/arae",AreaController.class);
+	}
+
+	/**
+	 *
+	 * @param me
+	 */
+	public  void centralenertprises(Routes me)
+	{
+		me.add("/centralenertprises",CentrlaEnterprisesController.class);
+	}
+
 	//首页路由
 	public void indexRoute(Routes me){
 		me.add("/index",IndexController.class,"/index");
@@ -240,6 +270,9 @@ public class AppConfig extends JFinalConfig {
 		arp.addMapping("ca_declaration", Declaration.class);
 		arp.addMapping("ca_review", CaReview.class);
 		arp.addMapping("ca_rormalreviewopinion",RormalReviewOpinion.class);
+
+		arp.addMapping("set_area",Area.class);
+		arp.addMapping("set_centrlaenterprises",CentrlaEnterprises.class);
 		
 		
 		//arp.setTransactionLevel(4);//事务隔离级别

@@ -11,6 +11,8 @@ import com.ccoa.admin.Admin;
 import com.ccoa.admin.News;
 import com.ccoa.admin.set.Template;
 import com.ccoa.admin.set.WinningList;
+import com.ccoa.area.Area;
+import com.ccoa.centralenterprises.CentrlaEnterprises;
 import com.ccoa.common.Constants;
 import com.ccoa.company.Company;
 import com.ccoa.expert.Expert;
@@ -35,6 +37,7 @@ import com.ccoa.customawards.Declaration;
 public class IndexController extends Controller {
 	public void index() {
 		String userName = "";
+
 
 		HttpServletRequest request = getRequest();
 		// HttpServletResponse response = getResponse();
@@ -124,6 +127,8 @@ public class IndexController extends Controller {
 		// 管理员登陆信息
 		String adminName = "";
 		String adminPwd = "";
+
+		List<CentrlaEnterprises> areas=CentrlaEnterprises.me.search("中国");
 
 		// 验证本地是否已经记住了相应登陆信息
 		Cookie cokLoginName = CookieTool.getCookieByName(request, "adminName");

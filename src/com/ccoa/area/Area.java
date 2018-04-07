@@ -14,7 +14,7 @@ public class Area extends Model<Area> {
      */
     public List<Area>  getArea()
     {
-        String sql="select id, AeeaName from set_area order by OrderIndex";
+        String sql="select id, AreaName from set_area order by OrderIndex";
         return this.find(sql);
     }
 }
