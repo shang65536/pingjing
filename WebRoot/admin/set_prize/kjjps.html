@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>科技奖评审设置</title>
+</head>
+
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+	<#include "/admin/_topmenu.html"/>
+	<div class="main">
+		<div class="main_content">
+
+			<#include "/admin/_leftmenu.html"/>
+
+			<div class="right">
+
+				<#include "/admin/_settab.html"/>
+
+				<form id="formdata" action="" method="post">
+				
+					<input type="hidden" name="prize.id" value="${prize.id!}"/>
+
+					<table class="table04" width="100%" border="0" cellpadding="0"
+						cellspacing="0">
+						<!-- 
+						<tr>
+							<td>
+								<label style="color: red">申报当前状态：${(prize.StatusSb?? && prize.StatusSb == 1 )?string("开启", "结束")}</label>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<a href="#" class="register" id="endbtnsb"  title="结束本年度申报">结束本年度申报</a>
+								<a href="#" class="register" id="startbtnsb" title="开启本年度申报">开启本年度申报</a>
+							</td>
+						</tr>
+						 -->
+						<tr>
+							<td>
+								<label style="color: red">评审当前状态：${(prize.Status?? && prize.Status == 1 )?string("开启", "结束")}</label>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<a href="#" class="register" id="endbtn"  title="结束本年度评审">结束本年度评审</a>
+								<a href="#" class="register" id="startbtn" title="开启新一年评审">开启新一年评审</a>
+							</td>
+						</tr>
+
+					</table>
+
+				</form>
+
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    $("#endbtn").click(function () {   	    	
+    	if(window.confirm('确定结束本年度评审？')){    		
+    		  var options = {
+    		            url: '${ctx_path}/admin/set/prize/save?prize.Status=0',
+    		            type: 'post',
+    		            dataType: 'json',
+    		            data: $("#formdata").serialize(),
+    		            success: function (data) {
+    		                if (data.success){
+    		                	alert("操作成功");
+    		                	//location.href="${ctx_path}/admin/set/prize/kjjps";
+    		                	window.location.reload();
+    		                }else{
+    		                	alert("操作失败");
+    		                }
+    		            }
+    		        };
+    		        $.ajax(options);
+    		        return false;
+
+         }else{           
+            return false;
+        }    	   	      
+    });
+    
+    $("#startbtn").click(function () {
+    	if(window.confirm('确定开启本年度评审？？')){
+    		   var options = {
+    		            url: '${ctx_path}/admin/set/prize/save?prize.Status=1&prize.StatusSb=1',
+    		            type: 'post',
+    		            dataType: 'json',
+    		            data: $("#formdata").serialize(),
+    		            success: function (data) {
+    		                if (data.success){
+    		                	alert("操作成功");
+    		                	//location.href="${ctx_path}/admin/set/prize/kjjpsz";
+    		                	window.location.reload();
+    		                }else{
+    		                	alert("操作失败");
+    		                }
+    		            }
+    		        };
+    		        $.ajax(options);
+    		        return false;
+         }else{
+            //alert("取消");
+            return false;
+        }
+    	
+    	
+    	
+    	
+     
+    });
+  
+});
+</script>
+</body>
+</html>

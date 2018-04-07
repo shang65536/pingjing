@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+
+<!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>专业评审组管理</title>
+</head>
+
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+	<#include "/admin/_topmenu.html"/>
+	<div class="main">
+		<div class="main_content">
+
+			<#include "/admin/_leftmenu.html"/>
+
+			<div class="right">
+
+				<#include "/admin/_settab.html"/>
+
+				<table class="table05" width="100%" border="0" cellpadding="0"
+					cellspacing="0">
+					<thead>
+						<tr>
+							<td colspan="12"><input type="submit" class="submit02" value="新增" id="addbtn" onclick="openWin(null,'');"/></td>
+						</tr>
+					</thead>
+					<tr>
+
+						<th width="50%" scope="col">评审组名称</th>
+						<th width="50%" scope="col">操作</th>
+					</tr>
+
+					<#list groupPage.getList() as x>
+					<tr>
+						<td scope="col"><a href="javascript:openWin(${x.id},'${x.Name!}');">${x.Name!}</a></td>
+						<td scope="col">
+							<p>
+								<input type="radio" name="Status${x.id}" onclick="operate(${x.id},1);" value="1" ${(x.Status?? && x.Status==1)?string("checked='checked'", "")}/>
+								<label for="RADIO1">有效</label>
+								<input type="radio" name="Status${x.id}" onclick="operate(${x.id},0);" value="0" ${(x.Status?? && x.Status==0)?string("checked='checked'", "")}/>
+								<label for="RADIO1">无效</label>
+							</p>
+						</td>
+
+					</tr>
+					</#list>
+
+				</table>
+				
+				<#include "/common/_paginate.html" />
+				<@paginate currentPage=groupPage.pageNumber totalPage=groupPage.totalPage actionUrl="${ctx_path}/admin/set/group" />
+
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+//新增、编辑
+function openWin(id,name){
+	var html = '评审组名称：<span style="color:red">*</span><input type="text" id="tname'+id+'" name="tname" class="text smaller" value="'+ name +'"/>';
+	
+    demoDG1 = $.dialog({ 
+    	title:'专业评审组管理', 
+    	content: html,
+    	width: '300px',
+        height: 100,
+   	    button:[
+			{
+			    name: '有效',
+			    callback: function () {
+			    	save(id,1);
+			        return false;
+			    },
+			    focus: true
+			},
+			{
+			    name: '无效',
+			    callback: function () {
+			    	save(id,0);
+			    	return false;
+			    }
+			}
+   	    ]
+   	});
+};
+//新增、修改入库
+function save(id,status){
+	var tname = $("#tname"+id).val();
+	var data;
+	if(id == null){
+		data = {'projectGroup.Name':tname,'projectGroup.Status':status};
+	}else{
+		data = {'projectGroup.Name':tname,'projectGroup.Status':status,'projectGroup.id':id};
+	}
+	
+	if(tname=="")
+	{
+		alert("评审组名称不能为空");
+		return false;
+	}else{
+		$.ajax({
+			type: "POST",
+			url: "${ctx_path}/admin/set/group/save",
+			data: data,
+			success: function(result) {
+				if(result.success){
+					alert("操作成功");
+					window.location.reload();
+				}else{
+					alert("评审组名重复，请重新输入");
+				}
+			}
+		});
+		return false;
+	}
+	
+}
+//操作有效、无效单选按钮
+function operate(id,status){
+	$.ajax({
+		type: "POST",
+		url: "${ctx_path}/admin/set/group/operate",
+		data: {'projectGroup.Status':status,'projectGroup.id':id},
+		success: function(result) {
+			if(result.success){
+				alert("操作成功");
+				window.location.reload();
+			}else{
+				alert("操作失败");
+			}
+		}
+	});
+	return false;
+}
+</script>
+</body>
+</html>

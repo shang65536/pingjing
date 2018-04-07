@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>注意事项设置</title>
+</head>
+
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+	<#include "/admin/_topmenu.html"/>
+	<div class="main">
+		<div class="main_content">
+
+			<#include "/admin/_leftmenu.html"/>
+
+
+			<div class="right">
+
+				<#include "/admin/_settab.html"/>
+
+				<form id="formdata" action="" method="post">
+				
+					<input type="hidden" name="prize.id" value="${prize.id!}"/>
+
+					<table class="table04" width="100%" border="0" cellpadding="0"
+						cellspacing="0">
+
+						<tr>
+
+							<td><label>申报平台注意事项：</label><br>
+								<textarea cols="8" rows="5" name="prize.Note">${prize.Note!}</textarea>
+							</td>
+						</tr>
+						<tr>
+							<td><label>专家平台提示内容(请用&ltbr&gt进行换行)：</label><br>
+								<textarea cols="8" rows="5" name="prize.expertNote">${prize.expertNote!}</textarea>
+							</td>
+						</tr>
+						<tfoot>
+							<tr>
+								<td colspan="6"><a href="#" class="butt01" id="savebtn" title="保存" style="color: #fff;">保存</a></td>
+							</tr>
+						</tfoot>
+					</table>
+
+				</form>
+
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    $("#savebtn").click(function () {
+        var options = {
+            url: '${ctx_path}/admin/set/prize/save',
+            type: 'post',
+            dataType: 'json',
+            data: $("#formdata").serialize(),
+            success: function (data) {
+                if (data.success){
+                	alert("保存成功");
+                	window.location.reload();
+                }else{
+                	alert("保存失败");
+                }
+            }
+        };
+        $.ajax(options);
+        return false;
+    });
+	
+});
+</script>
+</body>
+</html>

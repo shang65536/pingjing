@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* CSS Document */
+/*专业评审样式*/
+.content_box{width:1020px; margin:0 auto;margin-top:20px;}
+.left_box{float:left;width:260px;border:1px solid #cdcecf;overflow:hidden;}
+.left_box ul{overflow:hidden;padding-bottom:30px;padding-top:10px;}
+.left_box li{width:90%;display:block;margin: 0 auto;height:40px;line-height:40px; background:url(../images/zyps.png) left 20px center no-repeat;border-bottom:1px solid #e2e6e7;}
+.left_box li a{padding-left:50px;color:#5c5a5a;}
+.left_box li a.current{color:#00769d;}
+.right_box{float:left;width:740px;border:1px solid #cdcecf;margin-left:10px;overflow:hidden;}
+.zyps_table{width:98%;border-top:none;margin-left:1%; text-align:center;}
+.sj{margin:10px 0;padding-left:10px;}
+.zyps_table tr th{text-align:center;}
+.zyps_table tr td{text-align:center;border-right:1px solid #E5E5E5;}
+.zyps_table tr td:nth-child(1){border-left:1px solid #E5E5E5;}
+.grid_12{float:right;margin-bottom:10px;}
+.chax_table td input{width:100px;}
+.chax_table td input.chax{width:50px;}
+.pstitle{border-bottom:1px solid #E5E5E5;padding:10px;}
+.pstitle p{line-height:28px;}
+.ps_table{margin:0 auto;margin-bottom:10px;}
+.ps_table tr,.ps_table td{border:1px solid #E5E5E5;}
+.ps_table td{ text-align:center;}
+.ps_table td input{width:50px;}
+.tj_table{width:98%; margin-left:1%;}
+.textarea{width:80%;height:200px;}
+.hide_tr{ display:none;}
+.scpfb_table{margin-left:1%;}

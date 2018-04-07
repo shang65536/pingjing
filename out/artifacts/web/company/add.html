@@ -1,0 +1,82 @@
+<#include "/common/_layout.html" />
+<@layout>
+<h1>企业注册---&gt; 企业注册
+</h1>
+<div class="form_box">
+	<form action="${ctx_path}/company/add" method="post">
+		<fieldset class="solid">
+			<legend>企业注册</legend>
+			<input type="hidden" name="id" value="${(company.id)!}" />
+			<div>
+				<label>用户名</label>
+				<input type="text" name="Username" id="Username" value="${(company.Username)!}"/>
+			</div>
+			<div>
+				<label>密码</label>
+				<input type="text" name="Password" id="Password" value="${(company.Password)!}"/>
+			</div>
+			<div>
+				<label>确认密码</label>
+				<input type="text" name="confirm_Password" id="confirm_Password" value="${(company.Password)!}"/>
+			</div>
+			<div>
+				<label>联系人姓名</label>
+				<input type="text" name="LinkmanName" id="LinkmanName" value="${(company.LinkmanName)!}"/>
+			</div>
+			<div>
+				<label>联系人手机</label>
+				<input type="text" name="LinkmanPhone" id="LinkmanPhone" value="${(company.LinkmanPhone)!}"/>
+			</div>
+			<div>
+				<label>电子邮件</label>
+				<input type="text" name="Email" id="Email" value="${(company.Email)!}"/>
+			</div>
+			
+			<div>
+				<label>单位名称</label>
+				<input type="text" name="CompanyName" id="CompanyName" value="${(company.CompanyName)!}"/>
+			</div>
+			<div>
+				<label>单位地址</label>
+				<input type="text" name="CompanyAddress" id="CompanyAddress" value="${(company.CompanyAddress)!}"/>
+			</div>
+			<div>
+				<label>邮编</label>
+				<input type="text" name="ZipCode" id="ZipCode" value="${(company.ZipCode)!}"/>
+			</div>
+			  
+			<div>
+				<label>单位电话</label>
+				<input type="text" name="CompanyPhone" id="CompanyPhone" value="${(company.CompanyPhone)!}"/>
+			</div>
+			<div>
+				<label>单位传真</label>
+				<input type="text" name="CompanyFax" id="CompanyFax" value="${(company.CompanyFax)!}"/>
+			</div>
+			<div>
+			
+				<label>是否会员</label>
+				<input type="radio" value="1" id="IsMember" name="IsMember" onclick="document.getElementById('MemberCode').disabled='';"  /> 是
+				<input type="radio" value="0" id="IsMember" name="IsMember" onclick="document.getElementById('MemberCode').disabled='disabled';" checked/> 否				
+			</div>
+			<div>
+				<label>会员号</label>
+				<input type="text" name="MemberCode" id="MemberCode" disabled="disabled" />
+			</div>
+			<div>
+				<!--label>账号类别</label-->
+				<input type="hidden" name="AccountType"  id="AccountType" value="0" value="${(company.AccountType)!}"/>
+			</div>
+			
+			<div>
+				<label>备注</label>
+				<textarea name="Note" cols="80" rows="10" >${(company.Note)!}</textarea>
+			</div>
+			<div>
+			<label>&nbsp;</label>
+				<input value="提交" type="submit">
+			</div>
+		</fieldset>
+	</form>
+</div>
+</@layout>

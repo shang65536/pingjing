@@ -1,0 +1,33 @@
+<#macro header username detailUrl>
+<div id="header" class="png_bg">
+    <div id="head_wrap" class="container_12">
+        <div class="logo">
+         <img src="${ctx_path}/images/logo.png">
+        </div>        
+        <div class="logo_right">
+                <div id="controlpanel" class="grid_7">      
+                    <ul>           
+                        <li><p><strong>你好，${username}</strong></p></li>
+                        <li><a href="${detailUrl}" class="first">设置</a></li>
+                        <li><a href="${ctx_path}/logout" class="last">退出登录</a></li>               
+                    </ul>
+                    
+                    <div id="navigation" class=" grid_7">           
+                        <ul> 
+                            <li><a href="${ctx_path}/index">首页 </a></li>
+                            <li><a href="${ctx_path}/project">申报平台</a></li>
+                            <li><a href="${ctx_path}/projectreview">专家平台</a></li>
+                            <li><a href="${ctx_path}/technology/groupexpert/indexzj" class="active">管理平台</a></li>  
+                        </ul>
+                   </div>
+                    
+                </div> 
+        </div>   
+    </div>
+</div>
+
+<!-- end headwarp  -->
+
+<div id="sub_nav"></div>
+<!-- end  -->
+</#macro>

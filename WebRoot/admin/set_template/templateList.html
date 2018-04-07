@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>模板管理</title>
+</head>
+
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+    <#include "/admin/_topmenu.html" />
+	<div class="main">
+		<div class="main_content">
+
+			<#include "/admin/_leftmenu.html" />
+
+			<div class="right">
+
+				<table class="table03" width="100%" border="0" cellpadding="0"
+					cellspacing="0">
+					<thead>
+						<tr>
+							<td colspan="7">
+								<input type="submit" class="submit01" id="delbtn" value="删除" />
+								<input type="submit" class="submit01" value="上传" id="addbtn" />
+							</td>
+						</tr>
+					</thead>
+					<tr>
+						<th width="5%" scope="col"><input type="checkbox"
+							id="checkall" name="checkall" class="checkall" onclick="javascript:checkall();"/><label
+							for="checkbox"></label></th>
+
+						<th width="20%" scope="col">模板名称</th>
+						<th width="15%" scope="col">上传时间</th>
+						<th width="15%" scope="col">上传人</th>
+						<th width="35%" scope="col">描述</th>
+						<th width="10%" scope="col">下载</th>
+					</tr>
+					
+					<#list templatePage.getList() as x>
+					<tr>
+						<td scope="col"><input type="checkbox" name="ids" value="${x.id}" /></td>
+						<td scope="col">${x.Title!}</td>
+						<td scope="col">${x.Date!}</td>
+						<td scope="col">${x.AdminId!}</td>
+						<td scope="col">${x.Note!}</td>
+						<td scope="col"><input type="submit" class="submit01" value="下载" onclick="download(${x.id!});"/></td>
+					</tr>
+					</#list>
+
+				</table>
+				<#include "/common/_paginate.html" />
+				<@paginate currentPage=templatePage.pageNumber totalPage=templatePage.totalPage actionUrl="${ctx_path}/admin/set_template" />
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    //query
+	$("#querybtn").click(function () {
+    	var path="${ctx_path}/admin/set_template";
+    	$('#queryForm').attr("action", path).submit();  
+    });
+    //add
+    $("#addbtn").click(function () {
+    	var path="${ctx_path}/admin/set_template/add";
+    	location.href = path;
+    });
+    
+    /* del */
+	$("#delbtn").click(function() {
+		delRecord("${ctx_path}/admin/set_template/delete");
+	});
+});
+
+function download(id){
+	var path = "${ctx_path}/admin/set_template/download?id="+id;
+	location.href = path;
+	/* $.ajax({
+		type: "POST",
+		url: "${ctx_path}/admin/set_template/download",
+		data: {'id':id},
+		success: function(result) {
+			if(result.success){
+				alert("操作成功");
+				window.location.reload();
+			}else{
+				alert("操作失败");
+			}
+		}
+	});
+	return false; */
+}
+
+</script>
+</body>
+</html>

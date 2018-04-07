@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>项目打分规则</title>
+</head>
+
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+	<#include "/admin/_topmenu.html"/>
+	<div class="main">
+		<div class="main_content">
+
+			<#include "/admin/_leftmenu.html"/>
+
+			<div class="right">
+
+				<#include "/admin/_settab.html"/>
+
+				<form id="formdata" action="" method="post">
+					<input type="hidden" name="prize.id" value="${prize.id!}"/>
+					
+					<table class="table04" width="100%" border="0" cellpadding="0"
+						cellspacing="0">
+						<tr>
+							<td class="c2"><label>设置奖项：</label></td>
+							<td><input type="checkbox" class="checkbox" name="prize.Grandest" value="1" ${(prize.Grandest?? && prize.Grandest==1)?string("checked='checked'", "")}/><label>特等奖:</label>
+								<input type="checkbox" class="checkbox" name="prize.One" value="1" ${(prize.One?? && prize.One==1)?string("checked='checked'", "")}/><label>一等奖:</label>
+								<input type="checkbox" class="checkbox" name="prize.Two" value="1" ${(prize.Two?? && prize.Two==1)?string("checked='checked'", "")}/><label>二等奖:</label>
+								<input type="checkbox" class="checkbox" name="prize.Three" value="1" ${(prize.Three?? && prize.Three==1)?string("checked='checked'", "")}/><label>三等奖:</label>
+							</td>
+	
+						</tr>
+	
+						<tr>
+							<td class="c2"><label>专评打分规则：</label></td>
+							<td><input type="radio" name="prize.Professional" value="1" ${(prize.Professional?? && prize.Professional==1)?string("checked='checked'", "")}><label>所有分数平均分</label>
+								<input type="radio" name="prize.Professional" value="0" ${(prize.Professional?? && prize.Professional==0)?string("checked='checked'", "")}><label>去掉最低分去掉最高分的平均分<label style='color:red'>*(打分人数>2人)</label></label>
+							</td>
+						</tr>
+	
+						<tr>
+							<td class="c2"><label>综评打分规则：</label></td>
+							<td><input type="radio" name="prize.Composite" value="1" ${(prize.Composite?? && prize.Composite==1)?string("checked='checked'", "")}><label>所有分数平均分</label>
+								<input type="radio" name="prize.Composite" value="0" ${(prize.Composite?? && prize.Composite==0)?string("checked='checked'", "")}><label>去掉最低分去掉最高分的平均分<label style='color:red'>*(打分人数>2人)</label></label>
+							</td>
+						</tr>
+	
+						<tr>
+							<td class="c2"><label>专家可投票数： </label></td>
+							<td><label>特等奖： </label><input type="text" class="text" name="prize.GrandestVote" onkeyup="value=value.replace(/[^\d\.]/g,''); " value="${prize.GrandestVote!}" ${(prize.GrandestVote?? && prize.GrandestVote==1)?string("checked='checked'", "")}/>票
+								<label>一等奖： </label><input type="text" class="text" name="prize.OneVote" onkeyup="value=value.replace(/[^\d\.]/g,''); " value="${prize.OneVote!}" ${(prize.OneVote?? && prize.OneVote==1)?string("checked='checked'", "")}/>票 
+								<label>二等奖：</label><input type="text" class="text" name="prize.TwoVote" onkeyup="value=value.replace(/[^\d\.]/g,''); " value="${prize.TwoVote!}" ${(prize.TwoVote?? && prize.TwoVote==1)?string("checked='checked'", "")}/>票
+								<label>三等奖：</label><input type="text" class="text" name="prize.ThreeVote"  onkeyup="value=value.replace(/[^\d\.]/g,''); " value="${prize.ThreeVote!}" />票
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="c2"><label>申报时间： </label></td>
+							<td><input type="text" class="Wdate" name="prize.ApplyStartTime" value="${prize.ApplyStartTime!}" onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/> - <input type="text"
+								class="Wdate" name="prize.ApplyEndTime" value="${prize.ApplyEndTime!}" onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/></td>
+						</tr>
+	
+						<tr>
+							<td class="c2"><label>专评时间： </label></td>
+							<td><input type="text" class="Wdate" name="prize.ProfessionalStartTime" value="${prize.ProfessionalStartTime!}" onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/> - <input type="text"
+								class="Wdate" name="prize.ProfessionalEndTime" value="${prize.ProfessionalEndTime!}" onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/></td>
+						</tr>
+	
+						<tr>
+							<td class="c2"><label>综评打分时间： </label></td>
+							<td><input type="text" class="Wdate" name="prize.CompositeStartTime" value="${prize.CompositeStartTime!}" onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/> - <input type="text"
+								class="Wdate" name="prize.CompositeEndTime" value="${prize.CompositeEndTime!}" onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/></td>
+						</tr>
+						
+						<tr>
+							<td class="c2"><label>综评投票时间： </label></td>
+							<td><input type="text" class="Wdate" name="prize.CompositeVoteStartTime" value="${prize.CompositeVoteStartTime!}" onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/> - <input type="text"
+								class="Wdate" name="prize.CompositeVoteEndTime" value="${prize.CompositeVoteEndTime!}" onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/></td>
+						</tr>
+	
+						<tr>
+							<td class="c2"><label>水印文字设置:</label></td>
+							<td><input type="text" class="text" name="prize.Watermark" value="${prize.Watermark!}"/></td>
+						</tr>
+	
+						<tfoot>
+							<tr>
+								<td colspan="6"><a href="#" class="butt01" title="保存" id="okbtn" style="color: #fff;">保存</a></td>
+							</tr>
+						</tfoot>
+					</table>
+				</form>
+
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    $("#okbtn").click(function () {
+        var options = {
+            url: '${ctx_path}/admin/set/prize/save',
+            type: 'post',
+            dataType: 'json',
+            data: $("#formdata").serialize(),
+            success: function (data) {
+                if (data.success){
+                	alert("保存成功");
+                	location.href="${ctx_path}/admin/set/prize/xmdfgz";
+                }else{
+                	alert("保存失败");
+                }
+            }
+        };
+        $.ajax(options);
+        return false;
+    });
+	
+});
+</script>
+</body>
+</html>

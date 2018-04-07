@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>评审列表</title>
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" >
+</script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<script type="text/javascript">
+	function reviewView(reviewID) {
+		location.href = "${ctx_path}/review/reviewView?type=1&reviewID=" + reviewID;
+	}
+	function sumbitReview(baseinfoID,expertID){		
+		$.ajax({
+			type: "POST",
+			url: "${ctx_path}/review/totalNotRecommend",
+			data: {'baseinfoID':baseinfoID,'expertID':expertID},
+			success: function(result) {
+				if(result.success){
+				 
+					 $.ajax({
+							type: "POST",
+							url: "${ctx_path}/review/sumbitReview",
+							data: {'baseinfoID':baseinfoID,'expertID':expertID},
+							success: function(result) {
+								if(result.success){
+								 alert("提交成功！");
+								}else{
+						         alert("提交失败！");
+								}
+							}
+						}); 
+					
+				}else{
+		         alert("请全部评审后再进行提交操作！");
+				}
+			}
+		}); 
+						
+	}
+</script>
+</head>
+
+<body>
+<#include "/common/_header.html"/>
+<@header username=expert.UserName detailUrl="${ctx_path}/expert/detail"/>
+
+<div class="container_12">
+ <div class="toplist">
+          <ul>
+          <li><a href="${ctx_path}/projectreview"><h6>航空科技奖</h6></a></li> 
+          <li><a href="${ctx_path}/review/list" style="border-left:1px solid #ccc;" class="active"><h6>其他奖励与评估</h6></a></li> 
+         </ul>
+     </div>
+     <div class="main">      
+      <div class="main_content"> 
+              <h6>奖项名称：${baseinfo.Name!}</h6>
+              </br>
+              <div class="toplist03">
+                    <ul>                                          
+                         <a href="#" onClick="javascript:sumbitReview('${baseinfo.id}',${expert.id})"><input type="submit" class="submit01" value=" 提交   " /></a></span>
+                        
+                        <a href="${ctx_path}/review/list"><input type="submit" class="submit01" value=" 返回列表  " /></a></span>
+                    </ul>      
+              </div>  
+              <div style="width:1018px;overflow-x:scroll;">                                        	
+         <table class="table03" border="0" cellpadding="0" cellspacing="0" style="padding: 10px 0;min-width:1018px;">
+	        <tr> 
+	            <th  scope="col" nowrap="nowrap">序号</th>
+	            <th  scope="col" nowrap="nowrap">登记号</th>
+	            
+                 <#list base as s>
+                 <th width="150px" scope="col" nowrap="nowrap">${s!}</th>	     
+				  </#list>   
+	            <th width="150px" scope="col" nowrap="nowrap">申报书</th>
+	            <th  width="50px" scope="col" nowrap="nowrap">操作</th>
+	        </tr>
+	        
+	          <#list caReviewList as x>	         
+				<tr>
+					<td scope="col">${x_index+1}</td>										
+					<td scope="col">${x.RegisterNum!}</td>
+					 <#list base as s>
+					<td scope="col">
+					<#if x.HeaderAttributeValue??> 
+					${x.HeaderAttributeValue.split(';----;')[s_index]}</td>	
+					</#if>			
+				    </#list>  
+				    <td scope="col"><a href="${ctx_path}/review/downloadDeclarationFile?declarationID=${x.DeclarationID!}&type=1">${x.DeclarationFile!}</a></td>	
+				     <td scope="col">
+				      <#if x.ISRecommend??> 
+				         <a href="${ctx_path}/review/reviewView?reviewID=${x.rID}&type=2">查看</a>				           
+				      <#else> 
+				            <input type="submit" id="vbtn" onclick="javascript:reviewView('${x.rID}')" class="submit01" value="评审" />                       
+				      </#if>
+				     </td>
+				</tr>
+			 </#list>    
+	        	        
+             
+    </table>  
+    </div> 	                 
+        </div>
+        <div class="clearfix"></div>
+    </div> 
+</div>
+
+</body>
+</html>

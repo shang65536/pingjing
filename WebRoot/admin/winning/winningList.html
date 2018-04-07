@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>科技奖管理-获奖名单管理 </title>
+<script type="text/javascript">
+
+
+
+//根据年份切换 获奖名单
+function loadYearExpert()
+{
+	//得到改变的时间值
+	var winYear=$dp.cal.newdate.y;
+	var path="${ctx_path}/admin/set/winning?winYear="+winYear;
+	window.location.href = path;
+	
+}
+
+//验证只能操作当前年份的数据  其他年份灰掉相关操作按钮
+function check()
+{
+	//选择的时间 
+	var gyear = "${winYear!}";
+	//系统时间 
+	var today=new Date();
+	var y=today.getFullYear();
+	
+	if(y==gyear)  //相等  显示操作   
+	{
+		
+	}else
+	{
+		$(document.getElementById("send")).hide();
+		$(document.getElementById("add")).hide();
+		
+	}
+}
+
+$(function () {
+	/* 发布  */
+	$("#send").click(function() {
+		
+		// 判断是否至少选择一项
+		var checkedNum = $("input[name='ids']:checked").length;
+		if(checkedNum == 0) {
+			alert("请选择至少一项！");
+			return;
+		}
+		// 批量选择
+		var checkedList = new Array();
+		$("input[name='ids']:checked").each(function() {
+			checkedList.push($(this).val());
+		});
+		
+		$.ajax({
+			type: "POST",
+			url: "${ctx_path}/admin/set/winning/egstatus",
+			data: {'ids':checkedList.toString()},
+			success: function(result) {
+				if(result.success){
+					alert("操作成功");
+					//$("[name ='ids']:checkbox").attr("checked", false);
+					window.location.reload();
+				}else{
+					alert("操作失败");
+				}
+			}
+		});
+        return false;
+		
+	});	
+	
+	/*新增*/
+	$("#add").click(function(){
+		var html = '获奖名单描述名称：<span style="color:red">*</span><input type="text" id="winName" name="winName" class="text smaller" />';
+		
+	    demoDG2 = $.dialog({ 
+	    	title:'获奖名单描述', 
+	    	content: html,
+	    	width: '300px',
+	        height: 100,
+	   	    button:[
+				{
+				    name: '保存',
+				    callback: function () {
+				    	save();
+				        return false;
+				    },
+				    focus: true
+				}
+	   	    ]
+	   	});
+	});
+});
+
+
+//新增、修改入库
+function save(){
+	var winName = $("#winName").val();
+	
+	if(winName=="")
+	{
+		alert("名称不能为空");
+		return false;
+	}else{
+		$.ajax({
+			type: "POST",
+			url: "${ctx_path}/admin/set/winning/save",
+			data: {'winName':winName},
+			success: function(result) {
+				if(result.success){
+					alert("操作成功");
+					window.location.reload();
+				}else{
+					alert("操作失败");
+				}
+			}
+		});
+		return false;
+	}
+	
+}
+
+</script>
+</head>
+
+<body onload="check()">
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+    <#include "/admin/_topmenu.html"/>
+		<div class="main">
+			<div class="main_content">
+
+				<#include "/admin/_leftmenu.html"/>
+
+				<div class="right">
+
+					<#include "/admin/_settab.html"/>
+              
+		              <form action="" method="post"> 
+		                 <table class="table04" width="100%" border="0" cellpadding="0" cellspacing="0">
+				              <tr>
+				                <td class="c1">
+				                    <label>年度:</label>
+				                    <input class="Wdate" type="text" id="winYear" name="winYear" 
+                                      onfocus="WdatePicker({isShowClear:false,readOnly:true,startDate:'%y',dateFmt:'yyyy',ychanging:loadYearExpert})" value=${winYear!} />
+				                </td>
+				                </tr>
+		                    </table>
+		              </form>  
+                      <table class="table03" width="100%" border="0" cellpadding="0" cellspacing="0">
+						    <thead>
+						        <tr>
+						          <td colspan="12">
+						           <input type="button" id="add" class="submit01" value="新增" />
+						           <input type="button" id="send" class="submit02" value="发布" /> 
+						          </td>
+						         </tr>
+						    </thead>
+					        <tr>
+					            <th width="5%" scope="col">
+					             <input type="checkbox" id="checkall" name="checkall" class="checkall" onclick="javascript:checkall();" /><label for="checkbox"></label>
+					            </th>
+					            <th width="60%" scope="col">名单</th>
+					            <th width="35%" scope="col">状态</th>
+					
+					        </tr>
+					      <#list winningList as x>
+					        <tr>
+					            <td scope="col">
+					             <input type="checkbox" name="ids"  value="${x.id}"/>
+					            </td>
+					            <td scope="col"><a href="${ctx_path}/admin/set/winning/projectList?winYear=${winYear!}&parentID=${x.id}">${x.winName}</a></td>
+					            <td scope="col">
+					               ${(x.status?? && x.status=='1')?string("已发布", "未发布")}
+					               
+					            </td>
+					        </tr>
+					      </#list>
+					</table> 
+               </div>
+            <div class="clearfix"></div> 
+        </div>
+     </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head> 
+    <title>申报界面</title>  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="leipi.org">
+    <link href="${ctx_path}/admin/custom/Public/css/bootstrap/css/bootstrap.css?2024" rel="stylesheet" type="text/css" />
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="Public/css/bootstrap/css/bootstrap-ie6.css?2024">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="Public/css/bootstrap/css/ie.css?2024">
+    <![endif]-->
+    <link href="${ctx_path}/admin/custom/Public/css/site.css?2024" rel="stylesheet" type="text/css" />    
+    <link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+    <script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+var hav="";
+	function formhtml(Div){		
+		$("input,textarea,button", $(Div)).each(function() {
+			this.setAttribute('value',this.value);
+			});
+			$(":radio,:checkbox", $(Div)).each(function() {
+			if (this.checked) this.setAttribute('checked', 'checked');
+			else 
+				this.removeAttribute('checked');
+			});
+			$("option", $(Div)).each(function() {
+			if (this.selected) this.setAttribute('selected', 'selected');
+			else
+				this.removeAttribute('selected');
+			});	
+        return	$(Div).html();
+	}
+	
+//从界面获取属性对应的属性值，格式为属性1：属性值|属性2：属性值   备注：多选框多选时属性相同
+function reg(){
+	if(!window.confirm("是否确认提交!")){
+		return false;
+	}
+	var contentTemp = formhtml("#contentTemp");
+	$("#content").val(contentTemp);
+	hav="";
+	$('input[name=leipiNewField][type=text]').each(function(){
+		var v = $(this).val();
+		var t = $(this).attr("title");
+		if(v.indexOf(",----,")>=0 ||v.indexOf(":----:")>=0||v.indexOf(";----;")>=0){
+			alert("内容中不能包括,----,:----:和:----:");
+			return;
+		}
+		hav = hav+",----,"+t+":----:"+v;
+		});
+	
+	$('textarea[name=leipiNewField]').each(function(){
+		var v = $(this).val();
+		var t = $(this).attr("title");
+		if(v.indexOf(",----,")>=0 ||v.indexOf(":----:")>=0||v.indexOf(";----;")>=0){
+			alert("内容中不能包括,----,:----:和:----:");
+			return;
+		}
+		hav = hav+",----,"+t+":----:"+v;
+		});	
+	$('select[name=leipiNewField]').each(function(){
+				
+		var t = $(this).attr("title");
+		var v = $("select[name=leipiNewField][title="+t+"]").find("option:selected").text();	
+		if(v.indexOf(",----,")>=0 ||v.indexOf(":----:")>=0||v.indexOf(";----;")>=0){
+			alert("内容中不能包括,----,:----:和:----:");
+			return;
+		}
+		hav = hav+",----,"+t+":----:"+v;
+		});
+	
+	$($("input[name='leipiNewField'][type=checkbox][checked]")).each(function(){
+		var t =$(this).attr("title");
+		var v = $(this).val();
+		if(v.indexOf(",----,")>=0 ||v.indexOf(":----:")>=0||v.indexOf(";----;")>=0){
+			alert("内容中不能包括,----,:----:和:----:");
+			return;
+		}
+		hav = hav+",----,"+t+":----:"+v;
+		});
+	
+	$($("input[type=radio][checked]")).each(function(){
+		var t =$(this).attr("title");
+		var v = $(this).val();
+		if(v.indexOf(",----,")>=0 ||v.indexOf(":----:")>=0||v.indexOf(";----;")>=0){
+			alert("内容中不能包括,----,:----:和:----:");
+			return;
+		}
+		hav = hav+",----,"+t+":----:"+v;
+		});
+	$("#hav").val(hav);
+}
+function setSC(){
+	$("#sc").show();
+}
+function sc(){
+	$("#hc").empty();
+	$('#hc').append("<h6>回传申报书: <input  type='file' name='file1' id='file1' onchange='setSC();'/>&nbsp;&nbsp;<span id='sc' style='display: none;'> <a  href='#' onclick='javascript:sc();' title='删除' >删除</a></span>");
+	//$('#hc').append("232323");
+}
+
+$(function () {	
+  //删除
+    $("#del").click(function () {
+    	if(confirm("确认删除?")){
+    		$.ajax({
+    			type : "POST",
+    			url : "${ctx_path}/declaration/delDeclarationFile",
+    			data : {
+    				'id' : '${declaration.id!}',
+    			},
+    			success : function(result) {
+    				if(result.success){
+    					$("#ycs").hide();
+    				}
+    			}
+    		}); 
+    	}
+    	
+      	 		    	
+    });
+});
+
+</script>
+<style>
+      
+      #components{
+        min-height: 600px;
+      }
+      #target{
+        min-height: 200px;
+        border: 1px solid #ccc;
+        padding: 5px;
+      }
+      #target .component{
+        border: 1px solid #fff;
+      }
+      #temp{
+        width: 500px;
+        background: white;
+        border: 1px dotted #ccc;
+        border-radius: 10px;
+      }
+
+      .popover-content form {
+        margin: 0 auto;
+        width: 213px;
+      }
+      .popover-content form .btn{
+        margin-right: 10px
+      }
+      #source{
+        min-height: 500px;
+      }
+    </style>
+    <!--link href="Public/css/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"-->
+
+
+ </head>
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.Username detailUrl="${ctx_path}/company/detail"/>
+ 
+  <form  action="${ctx_path}/declaration/repair" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return reg();">  
+  <div class="container">
+      <div id="contentTemp">
+         ${declaration.Content!}
+      </div>  
+      <#if baseinfo.DeclarationFile??>
+	      <p> <b>下载申报书: </b><a href="${ctx_path}/declaration/downloadDeclarationFile?id=${baseinfo.id!}&type=1"> ${baseinfo.DeclarationFile!}</a></p>   
+	     <p><div id="hc">回传申报书: <input  type="file" name="file1" id="file1" onchange="setSC();"/>&nbsp;&nbsp;<span id="sc" style="display: none;"> <a  href="#" onclick="javascript:sc();" title="清除" >清除</a></span></div></p> 
+		      <#if declaration.DeclarationFile??> 
+		      <p id="ycs">
+			     <b>&nbsp;&nbsp;已回传申报书：</b>${declaration.DeclarationFile!}
+				  <#if declaration.FormalReviewStatus==1>		   
+				     <a href="#" id="del"  title="删除">删除</a>
+				  </#if>
+			  </p>
+			  </#if>		  
+     </#if>
+       <input type="hidden" id="hav" name="hav"/>
+       <input type="hidden"  name="baseinfoID" value="${baseinfo.id!}"/>
+       <input type="hidden" id="id" name="id" value="${declaration.id!}"/>
+      <input type="hidden" id="content" name="content"/>
+      <a onclick="javascript:window.history.go(-1)" class="register" title="返回" >返回</a>
+      <input type="submit" class="register" style="width:134px;height: 34px;" value="提交" />
+  </form>       
+</div> <!-- /container -->
+    
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/admin/custom/Public/js/jquery-1.7.2.min.js?2024"></script>
+<script type="text/javascript"  src="${ctx_path}/admin/custom/Public/js/formbuild/bootstrap/js/bootstrap.min.js?2024"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/admin/custom/Public/js/formbuild/leipi.form.build.core.js?2024"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/admin/custom/Public/js/formbuild/leipi.form.build.plugins.js?2024"></script>
+
+<!--script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1e6fd3a46a5046661159c6bf55aad1cf' type='text/javascript'%3E%3C/script%3E"));
+</script-->
+
+</body>
+</html>

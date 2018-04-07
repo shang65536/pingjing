@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>评审结果列表</title>
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" >
+</script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<script type="text/javascript">
+
+	function reviewStatus(formalReviewStatus,declarionID ) {
+		$.ajax({
+			type : "POST",
+			url : "${ctx_path}/baseinfo/reviewStatus",
+			data : {
+				'declarionID' : declarionID,
+				'formalReviewStatus' : formalReviewStatus,
+			},
+			success : function(result) {
+				alert("操作成功！");
+				window.location.reload();
+			}
+		});
+
+	}
+	function iSReview(id, status) {
+		$.ajax({
+			type : "POST",
+			url : "${ctx_path}/baseinfo/iSReview",
+			data : {
+				'id' : id,
+				'iSReview' : status,
+			},
+			success : function(result) {
+				alert(result.success);
+				window.location.reload();
+			}
+		});
+
+	}
+	
+	function ReviewOpinion(reviewOpinion,declarionID){	
+		   $.ajax({
+				type : "POST",
+				url : "${ctx_path}/baseinfo/reviewOpinion",
+				data : {
+					'declarionID' : declarionID,
+					'reviewOpinion' : reviewOpinion,
+				},
+				success : function(result) {
+						alert("操作成功！");
+						window.location.reload();
+				}
+			});		   				
+	}
+	
+	function exportExcel(url){		
+		location.href = url;
+	}
+	function sendHomePageView(id){			  
+		demoDG2 = $.dialog({ 
+			title:'上传评审结果Excel', 
+			content: 'url:${ctx_path}/baseinfo/sendHomePageView?baseinfoID='+id,
+			width: '500px',
+			 height: '80px'
+		});
+	   				
+	}
+	function showReviewList(id){
+		demoDG3 = $.dialog({ 
+        	title:'专家评审情况', 
+        	content: 'url:${ctx_path}/baseinfo/showReviewList?declarationID='+id,
+        	width: '1100px',
+            height: '500px'
+       	});
+	}
+</script>
+</head>
+
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+     <#include "/customawards/_topmenu.html"/>
+     <div class="main">      
+        <div class="main_content"> 
+              <h6>其他奖项与评估名称：${baseinfo.Name!}</h6>
+              </br>
+              <div class="toplist03">
+                    <ul>                     
+                        <li><h8><a href="${ctx_path}/baseinfo/groupExperList?id=${baseinfo.id!}">专家组</a></h8></li>	
+                        <li><h8><a href="${ctx_path}/baseinfo/recommendList?baseinfoID=${baseinfo.id!}">推荐项目简表</a></h8></li>
+                          <li><h8><a href="${ctx_path}/baseinfo/examinationList?baseinfoID=${baseinfo.id!}">形式审查表</a></h8></li>
+                        <li><h8><a href="${ctx_path}/baseinfo/reviewResultList?baseinfoID=${baseinfo.id!}" class="active">评审结果表</a></h8></li>
+                       <!--  <li><h8><a href="${ctx_path}/baseinfo/list">返回自定义列表</a></h8></li> -->
+                        <span style="float:right;">&nbsp;&nbsp;<a href="javascript:sendHomePageView('${baseinfo.id}');"><input type="button" value="发布结果到首页 " />&nbsp;&nbsp;</a></span>
+                        <span style="float:right;">&nbsp;&nbsp;<a href="${ctx_path}/baseinfo/exportExcel?baseinfoID=${baseinfo.id}"><input type="button" value="导出" /></a></span>
+                       
+                        <span style="float:right;">
+                        <#if baseinfo.ISReview==0>
+                        <a href="#" onClick="javascript:iSReview('${baseinfo.id}',1)"><input type="button" value=" 停止评审" /></a></span>
+                        <#else>
+                         <a href="#" onClick="javascript:iSReview('${baseinfo.id}',0)"><input type="button" value=" 开启评审" /></a></span>
+                        </#if>
+                        <span style="float:right;">&nbsp;&nbsp;<a href="${ctx_path}/baseinfo/uploadAllDeclaration?baseinfoID=${baseinfo.id}"><input type="button" value="下载申报书 " />&nbsp;&nbsp;</a></span>
+                       
+                       
+                        
+                    </ul>      
+              </div> 
+              <div style="width:1018px;overflow-x:scroll;">                                         	
+         <table class="table03" width="2200" border="0" cellpadding="0" cellspacing="0" style="padding: 10px 0;min-width:1018px;">
+	        <tr> 
+	            <th   width="50px" scope="col" nowrap="nowrap">序号</th>
+	            <th   width="50px" scope="col" nowrap="nowrap">登记号</th>	            
+                 <#list base as s>
+                 <th width="150px" scope="col" nowrap="nowrap">${s!}</th>	     
+				  </#list>  
+	            <th width="200px" scope="col" nowrap="nowrap">申报书</th>
+	            <th  width="40px" scope="col" nowrap="nowrap">评审情况</th>
+	            <th width="180px" scope="col" nowrap="nowrap">评审</th>
+	            <th width="150px" scope="col" nowrap="nowrap">评审意见</th>
+	        </tr>
+	        
+	          <#list declarationPage.getList() as x>	         
+				<tr>
+					<td scope="col">${(((declarationPage.pageNumber-1)*declarationPage.pageSize)+(x_index+1))?int}   <!-- 按分页来显示递增显示序号 --></td>										
+					<td scope="col">${x.RegisterNum!}</td>
+					 <#list base as s>
+					<td scope="col">
+					<#if x.HeaderAttributeValue??> 
+					${x.HeaderAttributeValue.split(';----;')[s_index]}
+					</#if>
+					</td>				
+				    </#list>  
+				    <td scope="col"><a href="${ctx_path}/baseinfo/downloadDeclarationFile?id=${x.id!}&type=2">${x.DeclarationFile!}</a></td>	
+				    <td scope="col">
+				     <a href="javascript:showReviewList('${x.id!}');"> 查看</a>				   
+				    </td>	
+				     <td scope="col">
+				     <#if x.FormalReviewStatus==3>
+						<input type="radio" onclick="reviewStatus(3,'${x.id!}')" name="FormalReviewStatus${x_index+1}" value="3" checked />通过 
+						<input type="radio" onclick="reviewStatus(4,'${x.id!}')"  name="FormalReviewStatus${x_index+1}" value="4" />不通过
+						<#elseif x.FormalReviewStatus==4>
+						<input type="radio" onclick="reviewStatus(3,'${x.id!}')" name="FormalReviewStatus${x_index+1}" value="3"  />通过 
+						<input type="radio" onclick="reviewStatus(4,'${x.id!}')" name="FormalReviewStatus${x_index+1}" value="4" checked/>不通过
+						<#else>
+						  <input type="radio" onclick="reviewStatus(3,'${x.id!}')" name="FormalReviewStatus${x_index+1}" value="3"  />通过
+                          <input type="radio" onclick="reviewStatus(4,'${x.id!}')" name="FormalReviewStatus${x_index+1}" value="4"/>不通过
+						</#if>
+						</td>
+				     <td scope="col">
+				         <input  type='text' value='${x.ReviewOpinion!}'  style="width:80;border-style:none"  onblur="ReviewOpinion(value,'${x.id}')" />
+				     </td>
+				</tr>
+			 </#list>    	        	                    
+    </table>
+    </div>
+    
+         <#include "/common/_paginate.html" />
+			 <@paginate currentPage=declarationPage.pageNumber totalPage=declarationPage.totalPage actionUrl="${ctx_path}/baseinfo/reviewResultList" 
+			 urlParas="baseinfoID=${baseinfo.id!}"/>
+	          
+        
+        </div>
+        <div class="clearfix"></div>
+    </div> 
+</div>
+
+</body>
+</html>

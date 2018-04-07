@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+
+ <!--[if lte IE 6]>
+<script type="text/javascript" src="${ctx_path}/js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>无标题文档</title>
+<script>
+ function load()
+ {
+	 //用来赋值  页面跳转后 动态下拉框的值
+	 document.getElementById("Category").value='${Category!}';
+	//申报状态是否已结束  如果结束 不能提交操作
+	  var Status='${prize.Status!}';
+	  if(Status=='0')  //结束  隐藏申报按钮
+	  {
+		 $(document.getElementById("tj")).hide();
+	  }
+ }
+ //验证
+ function check()
+ {   
+
+	 var flag = window.confirm("您确定要提交所有投票项目吗？提交后不能再修改！");     
+	 return flag;
+
+ }
+ function show(id){	
+	$("#vote_type").val(id);
+	$("#qryForm").submit();
+
+	}
+</script>
+</head>
+
+<body onload="load()">
+<#include "/common/_header.html"/>
+<@header username=expert.UserName detailUrl="${ctx_path}/expert/detail"/>
+
+
+<div class="container_12">
+      <div class="toplist">
+           <ul>
+          <li><a href="" style="border-left:1px solid #ccc;" class="active"><h6>航空科技奖</h6></a></li> 
+          <li><a href="${ctx_path}/review/list"><h6>其他奖励与评估</h6></a></li> 
+         </ul>
+     </div>
+     <div class="main">         
+          <div class="main_content">
+           
+                <div class="left">
+                   <ul>                               
+                     <li><a href="${ctx_path}/projectreview">专业评审</a></li>
+                     <li><a href="${ctx_path}/projectreviewZH" class="active">综合评审</a></li>
+                    </ul>                        
+                </div>
+
+                                                      
+                <div class="right">
+                 
+                 <div class="toplist03">
+              <ul>
+              <li><a href="${ctx_path}/projectreviewZH" style="background:rgb(94, 171, 244);">项目登记表</a></li> 
+              <li ><a href="${ctx_path}/projectreviewZH/px" style="background:rgb(94, 171, 244);">总分排序表</a></li>
+              <li><a href="${ctx_path}/projectreviewZH/tp" class="active">投票表</a></li>
+             </ul>
+             <span style=" float:right; padding-top:5px; color: red;">综合投票时间：${CompositeVoteStartTime!}至${CompositeVoteEndTime!}</span>
+             <div class="clearfix"></div>
+         </div>
+                
+              <form id = "qryForm" action="${ctx_path}/projectreviewZH/tp" method="post"> 
+               <p>
+                <label>项目名称:</label><input type="text" class="text" name="ProjectCN"  value='${ProjectCN!}' />
+                <label>评奖类别:</label>
+                <select name="Category" id="Category" class="select" style="width:120px;" >
+                       <option value="" selected>全部</option> 
+                <#list CategoryList as c>
+                       <option value="${c.id}" >${c.Name}</option>
+                </#list>
+                </select>
+                <label>操作:</label>
+                <select name="status" id="cbo" class="select" style="width:90px;">
+                 <#assign status='${status!}'>
+                    <#if status==''>
+                     <option value="" selected>全部</option> 
+                     <#else>
+                     <option value="">全部</option> 
+                   </#if> 
+                    <#if status=='1'>
+                     <option value="1" selected>已操作</option>
+                     <#else>
+                     <option value="1" >已操作</option>
+                   </#if> 
+                   <#if status=='0'>
+                     <option value="0" selected>未操作</option>
+                     <#else>
+                     <option value="0">未操作</option>
+                   </#if> 
+                 </select>
+                 <input type="hidden" id ="vote_type" name="vote_type" value='${vote_type!}' />
+                  <input type="submit" class="submit" value="查询" />
+                </tr>
+                
+                 </p>
+              </form> 
+                          
+                       <table class="table03" width="100%" border="0" cellpadding="0" cellspacing="0">
+                       <thead>
+        <tr>
+          <td colspan="12">
+            <form action="${ctx_path}/projectreviewZH/proTPTj" onsubmit="return check()">
+               <input type="submit" class="submit01" onclick="" id="tj" class="submit01" value="提交"  />&nbsp; &nbsp;&nbsp;<span style="color: red;">投票结束后请点击“提交”按钮，统一提交所有项目的投票结果</span>
+                                              
+               
+               <label style="color:red;">${ts!}</label>
+            </form>
+        </td></tr></thead>
+         <thead>
+        <tr><td colspan="12">
+         <input type="submit" class="submit01" value="全部" onclick="show('')"/>
+        <input type="submit" class="submit01" value="特等奖" onclick="show(1)"/>
+        <input type="submit" class="submit01" value="一等奖" onclick="show(2)"/>
+        <input type="submit" class="submit01" value="二等奖" onclick="show(3)"/>
+        <input type="submit" class="submit01" value="三等奖" onclick="show(4)"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">${show}</span> 
+        </td>
+        </tr>
+        </thead>
+
+        <tr>
+            
+            <th width="5%" scope="col">序号</th>
+            <th width="10%" scope="col">登记号</th>
+            <th width="15%" scope="col">项目名称</th>
+            <th width="15%" scope="col">评奖类别</th>
+            <th width="15%" scope="col">综评平均分</th>
+            <th width="15%" scope="col">投票类别</th>
+            <th width="15%" scope="col">投票结果</th>
+            <th width="25%" scope="col">操作</th>
+        </tr>
+        
+       <#list proReviewPage.getList() as x>
+        <tr>
+	            <td scope="col" style="text-align:center">
+	             ${(((proReviewPage.pageNumber-1)*proReviewPage.pageSize)+(x_index+1))?int}   <!-- 按分页来显示递增显示序号 -->
+	            </td> 
+	            <td scope="col">${x.RegisterNum!}</td>  <!-- 登记号 -->
+	            <td scope="col"><a href="#" onclick="window.open('${ctx_path}/projectreview/seeProject?step=1&id=${x.ProjectID}')">${x.ProjectCN!}</a></td>
+	            <td scope="col">${x.Category_name!}</td>
+	            <td scope="col">${x.zf!}</td>
+	          <!--   <td scope="col"><a href="javascript:chooseWin(${x.ProjectID!})" >${x.zf!}</a></td> --> 
+	            <td scope="col">
+	              <#if x.vote_type??>
+	                <#if x.vote_type==1>
+	                                                                     特等奖
+	                <#elseif x.vote_type==2>
+	                                                                    一等奖       
+	                <#elseif x.vote_type==3>
+	                                                                    二等奖            
+	                <#elseif x.vote_type==4>
+	                                                                    三等奖                                                                                                
+	                </#if>                                                   
+	              </#if>
+	            </td>
+	            <td scope="col">
+	            <#if x.vote??>
+	                <#if x.vote=='1'>
+	                                                                  同意
+	                <#elseif x.vote=='0'>
+	                                                                  不同意     	                            
+	                <#else>
+	                                                                    未投票                                                                                               
+	                </#if> 
+	              <#else>
+	              	未投票
+	              </#if>                                                  
+	            </td>
+	            
+	            <td scope="col">
+	         
+	              <!-- 先判断是否已经 关闭评审 -->
+	              <#if prize.Status?? && prize.Status!=0>
+	            
+		            <!-- 先判断是否已提交  如果已提交 则不允许再操作  0默认未提交  -->
+		            <#if x.statustp=='0'>
+		            <#if x.state==7>
+		            	已发布
+		            <#elseif x.state==6>
+		                                                     已统计，投票失效	
+		            <#else>
+			               <p><input type="radio" name="${x_index+1}" ${(x.vote?? && x.vote=='1')?string("checked='checked'", "")} value="1" onclick="location.href='${ctx_path}/projectreviewZH/proTp?ProjectID=${x.ProjectID}&expertID=${expert.id}&vote=1'" />
+		                  <label for="RADIO1">同意</label>
+		                  <input type="radio" name="${x_index+1}" ${(x.vote?? && x.vote=='0')?string("checked='checked'", "")} value="0" onclick="location.href='${ctx_path}/projectreviewZH/proTp?ProjectID=${x.ProjectID}&expertID=${expert.id}&vote=0'" />
+		                  <label for="RADIO1">不同意</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                 <!--  <#if x.voteName=='2'>
+		                    <label style="color:red;">未投票</label> </p>  
+		                  <#else>
+		                    <label style="color:blue;">[${x.voteName!}]</label> </p>                                
+			              </#if>
+			               -->
+		               </#if>
+		            <#else>
+		               
+		                <label >已提交</label>
+		               
+		            </#if>
+	              <#else>
+	             	 评审已结束
+	            </#if>    
+	            </td>                   
+        </tr>   
+         </#list>             
+    </table> 
+    
+              <#include "/common/_paginate.html" />
+	<@paginate currentPage=proReviewPage.pageNumber totalPage=proReviewPage.totalPage actionUrl="${ctx_path}/projectreviewZH/tp"  urlParas="ProjectCN=${ProjectCN!}&Category=${Category!}&status=${status!}"/> 
+          <div class="clear"></div>  
+          </div> 
+    </div>
+</div>
+<script type="text/javascript">
+//平均分
+function chooseWin(id){
+	$.dialog({
+		title:"各专家对该项目各项指标的评分情况",
+		width:580,
+		height:150,
+	    content: "",
+	    init: function () {
+	    	var data = {'id':id,"Status":2};
+			$.ajax({
+				type: "POST",
+				url: "${ctx_path}/projectreviewZH/totalSort",
+				data: data,
+				success: function(result) {
+					$('.ui_content').append(result);
+				}
+			});
+	    },
+	    cancelVal: '关闭',
+	    cancel: true 
+	});
+	
+}
+</script>
+</body>
+</html>

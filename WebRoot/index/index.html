@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript"
+	src="http://www.js-css.cn/jscode/jquery.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/jquery.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/jquery.tipsy.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/scripts.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/facebox.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/jquery.flot.pack.js"></script>
+<script src="${ctx_path}/js/graphs.js" type="text/javascript"></script>
+<script type="text/javascript" src="${ctx_path}js/jquery.js"></script>
+<script type="text/javascript"
+	src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var $div_li = $("div.tab_menu ul li");
+		$div_li.click(function() {
+			$(this).addClass("selected") //当前<li>元素高亮
+				.siblings().removeClass("selected"); //去掉其它同辈<li>元素的高亮
+			var index = $div_li.index(this); // 获取当前点击的<li>元素 在 全部li元素中的索引。
+			$("div.tab_box > div") //选取子节点。不选取子节点的话，会引起错误。如果里面还有div 
+				.eq(index).show() //显示 <li>元素对应的<div>元素
+				.siblings().hide(); //隐藏其它几个同辈的<div>元素
+		}).hover(function() {
+			$(this).addClass("hover");
+		}, function() {
+			$(this).removeClass("hover");
+		})
+
+	})
+
+	//找回密码
+	function openWin(type) {
+	}
+	;
+
+	function jx(type) {
+		if (1 == type) {
+			$("#kjj").removeClass().addClass("tjzw");
+			$("#qt").removeClass().addClass("tjzw hide");
+			$("#kjjdj").removeClass().addClass("selected");
+			$("#qtdj").removeClass();
+		} else {
+			$("#kjj").removeClass().addClass("tjzw hide");
+			$("#qt").removeClass().addClass("tjzw");
+			$("#kjjdj").removeClass();
+			$("#qtdj").removeClass().addClass("selected");
+		}
+
+	}
+</script>
+<!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]-->
+
+
+<title>中国航空学会科技奖励系统</title>
+</head>
+
+<body>
+	wewewewe
+	<#if userName !=""> <#include "/common/_header.html"/> <@header
+	username=userName detailUrl="${ctx_path}/admin/userDetail"/> <#else>
+	<!-- 未登录的情况 -->
+	<div id="header" class="png_bg">
+		<div id="head_wrap" class="container_12">
+			<div class="logo">
+				<img src="${ctx_path}/images/logo.png">
+			</div>
+			<div class="logo_right">
+				<div id="controlpanel" class="grid_7">
+					<ul>
+						<li><p>
+								<strong><br /></strong>
+							</p></li>
+						<li></li>
+						<li></li>
+					</ul>
+
+					<div id="navigation" class=" grid_7">
+						<ul>
+							<!--     <li><a href="/" class="active">首页</a></li> -->
+							<li><a href="${ctx_path}/index" class="active">首页</a></li>
+							<li><a href="${ctx_path}/project">申报平台</a></li>
+							<li><a href="${ctx_path}/projectreview">专家平台</a></li>
+							<li><a href="${ctx_path}/technology/groupexpert/indexzj">管理平台</a></li>
+						</ul>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="sub_nav"></div></#if>
+
+	<div class="container_12">
+
+		<div class="grid_7">
+			<div class="title">
+				<h2>信息公告</h2>
+			</div>
+
+			<div class="list">
+				<ul>
+					<#list newsPage.getList() as x>
+					<li><a href="${ctx_path}/index/newEdit?id=${x.id}">${x.NewsTitle!}</a>
+						<span>${x.NewsDate!}</span></li>
+					</#list>
+				</ul>
+			</div>
+			<#include "/common/_paginateIndex.html" />
+			<@paginate currentPage=newsPage.pageNumber
+			totalPage=newsPage.totalPage type=1 actionUrl="${ctx_path}/index" />
+		</div>
+		<div class="grid_5">
+
+			<ul class="tabs">
+				<li><a href="#tab1">申报单位</a></li>
+				<li><a href="#tab2">总会管理</a></li>
+				<li><a href="#tab3">专家登陆</a></li>
+			</ul>
+
+
+			<div class="tab_container">
+				<!-- 申报平台登录框 -->
+				<div id="tab1" class="tab_content">
+
+					<form class="dl_loginform" id="company_from"
+						action="${ctx_path}/login" method="post">
+						<input type="hidden" name="type" value="company" />
+						<ul>
+							<li><input type="text" name="username" class="username"
+								value="${(companyName?? && companyName !="
+								")?string("${companyName!}","用户名")}"  onfocus="this.value=''"
+								onblur="if(this.value==''){this.value='用户名'}" /></li>
+							<li><input type="password" name="password" class="password"
+								value="${(companyPwd?? && companyPwd !="
+								")?string("${companyPwd!}","")}"  onfocus="this.value=''"
+								onblur="if(this.value==''){this.value=''}" /></li>
+							<!--     <li><div class="d_buto"><span><input type="checkbox" checked='checked' name="remb" class="remb">&nbsp;&nbsp;记住密码</span><a href="javascript:openWin('company')">忘记密码？</a></div></li>  -->
+							<li><div class="d_buto">
+									<span><input type="checkbox" checked='checked'
+										name="remb" class="remb">&nbsp;&nbsp;记住密码</span><a
+										href="${ctx_path}/company/newpassword">忘记密码？</a>
+								</div></li>
+							<li><a
+								onclick="document.getElementById('company_from').submit();"
+								class="login" title="登陆">登陆</a><a
+								href="${ctx_path}/company/add" class="register" title="注册">注册</a></li>
+						</ul>
+					</form>
+
+				</div>
+				<!-- 总会管理平台登录框 -->
+				<div id="tab2" class="tab_content">
+					<form class="dl_loginform" id="admin_from"
+						action="${ctx_path}/login" method="post">
+						<input type="hidden" name="type" value="admin" />
+						<ul>
+							<li><input type="text" name="username" class="username"
+								value="${(adminName?? && adminName !="
+								")?string("${adminName!}","用户名")}"  onfocus="this.value=''"
+								onblur="if(this.value==''){this.value='用户名'}" /></li>
+							<li><input type="password" name="password" class="password"
+								value="${(adminPwd?? && adminPwd !="
+								")?string("${adminPwd!}","")}"  onfocus="this.value=''"
+								onblur="if(this.value==''){this.value=''}" /></li>
+							<li><div class="d_buto">
+									<span><input type="checkbox" checked='checked'
+										name="remb" class="remb">&nbsp;&nbsp;记住密码</span><a
+										href="${ctx_path}/company/newpassword">忘记密码？</a>
+								</div></li>
+							<!-- <li><div class="d_buto"><span><input type="checkbox" checked='checked' name="remb" class="remb">&nbsp;&nbsp;记住密码</span><a href="javascript:openWin('admin')">忘记密码？</a></div></li>  -->
+							<li><a
+								onclick="document.getElementById('admin_from').submit();"
+								class="login" title="登陆">登陆</a></li>
+						</ul>
+					</form>
+				</div>
+				<!-- 专家登陆平台登录框 -->
+				<div id="tab3" class="tab_content">
+					<form class="dl_loginform" id="expert_from"
+						action="${ctx_path}/login" method="post">
+						<input type="hidden" name="type" value="expert" />
+						<ul>
+							<li><input type="text" name="username" class="username"
+								value="${(expertName?? && expertName !="
+								")?string("${expertName!}","用户名")}"  onfocus="this.value=''"
+								onblur="if(this.value==''){this.value='用户名'}" /></li>
+							<li><input type="password" name="password" class="password"
+								value="${(expertPwd?? && expertPwd !="
+								")?string("${expertPwd!}","")}"  onfocus="this.value=''"
+								onblur="if(this.value==''){this.value=''}" /></li>
+							<!--       <li><div class="d_buto"><span><input type="checkbox" checked='checked' name="remb" class="remb">&nbsp;&nbsp;记住密码</span><a href="javascript:openWin('expert')">忘记密码？</a></div></li> -->
+							<li><div class="d_buto">
+									<span><input type="checkbox" checked='checked'
+										name="remb" class="remb">&nbsp;&nbsp;记住密码</span><a
+										href="${ctx_path}/company/newpassword">忘记密码？</a>
+								</div></li>
+							<li><a
+								onclick="document.getElementById('expert_from').submit();"
+								class="login" title="登陆">登陆</a></li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="container_12">
+
+		<div class="grid_7" style=" margin-top:23px;">
+			<div class="tab_menu">
+				<ul>
+					<li class="selected" id="kjjdj" onclick="jx(1);">航空科技奖</li>
+					<li id="qtdj" onclick="jx(2);">其他奖励与评估</li>
+				</ul>
+			</div>
+
+			<div class="tab_box">
+				<div class="tjzw" id="kjj">
+					<div class="list">
+						<ul>
+							<#list WinningPage.getList() as x>
+							<li><a href="${ctx_path}/index/winningSee?parentID=${x.id!}">${x.winName!}</a>
+							</li>
+							</#list>
+						</ul>
+					</div>
+					<#include "/common/_paginateIndex.html" />
+					<@paginate currentPage=WinningPage.pageNumber
+					totalPage=WinningPage.totalPage type=3
+					actionUrl="${ctx_path}/index" />
+				</div>
+				<div class="tjzw hide" id="qt">
+					<div class="list">
+						<ul>
+							<#list baseinfoPage.getList() as x>
+							<li><a
+								href="${ctx_path}/index/reciewResult?baseinfoID=${x.id!}">${x.Year!}年${x.Name!}评审结果</a>
+							</li>
+							</#list>
+						</ul>
+					</div>
+					<#include "/common/_paginateIndex.html" />
+					<@paginate currentPage=baseinfoPage.pageNumber
+					totalPage=baseinfoPage.totalPage type=4
+					actionUrl="${ctx_path}/index" />
+				</div>
+
+				<div class="tjzw hide">
+					<div class="list">
+						<ul>
+							<#list newsPage.getList() as x>
+							<li><a href="">${x.NewsTitle!}</a> <span>${x.NewsDate!}</span>
+							</li>
+							</#list>
+						</ul>
+					</div>
+					<#include "/common/_paginateIndex.html" />
+					<@paginate currentPage=newsPage.pageNumber
+					totalPage=newsPage.totalPage type=1 actionUrl="${ctx_path}/index"
+					/>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="grid_5" style=" margin-top:6px;">
+			<div class="title">
+				<h2>模板下载</h2>
+			</div>
+
+			<div class="list">
+				<ul>
+					<#list templatePate.getList() as x>
+					<li><a href="${ctx_path}/index/templateOut?id=${x.id!}">
+							${x.Title!} </a></li>
+					</#list>
+				</ul>
+			</div>
+			<#include "/common/_paginateIndex.html" />
+			<@paginate currentPage=templatePate.pageNumber
+			totalPage=templatePate.totalPage type=2 actionUrl="${ctx_path}/index"
+			/>
+
+		</div>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="${ctx_path}/js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>项目申报--主要完成人员</title>
+<script type="text/javascript">
+	function getByteLen(val) {
+	    var len = 0;
+	    for (var i = 0; i < val.length; i++) {
+	        if (val[i].match(/[^\x00-\xff]/ig) != null) //全角
+	            len += 2;
+	        else
+	            len += 1;
+	    }
+	    return len;
+	}
+   function check()
+   {
+	     var Name=document.getElementById("Name").value;
+	     var Nation=document.getElementById("Nation").value;
+	     var Homeplace=document.getElementById("Homeplace").value;
+	     var Birthday=document.getElementById("Birthday").value;
+	     var Parties=document.getElementById("Parties").value;
+	     
+	     var ContactPhone=document.getElementById("ContactPhone").value;
+	     var ContactAddress=document.getElementById("ContactAddress").value;
+	     var ZipCode=document.getElementById("ZipCode").value;
+	     var School=document.getElementById("School").value;
+	     var Education=document.getElementById("Education").value;
+	     var Degree=document.getElementById("Degree").value;
+	     var JobTitle=document.getElementById("JobTitle").value;
+	     var Speciality=document.getElementById("Speciality").value;
+	     var Graduation=document.getElementById("Graduation").value;
+	     var Honor=document.getElementById("Honor").value;
+	     var Contribution=document.getElementById("Contribution").value;
+	
+	
+	     var Company=document.getElementById("Company").value;
+	     var ContactPhone=document.getElementById("ContactPhone").value;
+	     var ContactAddress=document.getElementById("ContactAddress").value;
+	     var EMail=document.getElementById("EMail").value;
+	     var StartTime=document.getElementById("StartTime").value;
+	     var EndTime=document.getElementById("EndTime").value;
+	     
+	     //电子邮箱格式验证规则 
+	     var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	     
+	     
+	     var ts="";
+	     if(Name=="")
+	     {
+	    	 ts+="请输入姓名;\n";
+	     }
+	     if(Nation=="")
+	     {
+	    	 ts+="请输入民族;\n";
+	     }
+	     if(Homeplace=="")
+	     {
+	    	 ts+="请输入出生地;\n";
+	     }
+	     if(Birthday=="")
+	     {
+	    	 ts+="请输入出生日期;\n";
+	     }
+	     if(Parties=="")
+	     {
+	    	 ts+="请输入党派名称;\n";
+	     }	    
+	     if(Company=="")
+	     {
+	    	 ts+="请输入单位名称;\n";
+	     }
+	     if(ContactPhone=="")
+	     {
+	    	 ts+="请输入联系电话;\n";
+	     }
+	     if(ContactAddress=="")
+	     {
+	    	 ts+="请输入通讯地址;\n";
+	     }
+	     if(ZipCode=="")
+	     {
+	    	 ts+="请输入邮政编码;\n";
+	     }
+	     if(EMail=="")
+	     {
+	    	 ts+="请输入电子邮箱;\n";
+	     }
+	     if(EMail!="")
+	     {
+	    	 if(filter.test(EMail))
+	    	 {
+	    		 
+	    	 }else
+	    	 {	 
+	    	    ts+="电子邮箱格式不正确，请重新输入 ;\n";
+	    	 }
+	     }
+	     if(School=="")
+	     {
+	    	 ts+="请输入毕业学校;\n";
+	     }
+	     if(Education=="")
+	     {
+	    	 ts+="请输入文化水平;\n";
+	     }
+	     if(Degree=="")
+	     {
+	    	 ts+="请输入学位;\n";
+	     }
+	     if(JobTitle=="")
+	     {
+	    	 ts+="请输入职务职称;\n";
+	     }
+	     if(Speciality=="")
+	     {
+	    	 ts+="请输入专业专长;\n";
+	     }
+	     if(Graduation=="")
+	     {
+	    	 ts+="请输入毕业时间;\n";
+	     }
+	     
+	     if(StartTime=="")
+	     {
+	    	 ts+="请输入项目开始时间;\n";
+	     }
+	     if(EndTime=="")
+	     {
+	    	 ts+="请输入项目结束时间;\n";
+	     }
+	     if(StartTime!="" && EndTime!="")
+    	 {
+    	     if(StartTime>EndTime)
+    	     {
+    	    	 ts+="开始时间不能大于结束时间;\n";
+    	     }
+    	 }
+	     if(Honor=="")
+	     {
+	    	// ts+="请输入曾经奖励及荣誉;\n";
+	     }else{
+	    	 if(getByteLen(Honor)>2000){
+	    		 ts+="曾经奖励及荣誉字数不能超过1000个;\n"; 
+	    	 }
+	     }
+	     
+	     if(Contribution=="")
+	     {
+	    	 ts+="请输入创建性贡献;\n";
+	     }else{
+	    	 if(getByteLen(Contribution)>800){
+	    		 ts+="创建性贡献字数不能超过400个;\n"; 
+	    	 }
+	     }
+	     	     
+	     if(ts!=""){
+	    	 alert(ts);
+	    	 return false;
+	     }
+   }
+   
+  
+   function load()
+   {
+  	//申报状态是否已结束  如果结束 不能提交操作
+  	  /* var StatusSb='${prize.StatusSb!}';
+  	  if(StatusSb=='0')  //结束  隐藏申报按钮
+  	  {
+  		 //$(document.getElementById("okbtn")).hide();
+  		 $(document.getElementById("okbtn"));
+  	  } */
+  	  
+  	  var status='${project.Status!}'; //等于0未提交 3形式审查未审核通过的项目 才能操作 
+	  if(status !='0' && status!='3')
+	  {
+		  $(document.getElementById("okbtn")).hide();
+		 // $(document.getElementById("okbtn"));
+	  }
+	  var sex='${keyPerson.Sex!}';
+	  if(sex!=null && sex!=''){
+		  if(sex=='0'){
+			  $(document.getElementById("RADIO2")).attr("checked","checked");
+			  $(document.getElementById("RADIO1")).removeAttr("checked");			  
+		  }else{
+			  $(document.getElementById("RADIO2")).removeAttr("checked");
+			  $(document.getElementById("RADIO1")).attr("checked","checked");	
+		  }
+	  }
+   }
+   
+</script>
+<style>
+form input.text {
+width: 330px;
+}
+</style>
+</head>
+
+<body onload="load()">
+<#include "/common/_header.html"/>
+<@header username=user.Username detailUrl="${ctx_path}/company/detail"/>
+
+<div class="container_12">
+    
+	<#include "/project/_step_topmenu.html"/>
+	
+     <div class="clearfix">&nbsp;</div>
+      <h5><b>新增完成人</b></h5>
+      
+   <form action="${ctx_path}/project/apply" method="post" onSubmit="return check()">
+       <input type="hidden" name="step" value='3'/> 
+         <input type="hidden" name="id" value='${id}' />    
+        
+          <input type="hidden" name="keyPerson.id" value='${keyPerson.id!}' />  
+          <table   width="100%" border="0" cellpadding="0" cellspacing="0">   
+
+           <tr><td><label class="pad">姓名:</label><label style='color:red'>*</label></td>
+           <td><input type="text" class="text" id="Name" name="keyPerson.Name" value='${keyPerson.Name!}' /></td></tr>
+
+           <tr>
+           <td><label for="RADIO1" class="pad">性别：</label><label style='color:red'>*</label></td>
+           
+              <td><p><input type="radio" name="keyPerson.Sex" id="RADIO1" value="1"  checked="checked" />
+                <label for="RADIO1">男</label>
+                <input type="radio" name="keyPerson.Sex" id="RADIO2" value="0" />
+                <label for="RADIO1">女</label></p></td>
+            </tr>
+           <tr><td><label class="pad">民族：</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="Nation" name="keyPerson.Nation" value='${keyPerson.Nation!}' /></td></tr>
+
+             <tr><td><label class="pad">出生地：</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="Homeplace" name="keyPerson.Homeplace" value='${keyPerson.Homeplace!}' /></td></tr>
+          
+           <tr><td><label class="pad">出生日期：</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="Wdate" id="Birthday" name="keyPerson.Birthday" value='${keyPerson.Birthday!}' onFocus="WdatePicker({isShowClear:false,readOnly:true})" /></td></tr>
+          
+           <tr><td><label class="pad">党派名称：</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="Parties" name="keyPerson.Parties" value='${keyPerson.Parties!}' /></td></tr>
+          
+          <tr><td><label class="pad">工作单位：</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="Company" name="keyPerson.Company" value='${keyPerson.Company!}' /></td></tr>
+          
+          <tr><td><label class="pad">联系电话：</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="ContactPhone" name="keyPerson.ContactPhone" value='${keyPerson.ContactPhone!}' onkeyup="value=value.replace(/[^\d\.]/g,''); " /></td></tr>
+          
+          <tr><td><label class="pad">通讯地址：</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="ContactAddress" name="keyPerson.ContactAddress" value='${keyPerson.ContactAddress!}' /></td></tr>
+          
+          <tr><td><label class="pad">邮政编码:</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="ZipCode" name="keyPerson.ZipCode" value='${keyPerson.ZipCode!}' onkeyup="value=value.replace(/[^\d\.]/g,''); " /></td></tr>
+          
+          <tr><td><label class="pad">家庭住址:</label></td>
+          <td><input type="text" class="text" id="" name="keyPerson.HomeAddress" value='${keyPerson.HomeAddress!}' /></td></tr>
+          
+          <tr><td><label class="pad">住宅电话:</label></td>
+          <td><input type="text" class="text" id="" name="keyPerson.HomePhone" value='${keyPerson.HomePhone!}' /></td></tr>
+          
+          <tr><td><label class="pad">电子信箱:</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="EMail" name="keyPerson.EMail" value='${keyPerson.EMail!}' /></td></tr>
+          
+          <tr><td><label class="pad">毕业学校:</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="School" name="keyPerson.School" value='${keyPerson.School!}' /></td></tr>
+          
+          <tr><td><label class="pad">文化程度:</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="Education" name="keyPerson.Education" value='${keyPerson.Education!}' /></td></tr>
+          
+          <tr><td><label class="pad">学位:</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="Degree" name="keyPerson.Degree" value='${keyPerson.Degree!}' /></td></tr>
+          
+          <tr><td><label class="pad">职务职称:</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="JobTitle" name="keyPerson.JobTitle" value='${keyPerson.JobTitle!}' /></td></tr>
+          
+          <tr><td><label class="pad">专业专长:</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="text" id="Speciality" name="keyPerson.Speciality" value='${keyPerson.Speciality!}' /></td></tr>
+          
+          <tr><td><label class="pad">毕业时间:</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="Wdate" id="Graduation" name="keyPerson.Graduation" value='${keyPerson.Graduation!}' onFocus="WdatePicker({isShowClear:false,readOnly:true})" /></td></tr>
+          
+           <tr><td><label class="pad">参加本项目的起止时间:</label><label style='color:red'>*</label></td>
+          <td><input type="text" class="Wdate" id="StartTime" name="keyPerson.StartTime" value='${keyPerson.StartTime!}' onFocus="WdatePicker({isShowClear:false,readOnly:true})" />
+          -<input type="text" class="Wdate" id="EndTime" name="keyPerson.EndTime" value='${keyPerson.EndTime!}' onFocus="WdatePicker({isShowClear:false,readOnly:true})" /></td></tr>
+
+            
+           <tr>
+                 <td> <label class="pad">曾经奖励及荣誉:</label></td>
+                  <td><textarea cols="20" rows="3" id="Honor" name="keyPerson.Honor" style=" width:500px;">${keyPerson.Honor!}</textarea></td>
+            </tr>
+              <tr>
+                 <td> <label class="pad">创建性贡献:</label><label style='color:red'>*</label></td>
+                  <td><textarea cols="20" rows="3" id="Contribution" name="keyPerson.Contribution" style=" width:500px;">${keyPerson.Contribution!}</textarea></td>
+            </tr>
+           </table>
+   
+<div class="anniu"><input value="保存" type="submit" id="okbtn" name="submit" class="login"/>
+<input type="reset" name="button" id="button" class="register" value="重置" />
+<a href="javascript:history.go(-1)" class="register" title="返回" >返回</a>
+</div>
+ </form>
+</div>
+
+</body>
+</html>

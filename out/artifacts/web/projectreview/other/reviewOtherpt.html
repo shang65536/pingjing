@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+
+ <!--[if lte IE 6]>
+<script type="text/javascript" src="${ctx_path}/js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>无标题文档</title>
+<script>
+ function load()
+ {
+	 //用来赋值  页面跳转后 动态下拉框的值
+	 document.getElementById("Category").value=${queryParam.Category!};
+ }
+ //验证
+ function check()
+ {   
+
+	 var flag = window.confirm("您确定要提交所有评审项目吗？提交后不能再修改！");     
+	 return flag;
+
+ }
+</script>
+</head>
+
+<body onload="load()">
+<#include "/common/_header.html"/>
+<@header username=expert.UserName detailUrl="${ctx_path}/expert/detail"/>
+
+
+<div class="container_12">
+      <div class="toplist">
+          <ul>
+          <li><a href="${ctx_path}/projectreview" ><h6>科技奖</h6></a></li> 
+          <li><a href="" style="border-left:1px solid #ccc;" class="active"><h6>其他奖</h6></a></li> 
+         </ul>
+     </div>
+     <div class="main">         
+          <div class="main_content">
+           
+                
+                
+           <form action="${ctx_path}/projectreview/other" method="post" > 
+               <p>
+                <label>项目名称:</label><input type="text" class="text" name="_query.ProjectCN"  value='${queryParam.ProjectCN!}' />
+                <label>评奖类别:</label>
+                <select name="_query.Category" id="Category" class="select" style="width:120px;" >
+                
+                       <option value="" selected>全部</option> 
+                       
+                <#list CategoryList as c>
+                
+                       <option  value="${c.id}" >${c.Name}</option>
+                     
+                </#list>
+                </select>
+                
+                 <label for="cbo">是否推荐:</label>
+                <select name="_query.recommend" id="cbo" class="select" style="width:90px;" >
+                 <#assign prizecx='${queryParam.recommend!}'>
+                   <#if prizecx==''>
+                     <option value="" selected>全部</option> 
+                     <#else>
+                     <option value="">全部</option> 
+                   </#if> 
+                    <#if prizecx=='1'>
+                     <option value="1" selected>是</option>
+                     <#else>
+                     <option value="1" >是</option>
+                   </#if> 
+                   <#if prizecx=='0'>
+                     <option value="0" selected>否</option>
+                     <#else>
+                     <option value="0">否</option>
+                   </#if> 
+                 </select>
+                 <label for="cbo">操作:</label>
+                <select name="_query.status" id="cbo" class="select" style="width:90px;">
+                 <#assign status='${queryParam.status!}'>
+                    <#if status==''>
+                     <option value="" selected>全部</option> 
+                     <#else>
+                     <option value="">全部</option> 
+                   </#if> 
+                    <#if status=='1'>
+                     <option value="1" selected>已评审</option>
+                     <#else>
+                     <option value="1" >已评审</option>
+                   </#if> 
+                   <#if status=='0'>
+                     <option value="0" selected>未评审</option>
+                     <#else>
+                     <option value="0">未评审</option>
+                   </#if> 
+                   <#if status=='2'>
+                     <option value="2" selected>已提交</option>
+                     <#else>
+                     <option value="2">已提交</option>
+                   </#if> 
+                 </select>
+                  <input type="submit" class="submit" value="查询" />
+                </tr>
+                
+                 </p>
+              </form> 
+                          
+                       <table class="table03" width="100%" border="0" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+          <td colspan="12">
+            <form action="${ctx_path}/projectreview/other/proTj" onsubmit="return check()">
+               <input type="submit" class="submit01" onclick="" class="submit01" value="提交"  />                                
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <label style="color:red;">${ts!}</label>
+            </form>
+        </td></tr></thead>
+        <tr>
+        
+          <!--    <th width="5%" scope="col"><input type="checkbox" name="checkbox" id="checkbox" class="checkall" /><label for="checkbox"></label></th>-->
+            
+            <th width="5%" scope="col">序号</th>
+            <th width="10%" scope="col">登记号</th>
+            <th width="15%" scope="col">项目名称</th>
+            <th width="15%" scope="col">评奖类别</th>
+            <th width="10%" scope="col">是否推荐</th>
+            <th width="20%" scope="col">操作</th>
+        </tr>
+        
+         <#list proReviewPage.getList() as x>
+        <tr>
+        	    <!-- <td scope="col"><input type="checkbox" name="checkbox${x.ProjectID}" id="checkbox${x.ProjectID}" value="${x.ProjectID}"/></td> -->
+	            <td scope="col" style="text-align:center">${x.ProjectID}</td> 
+	            <td scope="col">${x.RegisterNum!}</td>  <!-- 登记号 -->
+	            <td scope="col"><a  href='' onclick="window.open(location.href='${ctx_path}/project/projectView?id=${x.ProjectID}')">${x.ProjectCN!}</a></td>
+	            <td scope="col">${x.Category_name!}</td>
+	            <td scope="col">${x.recommend!}</td>
+	            <td scope="col">
+	            <#if x.status =="1">
+	              <input type="submit" onclick="location.href='${ctx_path}/projectreview/other/psmain?RegisterNum=${x.RegisterNum!}&prid=${x.prid!}&ProjectID=${x.ProjectID!}&ExpertID=${expert.id!}&UserName=${expert.UserName!}'" class="submit01" value="修改" />                                                              
+	              &nbsp;&nbsp;&nbsp;
+	              <label style="color:blue;">[已评审]</label>                                 
+	            <#elseif x.status =="2"> 
+	                                                已提交
+	            <#else >
+	              <input type="submit" onclick="location.href='${ctx_path}/projectreview/other/psmain?RegisterNum=${x.RegisterNum!}&prid=${x.prid!}&ProjectID=${x.ProjectID!}&ExpertID=${expert.id!}&UserName=${expert.UserName!}'" class="submit01" value="评审" />                                
+	           </#if>
+	            </td>
+           
+
+           
+        </tr>   
+         </#list>  
+        
+    
+    </table> 
+     <#include "/common/_paginate.html" />
+	<@paginate currentPage=proReviewPage.pageNumber totalPage=proReviewPage.totalPage actionUrl="${ctx_path}/projectreview/other/" urlParas="_query.ProjectCN=${queryParam.ProjectCN!}&_query.Category=${queryParam.Category!}&_query.recommend=${queryParam.recommend!}&_query.status=${queryParam.status!}"/> 
+          <div class="clear"></div>            
+          </div> 
+    </div>
+</div>
+</body>
+</html>

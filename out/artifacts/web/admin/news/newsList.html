@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>新闻公告发布</title>
+</head>
+
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+    <#include "/admin/_topmenu.html"/>
+	<div class="main">
+		<div class="main_content">
+
+			<#include "/admin/_leftmenu.html"/>
+
+			<div class="right">
+
+				<form id="queryForm" action="${ctx_path}/admin/news" method="post">
+					<table class="table04" width="100%" border="0" cellpadding="0"
+						cellspacing="0">
+						<tr>
+
+							<td class="c2"><label>通知名称:</label></td>
+							<td><input type="text" class="text" id="newsTitle" name="_query.newsTitle" value="${queryParam.newsTitle!}" /></td>
+
+							<td class="c2"><label>通知时间:</label></td>
+							<td>
+								<input class="Wdate" type="text" id="_query.newsDate" value="${queryParam.newsDate!}" name="_query.newsDate" onFocus="WdatePicker({isShowClear:false,readOnly:true})"/>
+							</td>
+						</tr>
+
+						<tfoot>
+							<tr>
+								<td colspan="8"><a href="#" class="butt01" title="查询" id="querybtn"
+									style="color: #fff;">查询</a></td>
+							</tr>
+						</tfoot>
+					</table>
+				</form>
+
+
+				<table class="table03" width="100%" border="0" cellpadding="0"
+					cellspacing="0">
+					<thead>
+						<tr>
+							<td colspan="7"><input type="submit" class="submit01" id="delbtn" 
+								value="删除" /> <input type="submit" class="submit01" id="addbtn"
+								value="发通知" /></td>
+						</tr>
+					</thead>
+					<tr>
+
+						<th width="5%" scope="col"><input type="checkbox"
+							id="checkall" name="checkall" class="checkall" onclick="javascript:checkall();" /><label
+							for="checkbox"></label></th>
+
+						<th width="50%" scope="col">通知名称</th>
+						<th width="25%" scope="col">时间</th>
+						<!--  <th width="25%" scope="col">操作</th>-->
+					</tr>
+					
+					<#list newsPage.getList() as x>
+						<tr>
+
+							<td scope="col"><input type="checkbox" name="ids" value="${x.id}" /></td>
+							<td scope="col"><a href="${ctx_path}/admin/news/edit?id=${x.id}">${x.NewsTitle!}</a></td>
+							<td scope="col">${x.NewsDate!}</td>
+							<!-- <td scope="col">
+								<p>
+									<input type="radio" name="status${x.id}" onclick="operate(${x.id},1);" value="1" ${(x.status?? && x.status==1)?string("checked='checked'", "")}/>
+									<label for="RADIO1">发布</label>
+									<input type="radio" name="status${x.id}" onclick="operate(${x.id},0);" value="0" ${(x.status?? && x.status==0)?string("checked='checked'", "")}/>
+									<label for="RADIO1">取消</label>
+									
+								</p>
+							</td> -->
+						</tr>
+					</#list>
+					
+				</table>
+				
+				<#include "/common/_paginate.html" />
+				<@paginate currentPage=newsPage.pageNumber totalPage=newsPage.totalPage actionUrl="${ctx_path}/admin/news" urlParas="_query.NewsTitle=${queryParam.NewsTitle!}&_query.NewsDate=${queryParam.NewsDate!}"/>
+
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+	
+<script type="text/javascript">
+$(function () {
+    //query
+	$("#querybtn").click(function () {
+    	var path="${ctx_path}/admin/news";
+    	$('#queryForm').attr("action", path).submit();  
+    });
+    //add
+    $("#addbtn").click(function () {
+    	var path="${ctx_path}/admin/news/add";
+    	location.href = path;
+    });
+    
+    /* del */
+	$("#delbtn").click(function() {
+		delRecord("${ctx_path}/admin/news/delete");
+	});
+});
+
+//操作有效、无效单选按钮
+function operate(id,status){
+	$.ajax({
+		type: "POST",
+		url: "${ctx_path}/admin/news/operate",
+		data: {'news.status':status,'news.id':id},
+		success: function(result) {
+			if(result.success){
+				alert("操作成功");
+				window.location.reload();
+			}else{
+				alert("操作失败");
+			}
+		}
+	});
+	return false;
+}
+</script>
+</body>
+</html>

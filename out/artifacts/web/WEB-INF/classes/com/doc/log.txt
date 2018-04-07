@@ -1,0 +1,9 @@
+table update:
+company table
+add logintime datetime
+
+expert
+Change field type (bit(1) to int)
+
+set_prize
+update all field type (bit(1) to int )

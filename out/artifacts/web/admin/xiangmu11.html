@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>项目信息查看</title>
+<script type="text/javascript">
+function downloadProject(){
+	var path = "${ctx_path}/admin/downloadProject?fileType=1&projectID=${project.id}";
+	location.href = path;
+}
+function previewProject(){
+	var path = "${ctx_path}/admin/previewProject?fileType=1&projectID=${project.id}";
+	window.open(path);
+}
+</script>
+</head>
+
+<body>
+
+<div class="container_12">
+     <div class="main02">
+       <div class="main_content">
+         <div class="left">
+              <ul>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=1"  >项目基本情况</a></li> 
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=2"  >项目简介</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=3" >项目详细内容</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=4" >应用情况</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=5" >经济效益</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=6" >社会效益</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=7" >知识产权情况表</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=8" >主要完成单位</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=9" >主要完成人</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=10">附件</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=11" class='active'>基本信息页盖章</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=12">推荐单位意见</a></li>
+			    </ul>
+             <div class="clearfix"></div>
+          </div>
+          
+          <div class="right">
+         
+	        <div class="main_content02">
+            
+              <h2>基本信息页盖章</h2>
+              
+              <table class="table07" width="80%" border="1" cellpadding="0" cellspacing="0">
+		          <tr>          
+		            <th width="10%" scope="col">名称</th>
+		            <th width="12%" scope="col">下载/预览</th>
+		        </tr>
+
+		        <tr>
+		            <td scope="col">${fileName!}</td>
+		            <td scope="col"><input type="button" class="submit01" value="下载" onclick="downloadProject();"/>&nbsp;<input type="button" class="submit01" value="预览" onclick="previewProject();"/></td>
+		        </tr>     
+		       <!--  <tr>
+		            <td colspan="2">  <a href="javascript:history.go(-1)" class="register" title="返回" >返回</a></td>
+		         </tr> -->	         
+		        </table>
+                        
+          </div>
+          </div>
+        </div>
+    </div> 
+</div>
+</body>
+</html>

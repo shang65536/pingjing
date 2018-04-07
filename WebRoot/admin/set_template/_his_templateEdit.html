@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/jquery.form.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/ajaxfileupload.js"></script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]-->
+<title>新闻公告发布</title>
+</head>
+
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+     <#include "/admin/_topmenu.html"/>
+     <div class="main">         
+          <div class="main_content">
+           
+                <#include "/admin/_leftmenu.html"/>
+
+				<div class="right">
+
+					<form id="formdata" name="formdata" action="" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="template.id" value="${template.id!}"/>
+						<input type="hidden" name="template.Path" value="${template.Path!}"/>
+
+						<table width="100%" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td class="c2"><label>模板名称:</label></td>
+								<td><input type="text" name="template.Title" class="text smaller" value="${template.Title!}" /></td>
+							</tr>
+							
+							<tr>
+								<td class="c2"><label>文件:</label></td>
+								<td><input type="file" id="file1" name="template.file" class="text smaller" /></td>
+							</tr>
+
+							<tr>
+								<td class="c2"><label>描述:</label></td>
+								<td>
+									<textarea  name="template.Note" cols="100" rows="8" style="width:700px;height:200px">${template.Note!}</textarea>
+								</td>
+							</tr>
+
+							<tfoot>
+								<tr>
+									<td colspan="8">
+										<input type="submit" class="butt01" title="确定" value="确定"/>
+									 <!--<a href="#" class="butt01" title="确定" id="okbtn" style="color: #fff;">确定</a>-->
+									 
+									 </td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
+
+				</div>
+
+				<div class="clearfix"></div> 
+          </div> 
+    </div>
+</div>
+<script type="text/javascript">
+$(function () {
+	//alert("aaa");
+	
+	$('#formdata').submit(function() {
+		var options = {
+	            url: '${ctx_path}/admin/set_template/save',
+	            type: 'post',
+	            dataType: 'json',
+	            data: $("#formdata").serialize(),
+	            success: function (data) {
+	            	alert(data);
+	                if (data.success == true || data.success == "true"){
+	                	alert("保存成功");
+	                	location.href="${ctx_path}/admin/set_template";
+	                }else{
+	                	alert("保存失败");
+	                }
+	            }
+	        };
+			//alert("aaa");
+			$(this).ajaxSubmit(options);
+	        //$.ajax(options);
+	        return false;
+	});
+	
+	 /* $("#okbtn").click(function () {
+		 $.ajaxFileUpload
+         (
+             {
+                 url: '${ctx_path}/admin/set_template/save', //用于文件上传的服务器端请求地址
+                 secureuri: false, //是否需要安全协议，一般设置为false
+                 fileElementId: 'file1', //文件上传域的ID
+                 dataType: 'json', //返回值类型 一般设置为json
+                 success: function (data, status)  //服务器成功响应处理函数
+                 {
+                     //$("#img1").attr("src", data.imgurl);
+                     if (typeof (data.error) != 'undefined') {
+                         if (data.error != '') {
+                             alert(data.error);
+                         } else {
+                             alert(data.msg);
+                         }
+                     }
+                 },
+                 error: function (data, status, e)//服务器响应失败处理函数
+                 {
+                     alert(e);
+                 }
+             }
+         )
+         return false;
+
+	 });
+	 */
+	
+	
+});
+
+function doUpload() {
+	var options = {
+            url: '${ctx_path}/admin/set_template/save',
+            type: 'post',
+            dataType: 'json',
+            data: $("#formdata").serialize(),
+            success: function (data) {
+                if (data.success == true || data.success == "true"){
+                	alert("保存成功");
+                	location.href="${ctx_path}/admin/set_template";
+                }else{
+                	alert("保存失败");
+                }
+            },
+            error: function (returndata) {
+                alert(returndata);
+            }
+        };
+	/* alert("bb");
+	$('#formdata').ajaxSubmit(function() {
+	    // submit the form
+	    $(this).ajaxSubmit();
+	    // return false，这样可以阻止正常的浏览器表单提交和页面转向
+	    return false;
+	}); */
+}
+
+/* function doUpload() {
+  var formData = new FormData($( "#formdata" )[0]);
+  alert(formData);
+  $.ajax({
+    url: '${ctx_path}/admin/set_template/save' ,
+    type: 'POST',
+    data: formData,
+    async: false,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType: 'json',
+    success: function (returndata) {
+        alert(returndata);
+    },
+    error: function (returndata) {
+        alert(returndata);
+    }
+  });
+} */
+/* function ajaxFileUpload(){
+	$.ajaxFileUpload({
+            url: '${ctx_path}/admin/set_template/save', //用于文件上传的服务器端请求地址
+            secureuri: false, //是否需要安全协议，一般设置为false
+            fileElementId: 'file', //文件上传域的ID
+            type: 'post',
+            dataType: 'json', //返回值类型 一般设置为json
+            //data: $("#formdata").serialize(),
+            success: function (data, status)  //服务器成功响应处理函数
+            {
+                alert("fddsf");
+            },
+            error: function (data, status, e)//服务器响应失败处理函数
+            {
+                alert("aa");
+            }
+    });
+    return false;
+} */
+</script>
+</body>
+</html>

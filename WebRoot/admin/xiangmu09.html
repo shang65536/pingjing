@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>项目信息查看</title>
+<script type="text/javascript">
+function show(id){
+	$("table").hide();
+	$("#wcr").show();
+	$("#table"+id).show();		
+}
+</script>
+</head>
+
+<body>
+
+<div class="container_12">
+     <div class="main02">
+       <div class="main_content">
+         <div class="left">
+              <ul>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=1"  >项目基本情况</a></li> 
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=2"  >项目简介</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=3" >项目详细内容</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=4" >应用情况</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=5" >经济效益</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=6" >社会效益</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=7" >知识产权情况表</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=8" >主要完成单位</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=9" class='active'>主要完成人</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=10">附件</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=11">基本信息页盖章</a></li>
+			        <li><a href="${ctx_path}/admin/seeProject?id=${project.id!}&step=12">推荐单位意见</a></li>
+			    </ul>
+             <div class="clearfix"></div>
+          </div>
+          
+          <div class="right">
+         
+	        <div class="main_content02">
+            
+              <h2>主要完成人</h2>
+                <table id ="wcr" class="table07" width="100%" border="0" cellpadding="0" cellspacing="0">
+                 <tr>
+                 <td >
+                 <#list KPList as x>                	
+                 	<input  value="第${x_index+1}完成人"  class="login" onclick="show('${x_index+1}');"/>                 	 
+                 </#list>
+                 </td>
+                 </tr>
+                </table>
+            <#list KPList as x>
+            <#if x_index==0>
+            	<table id="table1" class="table7"  width="100%" cellpadding="0" cellspacing="0" style="display:;">
+            	<tr style="border: 1px solid; border-color: black;">
+            	 <td colspan ="6" style="background:#ebebeb;border: 1px solid;" width="100%"><h3>第${x_index+1}完成人</h3></td>
+            	</tr>
+               <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;" width="20%">姓名</td>
+                   <td width="20%" style="border: 1px solid;">${x.Name!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;"  width="10%">性别</td>
+                   <td width="20%" style="border: 1px solid;">
+                   <#if x.Sex==1>
+                                                                            男
+                   <#else>
+                                                                           女
+                   </#if>
+                   </td>
+                   <td style="background:#ebebeb;border: 1px solid;" width="10%">民族</td>
+                   <td width="20%" style="border: 1px solid;">${x.Nation!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;" >出生地</td>
+                   <td colspan="2" style="border: 1px solid;">${x.Homeplace!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;">出生日期</td>
+                   <td colspan="2"  style="border: 1px solid;">${x.Birthday!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">党派名称</td>
+                   <td colspan="5" style="border: 1px solid;">${x.Parties!}</td>
+               </tr>
+                  <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">工作单位</td>
+                   <td colspan="2" style="border: 1px solid;">${x.Company!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;" >联系电话</td>
+                   <td colspan="2" style="border: 1px solid;">${x.ContactPhone!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">通信地址/邮编</td>
+                   <td colspan="5" style="border: 1px solid;">${x.ContactAddress!}/${x.ZipCode!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;" >家庭住址</td>
+                   <td colspan="5"  style="border: 1px solid;">${x.HomeAddress!}</td>
+               </tr>
+                 <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">电子邮箱</td>
+                   <td colspan="2" style="border: 1px solid;">${x.EMail!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;">毕业学校</td>
+                   <td colspan="2" style="border: 1px solid;">${x.School!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;"">文化程度</td>
+                   <td colspan="2" style="border: 1px solid;">${x.Education!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;" ">学位</td>
+                   <td colspan="2" style="border: 1px solid;">${x.Degree!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">职务、职称</td>
+                   <td colspan="2" style="border: 1px solid;">${x.JobTitle!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;" ">专业、专长</td>
+                   <td colspan="2"style="border: 1px solid;">${x.Speciality!}</td>
+               </tr>
+               <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">毕业时间</td>
+                   <td colspan="5"  style="border: 1px solid;">${x.Graduation!}</td>
+               </tr>
+               <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">曾获奖励</td>
+                   <td colspan="5" style="border: 1px solid;">${x.Honor!}</td>
+               </tr>
+               <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">参加本项目时间</td>
+                   <td colspan="5" style="border: 1px solid;">自${x.StartTime!}至${x.EndTime!}</td>
+               </tr>
+               <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">创建性贡献</td>
+                   <td colspan="5"  style="border: 1px solid;">${x.Contribution!}</td>
+               </tr>               
+            </table>    
+            <#else>          
+          <table id="table${x_index+1}" class="table7"  width="100%" cellpadding="0" cellspacing="0" style="display:none;">
+          <tr style="border: 1px solid; border-color: black;">
+            	 <td colspan ="6" style="background:#ebebeb;border: 1px solid;" width="100%"><h3>第${x_index+1}完成人</h3></td>
+            	</tr>
+               <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;" width="20%">姓名</td>
+                   <td width="20%" style="border: 1px solid;">${x.Name!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;"  width="10%">性别</td>
+                   <td width="20%" style="border: 1px solid;">
+                    <#if x.Sex==1>
+                                                                            男
+                   <#else>
+                                                                           女
+                   </#if>
+                   </td>
+                   <td style="background:#ebebeb;border: 1px solid;" width="10%">民族</td>
+                   <td width="20%" style="border: 1px solid;">${x.Nation!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;" >出生地</td>
+                   <td colspan="2" style="border: 1px solid;">${x.Homeplace!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;">出生日期</td>
+                   <td colspan="2"  style="border: 1px solid;">${x.Birthday!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">党派名称</td>
+                   <td colspan="5" style="border: 1px solid;">${x.Parties!}</td>
+               </tr>
+                  <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">工作单位</td>
+                   <td colspan="2" style="border: 1px solid;">${x.Company!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;" >联系电话</td>
+                   <td colspan="2" style="border: 1px solid;">${x.ContactPhone!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">通信地址/邮编</td>
+                   <td colspan="5" style="border: 1px solid;">${x.ContactAddress!}/${x.ZipCode!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;" >家庭住址</td>
+                   <td colspan="5"  style="border: 1px solid;">${x.HomeAddress!}</td>
+               </tr>
+                 <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">电子邮箱</td>
+                   <td colspan="2" style="border: 1px solid;">${x.EMail!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;">毕业学校</td>
+                   <td colspan="2" style="border: 1px solid;">${x.School!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;"">文化程度</td>
+                   <td colspan="2" style="border: 1px solid;">${x.Education!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;" ">学位</td>
+                   <td colspan="2" style="border: 1px solid;">${x.Degree!}</td>
+               </tr>
+                <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">职务、职称</td>
+                   <td colspan="2" style="border: 1px solid;">${x.JobTitle!}</td>
+                   <td style="background:#ebebeb;border: 1px solid;" ">专业、专长</td>
+                   <td colspan="2"style="border: 1px solid;">${x.Speciality!}</td>
+               </tr>
+               <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">毕业时间</td>
+                   <td colspan="5"  style="border: 1px solid;">${x.Graduation!}</td>
+               </tr>
+               <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">曾获奖励</td>
+                   <td colspan="5" style="border: 1px solid;">${x.Honor!}</td>
+               </tr>
+               <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">参加本项目时间</td>
+                   <td colspan="5" style="border: 1px solid;">自${x.StartTime!}至${x.EndTime!}</td>
+               </tr>
+               <tr style="border: 1px solid; border-color: black;">
+                   <td style="background:#ebebeb;border: 1px solid;">创建性贡献</td>
+                   <td colspan="5"  style="border: 1px solid;">${x.Contribution!}</td>
+               </tr>               
+            </table> 
+            </#if>        
+            </#list>
+              
+          <!--   <table class="table07" width="80%" border="0" cellpadding="0" cellspacing="0">
+ 		              <tr>        
+		            <th width="20%" scope="col">完成人编号</th>
+		            <th width="20%" scope="col">姓名</th>
+		            </tr>
+		            <tr>
+		            <tr>
+		            <th width="13%" scope="col">党派名称</th>
+		            <th width="13%" scope="col">工作单位</th>
+		            
+		            </tr>
+		            <tr>
+		            <th width="20%" scope="col">邮箱</th>
+		            <th width="20%" scope="col">文化程度</th>
+		            </tr>
+		            <tr>
+		            <th width="20%" scope="col">学位</th>
+		            <th width="20%" scope="col">毕业学校</th>
+		            </tr>
+		            <tr>
+		            <th width="13%" scope="col">联系电话</th>
+		        </tr>
+		         
+		        <#list KPList as x>
+		        <tr>
+		            <td scope="col">${x_index+1}</td> 
+		            <td scope="col">${x.Name!}</td>
+		            <td scope="col">${x.Parties!}</td>
+		            <td scope="col">${x.Company!}</td>
+		            
+		            <td scope="col">${x.EMail!}</td>
+		            <td scope="col">${x.Education!}</td>
+		            <td scope="col">${x.Degree!}</td>
+		            <td scope="col">${x.School!}</td>
+		            <td scope="col">${x.ContactPhone!}</td>
+		        </tr>     
+		        </#list>
+		        </table> -->
+                  <!--  <br />
+                <a href="javascript:history.go(-1)" class="register" title="返回" >返回</a>   -->    
+          </div>
+          </div>
+        </div>
+    </div> 
+</div>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+<title>无标题文档</title>
+<script>
+ function load()
+ {
+	 //用来赋值  页面跳转后 动态下拉框的值
+	 $("#GroupZY").val(${queryParam.GroupZY!});
+ }
+</script>
+</head>
+<body  onload="load()">
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+     <#include "/admin/_topmenu.html"/>
+     <div class="main">
+         <#include "/admin/_guanli_topmenu.html"/>
+         
+        <div class="main_content">
+         
+          
+              <form action="${ctx_path}/technology/profe/results" method="post" id="queryForm"> 
+              <table class="table04" width="100%" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+               <td><label for="cbo" >年度:</label></td>          
+                <td>
+                	 <select name="_query.ApplyYear" id="cbo" class="select">   	
+	                	 <#list years as year>
+	                	 	<option value="${year}" ${queryParam.ApplyYear!?ends_with(year+"")?string("selected='selected'", "")}>${year}</option>
+						 </#list>
+	                </select>
+                </td> 
+                <td><label>项目名称:</label></td>
+               <td><input type="text" class="text" name="_query.ProjectCN" value='${queryParam.ProjectCN!}'/></td>
+               <!--   <td><label>序号:</label></td>
+                <td><input type="text" class="text" name="_query.id" value='${queryParam.id!}'/></td>-->
+               
+                <td><label>登记号:</label></td>
+                <td><input type="text" class="text" onkeyup="value=value.replace(/[^\d\.]/g,''); " name="_query.RegisterNum" value='${queryParam.RegisterNum!}'/></td>
+                </tr>
+                 <tr>
+                 <!-- <td><label>专业评审组:</label></td>
+                 <td>
+	                <select name="_query.GroupZY" id="GroupZY" class="select" >
+	                   <option value="" selected>全部</option>
+	            	 <#list groupList as g>
+	               	 <option value="${g.id}">${g.Name!}</option>
+	             	</#list>    
+	             	</select>
+             	</td> -->
+                 <td><label>推荐结果:</label></td>
+                 <td colspan="5">
+                 	<select id="cbo" class="select" name="_query.results">  
+                 		<option value="">全部</option>          
+	                    <option value="1" ${queryParam.results!?ends_with("1")?string("selected='selected'", "")}>推荐一等奖</option>
+	                    <option value="2" ${queryParam.results!?ends_with("2")?string("selected='selected'", "")}>推荐</option>
+                    </select>
+                    <input type='hidden' id='px' name='_query.px' value='${queryParam.px!}' />
+                </td>
+                </tr>
+
+                  <tfoot>
+                  <tr><td colspan="6"><a href="#" class="butt01" title="查询" style=" color:#fff;" onclick="queryProject();">查询</a></td></tr>
+                  </tfoot>
+                  </table>
+              </form> 
+           
+        
+            	
+         <table class="table03" width="100%" border="0" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr><td colspan="12"><input type="submit" class="submit01" value="导出" id="excelbtn"/>
+        		<input id="queryxhbtn"  type="submit" class="submit01" value="按推荐评分排列" />
+		        <input id="querydjhbtn"  type="submit" class="submit01" value="按登记号排列" />
+		        </td></tr></thead>
+	        <tr> 
+	            <th width="5%" scope="col">序号</th>
+	            <th width="10%" scope="col">登记号</th>
+	            <th width="10%" scope="col">项目名称</th>
+	            <th width="10%" scope="col">推荐单位</th>
+	            <th width="7%" scope="col">专业评审平均分</th>
+	            <th width="5%" scope="col">推荐票数</th>
+	            <th width="6%" scope="col">一等奖票数</th>
+	             <th width="6%" scope="col">二等奖票数</th>
+	            <th width="6%" scope="col">三等奖票数</th>
+	            <th width="10%" scope="col">专业组专家人数</th>
+	           <!--  <th width="10%" scope="col">推荐票数/专家比例(%)</th>
+	            <th width="10%" scope="col">一等奖票数/专家比例(%)</th> -->
+	            <th width="10%" scope="col">专家组</th>
+	            <th width="10%" scope="col">推荐结果</th>
+	        </tr>
+      
+          <#list projectPage.getList() as p>
+		        <tr>        
+		            <td scope="col">${(((projectPage.pageNumber-1)*projectPage.pageSize)+(p_index+1))?int}</td> 
+		            <td scope="col">${p.RegisterNum!}</td>
+		            <td scope="col">
+		            	<a href="#" onclick="window.open('${ctx_path}/admin/seeProject?id=${p.id}&step=1')">${p.ProjectCN!}</a>
+		            </td>
+		            <td scope="col">${p.RecommendCompany!}</td>
+		            <td scope="col">
+		            	<a href="#" onclick="chooseWin(${p.id});">${p.averageNum!}</a>
+		            </td>
+		            <td scope="col">${p.recom_count!}</td>
+		            <td scope="col">${p.prize_count!}</td>
+		             <td scope="col">${p.er_count!}</td>
+		              <td scope="col">${p.san_count!}</td>
+		            <td scope="col">${p.person_count!}</td>
+		         <!--    <td scope="col">${p.recomNum!}</td>
+		            <td scope="col">${p.prizeNum!}</td> -->
+		            <td scope="col">${p.group_name!}</td>
+		            <td scope="col">
+		            	<#assign results = '${p.recom_results!}'>
+		            	<#if results! == "">
+		            		<input type="button" onclick="recomResults(2,${p.id})" value="推荐"/>
+		            		<input type="button" onclick="recomResults(1,${p.id})" value="推荐一等奖"/>
+		            	<#elseif results! == "1">
+		            		已推荐一等奖
+		            	<#else>
+		            		已推荐
+		            	</#if>
+		            </td>
+		        </tr>
+          </#list>
+       
+  
+    </table>
+       <#include "/common/_paginate.html" />
+	   <@paginate currentPage=projectPage.pageNumber totalPage=projectPage.totalPage actionUrl="${ctx_path}/technology/profe/results" 
+	   urlParas="_query.px=${queryParam.px!}&_query.ApplyYear=${queryParam.ApplyYear!}&_query.ProjectCN=${queryParam.ProjectCN!}&_query.RegisterNum=${queryParam.RegisterNum!}&_query.GroupZY=${queryParam.GroupZY!}&_query.results=${queryParam.results!}"
+	   />
+        
+        </div>
+    </div> 
+</div>
+</body>
+<script type="text/javascript" >
+	//查询
+	function queryProject(){
+		$("#px").val("1"); 
+		$('#queryForm').submit();;  
+	}
+	
+    $("#queryxhbtn").click(function () {
+    	$("#px").val("1"); 
+    	var path="${ctx_path}/technology/profe/results"
+        	$('#queryForm').attr("action", path).submit();    
+    });
+    //按登记号查询
+    $("#querydjhbtn").click(function () {
+    	$("#px").val("2"); 
+    	var path="${ctx_path}/technology/profe/results"
+        	$('#queryForm').attr("action", path).submit();    
+    });
+	
+	//平均分
+	function chooseWin(id){
+		$.dialog({
+			title:"各专家评分情况列表",
+			width:700,
+			height:150,
+		    content: "",
+		    init: function () {
+		    	var data = {'id':id,"Status":2};
+				$.ajax({
+					type: "POST",
+					url: "${ctx_path}/technology/profe/average",
+					data: data,
+					success: function(result) {
+						$('.ui_content').append(result);
+					}
+				});
+		    },
+		    cancelVal: '关闭',
+		    cancel: true 
+		});
+		
+	}
+	
+	//推荐
+	function recomResults(recom_results,id){
+		var text = "推荐一等奖";
+		if(recom_results == 2){
+			text = "推荐"
+		}
+		$.dialog({
+			title:"确认",
+		    content: "是否"+text+"？",
+		    width:200,
+		    height:30,
+		    ok: function(){
+		    	var data = {'project.recom_results':recom_results,'project.id':id};
+				$.ajax({
+					type: "POST",
+					url: "${ctx_path}/technology/profe/recomResults",
+					data: data,
+					success: function(result) {
+						if(result.success){
+							//location.href = "${ctx_path}/technology/profe/recomm";
+							alert("操作成功");
+							location.reload();
+						}else{
+							alert("操作失败");
+						}
+					}
+				});
+		    },
+		    cancelVal: '关闭',
+		    cancel: true 
+		});
+	}
+	 $("#excelbtn").click(function() {
+		 var ProjectCN =escape(encodeURIComponent('${queryParam.ProjectCN!}'));
+		 var RegisterNum =escape(encodeURIComponent('${queryParam.RegisterNum!}'));
+		 params="_query.ApplyYear=${queryParam.ApplyYear!}&_query.ProjectCN="+ProjectCN+"&_query.RegisterNum="+RegisterNum+"&_query.GroupZY=${queryParam.GroupZY!}&_query.results=${queryParam.results!}"	     
+		 location.href='${ctx_path}/technology/profe/toZYPSJGhZBExcel?'+params;			
+		});
+</script>
+</body>
+
+</html>

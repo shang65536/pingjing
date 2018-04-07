@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>科技奖管理-获奖名单管理 </title>
+<script type="text/javascript">
+$(function () {
+	/* 导出 */
+	$("#excelbtn").click(function() {
+		location.href='${ctx_path}/admin/set/winning/exportExcel?parentID='+${parentID!};
+		
+	});
+	
+	/*导入*/
+	$("#import").click(function() {
+		alert("友情提示：导入的文件中不要包含序号那一列!");
+		var html = '<form id="formId" method="post" action="${ctx_path}/admin/set/winning/importWinning?winYear=${winYear!}&parentID=${parentID!}"  onsubmit="return check()" enctype="multipart/form-data">';
+		    html += '<input type="file" id="winningExcel" name="winningExcel" class="text smaller"/>';
+		    html += '<input type="submit" class="register01" title="导入" value="导入" /></form>';
+	    demoDG1 = $.dialog({ 
+	    	title:'导入', 
+	    	content: html,
+	    	width: '300px',
+	        height: 100,
+	        button:[
+	    			{
+	    				name:'关闭'
+	    			}
+	       	    ]
+	        
+	   	});
+	});
+});
+
+//验证
+function check()
+{
+	var winningExcel = document.getElementById("winningExcel").value;
+	if(winningExcel=='')
+	{
+		alert("导入文件不能为空!");
+		return false;
+	}else
+	{
+	   var type=".xls,.xlsx";//允许上传的文件类型 0为无限制 每个扩展名后边要加一个"," 小写字母表示
+		   
+	   var fileName=winningExcel.substr(winningExcel.lastIndexOf(".")).toLowerCase(); 
+	   if(type.indexOf(fileName)==-1)//判断文件类型是否允许上传 
+	   { 
+		   alert("\n导入文件格式不正确。请导入 "+type+" 类型的文件，当前文件类型为"+fileName); 
+		   return false;
+	   }
+	}
+}
+
+//验证只能操作当前年份的数据  其他年份灰掉相关操作按钮
+function checkImport()
+{
+	//选择的时间 
+	var gyear = ${winYear!};
+	//系统时间 
+	var today=new Date();
+	var y=today.getFullYear();
+	
+	if(y==gyear)  //相等  显示操作   
+	{
+		
+	}else
+	{
+		$(document.getElementById("import")).hide();
+	}
+}
+</script>
+</head>
+
+<body onload="checkImport()">
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+    <#include "/admin/_topmenu.html"/>
+		<div class="main">
+			<div class="main_content">
+
+				<#include "/admin/_leftmenu.html"/>
+
+				<div class="right">
+
+					<#include "/admin/_settab.html"/>
+            	
+		          <table class="table03" width="100%" border="0" cellpadding="0" cellspacing="0">
+				    <thead>
+				        <tr><td colspan="5">
+				           <h4 style=" color:red;">${PwinName!}</h4> 
+				           </td>
+				           <td colspan="2">
+				             <input type="button" id="import" class="submit01" value="导入获奖项目列表" />
+				             <input type="submit"  class="submit02" id='excelbtn' value="导出" />
+				           </td></tr></thead>
+				        <tr> 
+				            <th width="10%" scope="col">序号</th>
+				            <th width="10%" scope="col">登记号</th>
+				            <th width="15%" scope="col">项目名称</th>
+				            <th width="20%" scope="col">主要完成单位</th>
+				            <th width="15%" scope="col">主要完成人</th>
+				            <th width="13%" scope="col">推荐单位</th>
+				            <th width="17%" scope="col">获奖奖项</th>
+				        </tr>
+				        
+				        <#list winningproject as x>
+							  <tr>        
+							        <td scope="col">${x_index+1}</td> 
+							        <td scope="col">${x.registerNum!}</td>
+							        <td scope="col"> <!-- 按登记号查询 -->
+						            	<a href="" onclick="window.open(location.href='${ctx_path}/admin/seeProject?registerNum=${x.registerNum!}&step=1')">${x.projectCN!}</a>
+						         	</td>
+							        <td scope="col">${x.majorCompany!}</td>
+						            <td scope="col">${x.keyPerson!}</td>
+						            <td scope="col">${x.recommendCompany!}</td>
+						            <td scope="col">${x.winning!}</td>           
+				       		 </tr>
+				        </#list> 
+		
+		        </table>
+		        <div class="anniu">
+					<a href="${ctx_path}/admin/set/winning?winYear=${winYear!}" class="register" title="返回" >返回</a>
+				</div>
+        </div>
+    </div> 
+</div>
+</div>
+</body>
+</html>

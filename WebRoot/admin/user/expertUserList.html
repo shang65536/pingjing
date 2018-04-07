@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>专家帐号管理</title>
+</head>
+
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+     <#include "/admin/_topmenu.html"/>
+     <div class="main">
+			<div class="main_content">
+
+				<#include "/admin/_leftmenu.html"/>
+
+				<div class="right">
+
+					<div class="toplist03">
+						<ul>
+							<li><a href="${ctx_path}/admin/user">申报账号管理</a></li>
+							<li><a href="${ctx_path}/admin/user/expertUser" class="active">专家账号管理</a></li>
+							<li><a href="${ctx_path}/admin/user/adminUser">管理员账号管理</a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+
+					<form id="queryForm" action="" method="post">
+						<table class="table04" width="100%" border="0" cellpadding="0"
+							cellspacing="0">
+							<tr>
+
+								<td class="c2"><label>用户名:</label></td>
+								<td><input type="text" class="text" name="_query.UserName"
+									value="${queryParam.UserName!}" /></td>
+								<td class="c2"><label>姓名:</label></td>
+								<td><input type="text" class="text" name="_query.Name"
+									value="${queryParam.Name!}" /></td>
+								<td class="c2"><label>单位名称:</label></td>
+								<td><input type="text" class="text" name="_query.Job"
+									value="${queryParam.Job!}" /></td>								
+							</tr>
+
+							<tfoot>
+								<tr>
+									<td colspan="8"><a href="#" class="butt01" id="querybtn"
+										title="查询" style="color: #fff;">查询</a></td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
+
+					<table class="table03" width="100%" border="0" cellpadding="0"
+						cellspacing="0">
+						<thead>
+							<tr>
+								<td colspan="7"><input type="submit" class="submit01" id="delbtn"
+									value="删除" /> <input type="submit" class="submit01" id="addbtn"
+									value="新增账号" /></td>
+							</tr>
+						</thead>
+						<tr>
+
+							<th width="5%" scope="col"><input type="checkbox"
+								name="checkbox" id="checkall" class="checkall" onclick="javascript:checkall();" /><label
+								for="checkbox"></label></th>
+							<th width="16%" scope="col">用户名</th>
+							<th width="14%" scope="col">姓名</th>
+							<th width="17%" scope="col">单位名称</th>
+							<th width="13%" scope="col">电话</th>
+							<th width="13%" scope="col">邮箱</th>
+							<th width="20%" scope="col">单位地址</th>
+						</tr>
+						
+						<#list expertPage.getList() as x>
+						<tr>
+							<td scope="col"><input type="checkbox" name="ids" value="${x.id}" /></td>
+							<td scope="col"><a href="${ctx_path}/admin/user/expertEdit?id=${x.id}">${x.UserName!}</a></td>
+							<td scope="col">${x.Name!}</td>
+							<td scope="col">${x.Job!}</td>
+							<td scope="col">${x.Phone!}</td>
+							<td scope="col">${x.Email!}</td>
+							<td scope="col">${x.Address!}</td>
+						</tr>
+						</#list>
+
+					</table>
+					
+					<#include "/common/_paginate.html" />
+					<@paginate currentPage=expertPage.pageNumber totalPage=expertPage.totalPage actionUrl="${ctx_path}/admin/user/expertUser" urlParas="_query.userName=${queryParam.userName!}&_query.name=${queryParam.name!}&_query.job=${queryParam.job!}"/>
+					
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
+		</div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    $("#querybtn").click(function () {
+    	var path="${ctx_path}/admin/user/expertUser"
+    	$('#queryForm').attr("action", path).submit();;  
+    });
+    
+  	//add
+    $("#addbtn").click(function () {
+    	var path="${ctx_path}/admin/user/expertAdd";
+    	location.href = path;
+    });
+    
+    /* del */
+	$("#delbtn").click(function() {
+		delRecord("${ctx_path}/admin/user/expertDelete");
+	});
+});
+</script>
+</body>
+</html>

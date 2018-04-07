@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head> 
+    <title>自定义奖项预览</title>  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="leipi.org">
+    <link href="${ctx_path}/admin/custom/Public/css/bootstrap/css/bootstrap.css?2024" rel="stylesheet" type="text/css" />
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="Public/css/bootstrap/css/bootstrap-ie6.css?2024">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="Public/css/bootstrap/css/ie.css?2024">
+    <![endif]-->
+    <link href="${ctx_path}/admin/custom/Public/css/site.css?2024" rel="stylesheet" type="text/css" />    
+    <link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+    <script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+ 
+function  saveVaild() {
+	 var headerAttribute = document.getElementsByName("headerAttribute");
+	 var header="";
+	 for(var i=0;i<headerAttribute.length;i++){
+         if(headerAttribute[i].checked){
+        	 if(header==""){
+        		 header =  headerAttribute[i].value 
+        	 }else{
+        		 header = header+","+ headerAttribute[i].value
+        	 }        	
+       }
+    } 
+	 if(header==""){
+		 alert("表头设置为空，请选择需要设置的表头！");
+		 return  false;
+	 }else{
+		 $("#headerAttribute").val(header);
+	 }
+}
+
+function back() {
+	 location.href = "${ctx_path}/admin/back?id="+$("#id").val();	 
+}
+
+</script>
+<style>
+      
+      #components{
+        min-height: 600px;
+      }
+      #target{
+        min-height: 200px;
+        border: 1px solid #ccc;
+        padding: 5px;
+      }
+      #target .component{
+        border: 1px solid #fff;
+      }
+      #temp{
+        width: 500px;
+        background: white;
+        border: 1px dotted #ccc;
+        border-radius: 10px;
+      }
+
+      .popover-content form {
+        margin: 0 auto;
+        width: 213px;
+      }
+      .popover-content form .btn{
+        margin-right: 10px
+      }
+      #source{
+        min-height: 500px;
+      }
+    </style>
+    <!--link href="Public/css/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"-->
+
+
+ </head>
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+<div class="container">
+
+  ${baseinfo.Content!}
+  <form id='saveFrom' action="${ctx_path}/baseinfo/save" method="post" onsubmit="return saveVaild()">
+  <input type="hidden" id ="id" name="id" value='${baseinfo.id!}' />
+  <input type="hidden" id ="headerAttribute" name ="headerAttributeTemp" />
+  <table   width="100%" border="0" cellpadding="0" cellspacing="0">  
+    <tr><td><b>设置表头：</b></td></tr>
+	<tr>
+		<td>
+			<#list columnList as x >
+			    <input type="checkbox" class="checkbox"  name="headerAttribute" value="${x}"/> ${x!}
+			</#list> 
+		</td>
+	</tr>
+	<tr>
+		<td>  
+			<input value="保存" type="submit"  class="register" id="send" style="width:134px;height:34px;"/>
+ 			<a onclick="back();" class="register" title="返回" >返回</a>   
+		</td>
+	</tr>
+</table>
+</form>
+       
+</div> <!-- /container -->
+    
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/admin/custom/Public/js/jquery-1.7.2.min.js?2024"></script>
+<script type="text/javascript"  src="${ctx_path}/admin/custom/Public/js/formbuild/bootstrap/js/bootstrap.min.js?2024"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/admin/custom/Public/js/formbuild/leipi.form.build.core.js?2024"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/admin/custom/Public/js/formbuild/leipi.form.build.plugins.js?2024"></script>
+
+<!--script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1e6fd3a46a5046661159c6bf55aad1cf' type='text/javascript'%3E%3C/script%3E"));
+</script-->
+
+</body>
+</html>

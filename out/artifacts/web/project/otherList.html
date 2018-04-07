@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.tipsy.js"></script>
+<script type="text/javascript" src="js/scripts.js"></script>	
+<script type="text/javascript" src="js/facebox.js"></script>
+<script type="text/javascript" src="js/jquery.flot.pack.js"></script>
+<script src="js/graphs.js" type="text/javascript"></script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>无标题文档</title>
+</head>
+
+<body>
+<#include "/common/company_header.html"/>
+<@header username=user.Username detailUrl="${ctx_path}/company/detail"/>
+
+<div class="container_12">
+  
+	<div class="toplist">
+          <ul>
+          <li><a href="${ctx_path}/project" class="active" style="border-left:1px solid #ccc;"><h6>航空科技奖</h6></a></li> 
+          <li><a href="${ctx_path}/other" ><h6>其他奖励与评估</h6></a></li>
+          <span style="float:right;">申报时间：2015-4-29</span>	 
+         </ul>
+     </div>
+    
+       <ul class="tabs">
+                        <li><a href="#tab8">未申报</a></li>
+                        <li><a href="#tab9">已申报</a></li>		
+         </ul>
+   
+    <div class="tab_container">
+    <div id="tab8" class="tab_content">        	
+    <table class="table01" width="100%" border="0" cellpadding="0" cellspacing="0">
+
+        <tr>        
+            <th width="5%" scope="col">
+            <input type="checkbox" name="checkbox" id="checkbox" class="checkall" /><label for="checkbox"></label></th>
+            
+            <th width="25%" scope="col">序号</th>
+            <th width="45%" scope="col">项目名称</th>
+            <th width="25%" scope="col">操作</th>
+        </tr>
+        
+        <tr>
+        
+            <td scope="col"><input type="checkbox" name="checkbox2" id="checkbox2" /></td>
+            <td scope="col">1</td> 
+            <td scope="col">这是项目名称</td>
+            <td scope="col"><input type="submit" class="submit" value="申报" /></td>
+        </tr>
+        
+        <tr>
+        
+            <td scope="col"><input type="checkbox" name="checkbox2" id="checkbox2" /></td>
+            <td scope="col">1</td> 
+            <td scope="col">这是项目名称</td>
+            <td scope="col"><input type="submit" class="submit" value="申报" /></td>
+        </tr>
+        
+        <tr>
+        
+            <td scope="col"><input type="checkbox" name="checkbox2" id="checkbox2" /></td>
+            <td scope="col">1</td> 
+            <td scope="col">这是项目名称</td>
+            <td scope="col"><input type="submit" class="submit" value="申报" /></td>
+        </tr>
+        
+        <tr>
+        
+            <td scope="col"><input type="checkbox" name="checkbox2" id="checkbox2" /></td>
+            <td scope="col">1</td> 
+            <td scope="col">这是项目名称</td>
+            <td scope="col"><input type="submit" class="submit" value="申报" /></td>
+        </tr>
+        
+        <tr>
+        
+            <td scope="col"><input type="checkbox" name="checkbox2" id="checkbox2" /></td>
+            <td scope="col">1</td> 
+            <td scope="col">这是项目名称</td>
+            <td scope="col"><input type="submit" class="submit" value="申报" /></td>
+        </tr>
+
+    </table>
+    <ul id="pagination" style=" height:35px; border:1px solid #ccc; border-top:none; margin-top:0; padding-left:10px;">
+            
+                <li class="previous-off">上一页</li>
+                <li class="active">1</li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#">9</a></li>
+                <li><a href="#">10</a></li>
+                <li class="next"><a href="#">下一页</a></li>
+                
+            </ul> 
+     </div> 
+     <div id="tab9" class="tab_content">        	
+    <table class="table01" width="100%" border="0" cellpadding="0" cellspacing="0">
+
+        <tr>        
+            <th width="5%" scope="col">
+            <input type="checkbox" name="checkbox" id="checkbox" class="checkall" /><label for="checkbox"></label></th>
+            
+            <th width="25%" scope="col">序号</th>
+            <th width="45%" scope="col">项目名称</th>
+            <th width="25%" scope="col">操作</th>
+        </tr>
+        
+        <tr>
+        
+            <td scope="col"><input type="checkbox" name="checkbox2" id="checkbox2" /></td>
+            <td scope="col">1</td> 
+            <td scope="col">这是项目名称</td>
+            <td scope="col"><input type="submit" class="submit" value="申报" /></td>
+        </tr>
+        
+        <tr>
+        
+            <td scope="col"><input type="checkbox" name="checkbox2" id="checkbox2" /></td>
+            <td scope="col">1</td> 
+            <td scope="col">这是项目名称</td>
+            <td scope="col"><input type="submit" class="submit" value="申报" /></td>
+        </tr>
+        
+        <tr>
+        
+            <td scope="col"><input type="checkbox" name="checkbox2" id="checkbox2" /></td>
+            <td scope="col">1</td> 
+            <td scope="col">这是项目名称</td>
+            <td scope="col"><input type="submit" class="submit" value="申报" /></td>
+        </tr>
+
+
+    </table>
+    <ul id="pagination" style=" height:35px; border:1px solid #ccc; border-top:none; margin-top:0; padding-left:10px;">
+            
+                <li class="previous-off">上一页</li>
+                <li class="active">1</li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#">9</a></li>
+                <li><a href="#">10</a></li>
+                <li class="next"><a href="#">下一页</a></li>
+                
+            </ul> 
+     </div>       
+    </div>        
+             
+       
+          
+</div>
+</body>
+</html>

@@ -1,0 +1,707 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Times New Roman","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Times New Roman","serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Times New Roman","serif";}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+ /* Page Definitions */
+ @page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+ <!--[if lte IE 6]>
+<script type="text/javascript" src="${ctx_path}/js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>无标题文档</title>
+<script type="text/javascript">
+function getByteLen(val) {
+    var len = 0;
+    for (var i = 0; i < val.length; i++) {
+        if (val[i].match(/[^\x00-\xff]/ig) != null) //全角
+            len += 2;
+        else
+            len += 1;
+    }
+    return len;
+}
+ <!--用来累计分数及验证-->
+ function scoreLj()
+ {
+ 	var sumValue;
+ 	var score1=eval(document.getElementById("score1").value);
+ 	var score2=eval(document.getElementById("score2").value);
+ 	var score3=eval(document.getElementById("score3").value);
+ 	var score4=eval(document.getElementById("score4").value);
+ 	var score5=eval(document.getElementById("score5").value);
+ 	if (isNaN(score1))
+ 	{score1=0}
+ 	if (isNaN(score2))
+ 	{score2=0}
+ 	if (isNaN(score3))
+ 	{score3=0}
+ 	if (isNaN(score4))
+ 	{score4=0}
+ 	if (isNaN(score5))
+ 	{score5=0}
+ 	sumValue = score1+score2+score3+score4+score5;
+ 	document.getElementById('score').value =sumValue;
+ 	document.getElementById('scoreParam').value=score1+","+score2+","+score3+","+score4+","+score5;
+ 	document.getElementById('prdescribe').value="技术创新程度:"+score1+",技术指标的先进程度:"+score2+", 推广、应用程度:"+score3+",已获得社会、生态、环境效益:"+score4+",对科技进步的推动作用:"+score5;
+ }
+ function check()
+ {   
+	 var score = document.getElementById('score').value; 
+	  if(score ==  null || score == '')
+	  {        
+		  alert("分数不能为空");        
+		  return false;   
+	  }
+	  var note = document.getElementById('note').value; 
+	  if(note ==  null || note == '')
+	  {        
+		  alert("推荐/不推荐意见不能为空!");        
+		  return false;   
+	  }else{
+		  if(getByteLen(note)>2000 ||getByteLen(note)<40 ){
+				alert("推荐/不推荐意见字数不能小于20大于1000个!");        
+				return false; 
+			  }
+		  }
+ }
+ //判断是否隐藏 推荐一等奖   
+ function checkRadio(recommend)
+ {
+	 
+	 if(recommend=='1')  //1显示推荐一等奖
+     {
+		 document.getElementById("divprize1").style.display="block";
+		 document.getElementById("divprize2").style.display="block";
+		 document.getElementById("divprize3").style.display="block";
+		 document.getElementsByName("projectReview.prize")[0].checked="checked";
+     }else if(recommend=='0') //不显示推荐
+     {
+    	 document.getElementById("divprize1").style.display="none";
+    	 document.getElementById("divprize2").style.display="none";
+    	 document.getElementById("divprize3").style.display="none";
+    	 document.getElementsByName("projectReview.prize")[3].checked="checked";  //默认不推荐 
+     }
+ }
+ function load()
+ {
+	 var Secret='${pro.recommend!}';  //是否推荐
+	 if(Secret=='1')
+	   {
+		   document.getElementById("divprize1").style.display = "block";
+		   document.getElementById("divprize2").style.display = "block";
+		   document.getElementById("divprize3").style.display = "block";
+
+	   }else
+	   {
+		   document.getElementById("divprize1").style.display="none";
+	       document.getElementById("divprize2").style.display="none";
+	       document.getElementById("divprize3").style.display="none";
+	       
+	       document.getElementsByName("projectReview.prize")[3].checked="checked";  //默认不推荐  
+	   }
+	 var scoreParam='${pro.scoreParam!}';  //分数属性
+	 if(scoreParam!=null && scoreParam!=""){
+		 var comName= new Array(); 
+		 comName=scoreParam.split(","); //字符分割 
+		 for (kk=1;kk<comName.length+1 ;kk++ )    
+		     { 
+			 document.getElementById("score"+kk).value=comName[kk-1];
+		     }
+	 }
+ }
+</script>
+
+
+</head>
+
+<#include "/common/_header.html"/>
+<@header username=UserName detailUrl="${ctx_path}/expert/detail"/>
+
+<body lang=ZH-CN style='text-justify-trim:punctuation' onload="load()">
+
+<div class="container_12">
+      <div class="toplist">
+          <ul>
+          <li><a href="${ctx_path}/projectreview" style="border-left:1px solid #ccc;" class="active"><h6>航空科技奖</h6></a></li> 
+          <li><a href="${ctx_path}/review/list"><h6>其他奖励与评估</h6></a></li> 
+         </ul>
+     </div>
+     <div class="main">         
+          <div class="main_content">
+           
+                <div class="pstitle">
+        	<p>项目名称：<span style=" color:#333; font-weight:bold;">${ProjectCN}</span></p>
+            <p>登记号:<span>${RegisterNum!}</span></p>
+        </div>
+
+<div class=Section1 style='layout-grid:15.6pt'>
+
+<div align=center>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=720
+ style='width:763pt;border-collapse:collapse;border:none'>
+ <caption>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-size:12.0pt;font-family:宋体;color:#333; font-weight:bold;'>航空科技奖（社会公益项目）评价指标</span></b></p>
+ </caption>
+ <tr>
+  <td width=109 style='width:82.0pt;border:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-size:12.0pt;font-family:宋体'>定量评价指标</span></b></p>
+  </td>
+  <td width=180 style='width:134.65pt;border:solid windowtext 1.0pt;border-left:
+  none;padding:0cm 1.4pt 0cm 1.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-size:12.0pt;font-family:宋体'>指</span></b><b><span
+  style='font-size:12.0pt'> </span></b><b><span style='font-size:12.0pt;
+  font-family:宋体'>标</span></b><b><span style='font-size:12.0pt'> </span></b><b><span
+  style='font-size:12.0pt;font-family:宋体'>含</span></b><b><span
+  style='font-size:12.0pt'> </span></b><b><span style='font-size:12.0pt;
+  font-family:宋体'>义</span></b></p>
+  </td>
+  <td width=325 colspan=4 style='width:244.0pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0cm 1.4pt 0cm 1.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-size:12.0pt;font-family:宋体'>打分规则</span></b></p>
+  </td>
+  <td width=62 style='width:46.6pt;border:solid windowtext 1.0pt;border-left:
+  none;padding:0cm 1.4pt 0cm 1.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-size:12.0pt;font-family:宋体'>权重</span></b><b><span lang=EN-US
+  style='font-size:12.0pt'>%</span></b></p>
+  </td>
+  <td width=39 valign=top style='width:29.4pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0cm 1.4pt 0cm 1.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-size:12.0pt;font-family:宋体'>分数</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:33.4pt'>
+  <td width=109 rowspan=2 style='width:82.0pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 1.4pt 0cm 1.4pt;height:33.4pt'>
+  <p class=MsoNormal><span style='font-size:12.0pt;font-family:宋体'>技术创新程度</span></p>
+  </td>
+  <td width=180 rowspan=2 style='width:134.65pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:33.4pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>指项目在科学研究和技术开发中取得的进展和创新程，包括建立新技术、新方法、新装置，掌握新规律，及进行系统集成创新等。</span></p>
+  </td>
+  <td width=88 style='width:66.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:33.4pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>15</span><span
+  style='font-family:宋体'>≥～≥</span><span lang=EN-US>12</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:33.4pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span lang=EN-US>12</span><span style='font-family:
+  宋体'>＞～＞</span><span lang=EN-US>6</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:33.4pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>6</span><span
+  style='font-family:宋体'>≥～≥</span><span lang=EN-US>3</span></p>
+  </td>
+  <td width=69 style='width:51.75pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:33.4pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>3</span><span
+  style='font-family:宋体'>＞～≥</span><span lang=EN-US>0</span></p>
+  </td>
+  <td width=62 rowspan=2 style='width:46.6pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:33.4pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:6.0pt'><b><span lang=EN-US
+  style='font-size:12.0pt'>15</span></b></p>
+  </td>
+  <td width=39 rowspan=2 valign=top style='width:29.4pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:33.4pt'>
+  <p class=MsoNormal align=center style='margin-top:4.65pt;margin-right:0cm;
+  margin-bottom:4.65pt;margin-left:0cm;text-align:center'><b><span lang=EN-US
+  style='font-size:12.0pt'><input  type="text" class="text" name="score1" id="score1" onkeyup="value=value.replace(/[^\d\.]/g,'');if(value>15){value='';alert('填写不规范，不能大于15')};scoreLj();"></span></b></p>
+  </td>
+ </tr>
+ <tr style='height:55.55pt'>
+  <td width=88 style='width:66.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:55.55pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>有很大突破或有实质性创新</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:55.55pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>有明显突破或创新</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:55.55pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>创新程度不高</span></p>
+  </td>
+  <td width=69 style='width:51.75pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:55.55pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>基本没有创新</span></p>
+  </td>
+ </tr>
+ <tr style='height:32.95pt'>
+  <td width=109 rowspan=2 style='width:82.0pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 1.4pt 0cm 1.4pt;height:32.95pt'>
+  <p class=MsoNormal><span style='font-size:12.0pt;font-family:宋体'>技术指标的先进程度</span></p>
+  </td>
+  <td width=180 rowspan=2 style='width:134.65pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:32.95pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>指项目与国内外同类技术、方法、装置比较，其性能、功能参数及总体技术指标等的水平。</span></p>
+  </td>
+  <td width=88 style='width:66.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:32.95pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>20</span><span
+  style='font-family:宋体'>≥～≥</span><span lang=EN-US>16</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:32.95pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span lang=EN-US>16</span><span style='font-family:
+  宋体'>＞～＞</span><span lang=EN-US>8</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:32.95pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>8</span><span
+  style='font-family:宋体'>≥～≥</span><span lang=EN-US>4</span></p>
+  </td>
+  <td width=69 style='width:51.75pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:32.95pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>4</span><span
+  style='font-family:宋体'>＞～≥</span><span lang=EN-US>0</span></p>
+  </td>
+  <td width=62 rowspan=2 style='width:46.6pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:32.95pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:6.0pt'><b><span lang=EN-US
+  style='font-size:12.0pt'>20</span></b></p>
+  </td>
+  <td width=39 rowspan=2 valign=top style='width:29.4pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:32.95pt'>
+  <p class=MsoNormal align=center style='margin-top:4.65pt;margin-right:0cm;
+  margin-bottom:4.65pt;margin-left:0cm;text-align:center;text-indent:6.0pt'><b><span
+  lang=EN-US style='font-size:12.0pt'><input  type="text" class="text" name="score2" id="score2" onkeyup="value=value.replace(/[^\d\.]/g,'');if(value>20){value='';alert('填写不规范，不能大于20')};scoreLj();"></span></b></p>
+  </td>
+ </tr>
+ <tr style='height:73.2pt'>
+  <td width=88 style='width:66.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:73.2pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>达到同类技术领先水平</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:73.2pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>达到同类技术先进水平</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:73.2pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>接近同类技术先进水平</span></p>
+  </td>
+  <td width=69 style='width:51.75pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:73.2pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>未达到国内最好水平</span></p>
+  </td>
+ </tr>
+ <tr style='height:36.5pt'>
+  <td width=109 rowspan=2 style='width:82.0pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 1.4pt 0cm 1.4pt;height:36.5pt'>
+  <p class=MsoNormal><span style='font-size:12.0pt;font-family:宋体'>推广、应用程度</span></p>
+  </td>
+  <td width=180 rowspan=2 style='width:134.65pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:36.5pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>指项目的实用性、适用性和已经推广应用的范围。对显著促进行业标准提升或具有自主知识产权的项目可酌情加分。</span></p>
+  </td>
+  <td width=88 style='width:66.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:36.5pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>25</span><span
+  style='font-family:宋体'>≥～≥</span><span lang=EN-US>20</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:36.5pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span lang=EN-US>20</span><span style='font-family:
+  宋体'>＞～＞</span><span lang=EN-US>10</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:36.5pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>10</span><span
+  style='font-family:宋体'>≥～≥</span><span lang=EN-US>5</span></p>
+  </td>
+  <td width=69 style='width:51.75pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:36.5pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>5</span><span
+  style='font-family:宋体'>＞～≥</span><span lang=EN-US>0</span></p>
+  </td>
+  <td width=62 rowspan=2 style='width:46.6pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:36.5pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:6.0pt'><b><span lang=EN-US
+  style='font-size:12.0pt'>25</span></b></p>
+  </td>
+  <td width=39 rowspan=2 valign=top style='width:29.4pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:36.5pt'>
+  <p class=MsoNormal align=center style='margin-top:4.65pt;margin-right:0cm;
+  margin-bottom:4.65pt;margin-left:0cm;text-align:center'><b><span lang=EN-US
+  style='font-size:12.0pt'><input  type="text" class="text" name="score3" id="score3" onkeyup="value=value.replace(/[^\d\.]/g,'');if(value>25){value='';alert('填写不规范，不能大于25')};scoreLj();"></span></b></p>
+  </td>
+ </tr>
+ <tr style='height:79.65pt'>
+  <td width=88 style='width:66.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:79.65pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>实用性很强，已广泛应用</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:79.65pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>实用性较强，已在较大范围应用</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:79.65pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>实用性一般，已经部分应用</span></p>
+  </td>
+  <td width=69 style='width:51.75pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:79.65pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>无实用性，尚未应用</span></p>
+  </td>
+ </tr>
+ <tr style='height:35.05pt'>
+  <td width=109 rowspan=2 style='width:82.0pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 1.4pt 0cm 1.4pt;height:35.05pt'>
+  <p class=MsoNormal><span style='font-size:12.0pt;font-family:宋体'>已获得社会、生态、环境效益</span></p>
+  </td>
+  <td width=180 rowspan=2 style='width:134.65pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:35.05pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>指项目对提高行业科学研究基础建设水平和科学技术普及的贡献，或在环境、生态、资源保护与合理利用，提高人民生活质量和健康水平，防灾、减灾，保障经济、社会有序、持久发展等方面取得的综合效益。</span></p>
+  </td>
+  <td width=88 style='width:66.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:35.05pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>25</span><span
+  style='font-family:宋体'>≥～≥</span><span lang=EN-US>20</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:35.05pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span lang=EN-US>20</span><span style='font-family:
+  宋体'>＞～＞</span><span lang=EN-US>10</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:35.05pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>10</span><span
+  style='font-family:宋体'>≥～≥</span><span lang=EN-US>5</span></p>
+  </td>
+  <td width=69 style='width:51.75pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:35.05pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>5</span><span
+  style='font-family:宋体'>＞～≥</span><span lang=EN-US>0</span></p>
+  </td>
+  <td width=62 rowspan=2 style='width:46.6pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:35.05pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:6.0pt'><b><span lang=EN-US
+  style='font-size:12.0pt'>25</span></b></p>
+  </td>
+  <td width=39 rowspan=2 valign=top style='width:29.4pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:35.05pt'>
+  <p class=MsoNormal align=center style='margin-top:4.65pt;margin-right:0cm;
+  margin-bottom:4.65pt;margin-left:0cm;text-align:center;text-indent:6.0pt'><b><span
+  lang=EN-US style='font-size:12.0pt'><input  type="text" class="text" name="score4" id="score4" onkeyup="value=value.replace(/[^\d\.]/g,'');if(value>25){value='';alert('填写不规范，不能大于25')};scoreLj();"></span></b></p>
+  </td>
+ </tr>
+ <tr style='height:88.1pt'>
+  <td width=88 style='width:66.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:88.1pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>社会、生态、环境效益重大</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:88.1pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>社会、生态、环境效益显著</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:88.1pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>社会、生态、环境效益一般</span></p>
+  </td>
+  <td width=69 style='width:51.75pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:88.1pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>尚未取得社会、生态、环境效益</span></p>
+  </td>
+ </tr>
+ <tr style='height:30.35pt'>
+  <td width=109 rowspan=2 style='width:82.0pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 1.4pt 0cm 1.4pt;height:30.35pt'>
+  <p class=MsoNormal><span style='font-size:12.0pt;font-family:宋体'>对科技进步的推动作用</span></p>
+  </td>
+  <td width=180 rowspan=2 valign=top style='width:134.65pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:30.35pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>指项目技术水平提高的幅度，对解决行业、区域、学科发展的关键问题，实现技术跨越或技术进步，制定国家、行业（学科）标准，推动产业（学科）或区域科技进步的作用。</span></p>
+  </td>
+  <td width=88 style='width:66.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:30.35pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>15</span><span
+  style='font-family:宋体'>≥～≥</span><span lang=EN-US>12</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:30.35pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span lang=EN-US>12</span><span style='font-family:
+  宋体'>＞～＞</span><span lang=EN-US>6</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:30.35pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>6</span><span
+  style='font-family:宋体'>≥～≥</span><span lang=EN-US>3</span></p>
+  </td>
+  <td width=69 style='width:51.75pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:30.35pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.25pt'><span lang=EN-US>3</span><span
+  style='font-family:宋体'>＞～≥</span><span lang=EN-US>0</span></p>
+  </td>
+  <td width=62 rowspan=2 style='width:46.6pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:30.35pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm;text-indent:5.9pt'><b><span lang=EN-US
+  style='font-size:12.0pt'>15</span></b></p>
+  </td>
+  <td width=39 rowspan=2 valign=top style='width:29.4pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:30.35pt'>
+  <p class=MsoNormal align=center style='margin-top:4.65pt;margin-right:0cm;
+  margin-bottom:4.65pt;margin-left:0cm;text-align:center'><b><span lang=EN-US
+  style='font-size:12.0pt'><input  type="text" class="text" name="score5" id="score5" onkeyup="value=value.replace(/[^\d\.]/g,'');if(value>15){value='';alert('填写不规范，不能大于15')};scoreLj();"></span></b></p>
+  </td>
+ </tr>
+ <tr style='height:88.1pt'>
+  <td width=88 style='width:66.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:88.1pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>实现技术跨越，对行业技术进步作用显著</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:88.1pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>技术水平明显提高，对行业科技进步作用明显</span></p>
+  </td>
+  <td width=84 style='width:63.0pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 1.4pt 0cm 1.4pt;
+  height:88.1pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>技术水平有所提高，对行业科技进步作用一般</span></p>
+  </td>
+  <td width=69 style='width:51.75pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 1.4pt 0cm 1.4pt;height:88.1pt'>
+  <p class=MsoNormal style='margin-top:4.65pt;margin-right:0cm;margin-bottom:
+  4.65pt;margin-left:0cm'><span style='font-size:12.0pt;font-family:宋体'>技术水平没有提高</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+ <form action="${ctx_path}/projectreview/psAdd" method="post"  onsubmit="return check()"> 
+<table width="100%" border="0" style="tj_table">
+         <tr>
+            <td>总分</td>
+            <td colspan="2"><input   type="text" class="text" id="score" name="projectReview.score" readonly="readonly" value='${pro.score!}'>
+            <input type="hidden" id="prdescribe" name="projectReview.prdescribe" value="${pro.prdescribe!}">
+            <input type="hidden" id="scoreParam" name="projectReview.scoreParam" value="${pro.scoreParam!}"></td>
+         </tr>
+          <tr>
+            <td width="20%">是否推荐</td>
+            
+            <#assign fz='${pro.recommend!}'>
+            <#if fz=='1'>
+                <td><input type="radio"   name="projectReview.recommend" value="1" onclick="checkRadio(value)" checked/>推荐</td>
+                <td><input type="radio"   name="projectReview.recommend" value="0" onclick="checkRadio(value)" />不推荐</td>
+             <#else>
+                <td><input type="radio"   name="projectReview.recommend" value="1" onclick="checkRadio(value)" />推荐</td>
+                <td><input type="radio"   name="projectReview.recommend" value="0" onclick="checkRadio(value)" checked />不推荐</td>
+            </#if>
+            
+          </tr>
+          <tr class="hide_tr" >
+            <td>推荐获奖等级</td>
+            
+            <#assign fz='${pro.prize!}'>
+            <#if fz=='3'>
+                <td><div id="divprize1"  ><input  type="radio"  name="projectReview.prize" value="1" />一等奖</div></td>
+                <td><div id="divprize2"  ><input  type="radio"  name="projectReview.prize" value="2" />二等奖</div></td>
+                <td><div id="divprize3"  ><input  type="radio"  name="projectReview.prize" value="3"  checked/>三等奖</div> 
+                 <div id="divprize4" style="display: none" ><input  type="radio"  name="projectReview.prize" value="0" />不推荐</div></td>
+             <#elseif fz=='2'>
+                <td><div id="divprize1"  ><input  type="radio"  name="projectReview.prize" value="1"/>一等奖</div></td>
+                <td><div id="divprize2"  ><input  type="radio"  name="projectReview.prize" value="2" checked />二等奖</div></td>
+                <td><div id="divprize3"  ><input  type="radio"  name="projectReview.prize" value="3" />三等奖</div> 
+               <div id="divprize4" style="display: none" ><input  type="radio"  name="projectReview.prize" value="0" />不推荐</div></td>
+              <#elseif  fz=='0'>
+                 <td><div id="divprize1"  ><input  type="radio"  name="projectReview.prize" value="1"/>一等奖</div></td>
+                <td><div id="divprize2"  ><input  type="radio"  name="projectReview.prize" value="2" />二等奖</div></td>
+                <td><div id="divprize3"  ><input  type="radio"  name="projectReview.prize" value="3"/>三等奖</div>
+                 <div id="divprize4" style="display: none" ><input  type="radio"  name="projectReview.prize" value="0"  checked/>不推荐</div> </td>
+                <#else>
+                 <td><div id="divprize1"  ><input  type="radio"  name="projectReview.prize" value="1" checked />一等奖</div></td>
+                <td><div id="divprize2"  ><input  type="radio"  name="projectReview.prize" value="2" />二等奖</div></td>
+                <td><div id="divprize3"  ><input  type="radio"  name="projectReview.prize" value="3"/>三等奖</div> 
+                 <div id="divprize4" style="display: none" ><input  type="radio"  name="projectReview.prize" value="0" />不推荐</div></td>
+            </#if>
+            
+          </tr>
+          <tr>
+            <td>推荐/不推荐意见<label style='color:red'>*</label></td>
+            <td colspan="2"><textarea class="textarea" id="note" name="projectReview.note">${pro.note!}</textarea></td>
+          </tr>
+           <tr>
+            <td></td>
+           <td colspan="2"  align='center'><input type="submit" class="submit" value="保存" style="background: #3391B0;;color: #fff;width:80px;font-weight:bolder;"/></td></tr>
+          
+        </table>      
+        <input type="hidden" name="projectReview.projectID" value='${ProjectID}'> 
+        <input type="hidden" name="projectReview.expertID" value='${ExpertID}'> 
+        <input type="hidden" name="projectReview.id" value='${pro.id!}'> 
+        <input type="hidden" name="currentPage" value='${currentPage!}'> 
+  </form>
+ <div class="clearfix"></div> 
+
+</div>
+</div>
+</body>
+
+</html>

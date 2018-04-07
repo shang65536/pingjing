@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>无标题文档</title>
+</head>
+
+<body>
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+	<#include "/admin/_topmenu.html"/>
+	<div class="main">
+		<div class="main_content">
+
+			<#include "/admin/_leftmenu.html"/>
+
+			<div class="right">
+
+				<div class="toplist03">
+					<ul>
+						<li><a href="${ctx_path}/admin/user">申报账号管理</a></li>
+						<li><a href="${ctx_path}/admin/user/expertUser">专家账号管理</a></li>
+						<li><a href="${ctx_path}/admin/user/adminUser"
+							class="active">管理员账号管理</a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
+				<table class="table03" width="100%" border="0" cellpadding="0"
+					cellspacing="0">
+					<tr>
+
+						<th width="16%" scope="col">账号</th>
+						<th width="14%" scope="col">手机</th>
+						<th width="17%" scope="col">办公电话</th>
+					</tr>
+
+					<#list adminPage.getList() as x>
+					<tr>
+						<td scope="col">${x.AdminName!}</td>
+						<td scope="col">${x.MobilePhone!}</td>
+						<td scope="col">${x.OfficePhone!}</td>
+					</tr>
+					</#list>
+
+				</table>
+
+				<#include "/common/_paginate.html" /> <@paginate
+				currentPage=adminPage.pageNumber totalPage=adminPage.totalPage
+				actionUrl="/admin/user/admminUser"/>
+
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

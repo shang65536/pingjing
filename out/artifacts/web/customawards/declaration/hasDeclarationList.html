@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>已申报列表</title>
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" >
+</script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<script>
+function check()
+{
+	$('#FormalReviewStatus').val(${queryParam.FormalReviewStatus!});	 	
+}
+function groupExperList(id){
+	location.href = "${ctx_path}/baseinfo/groupExperList?id="+id;	
+}
+</script>
+
+</head>
+
+<body onload="check()">
+<#include "/common/_header.html"/>
+<@header username=user.Username detailUrl="${ctx_path}/company/detail"/>
+
+<div class="container_12">
+ <div class="toplist">
+          <ul>
+          <li><a href="${ctx_path}/project"  style="border-left:1px solid #ccc;"><h6>航空科技奖</h6></a></li> 
+          <li><a href="${ctx_path}/declaration/declarationList" class="active" ><h6>其他奖励与评估</h6></a></li>	 
+         </ul>
+     </div>
+     <div class="main">     
+        <div class="main_content">    
+                      <div class="toplist03">
+                    <ul>
+                        <li><h8><a href="${ctx_path}/declaration/declarationList">未申报</a></h8></li>	
+                        <li><h8><a href="${ctx_path}/declaration/hasDeclarationList"  class="active">已申报</a></h8></li>
+                       
+                    </ul>        
+              </div>
+              </br>              
+              <form id='querysForm' action="" method="post"> 
+              <table class="table04" width="100%" border="0" cellpadding="0" cellspacing="0">
+               <tr>                 
+                  <td><label>项目名称:</label></td>
+                  <td><input type="text" class="text" name='_query.Name' value='${queryParam.Name!}'/></td>                  	             
+                    <td><label for="cbo" >年度:</label></td>          
+                  <td>
+                    <select name="_query.Year"  id="cbo" class="select" >   	
+	                	 <#list years as year>
+	                	 	<option value="${year!}" ${queryParam.Year!?ends_with(year+"")?string("selected='selected'", "")}>${year!}</option>
+						 </#list>
+	                  </select>
+                  </td> 
+                   <td><label>状态:</label></td>
+	              <td> <select name="_query.FormalReviewStatus" id="FormalReviewStatus" class="select" style="width:120px;" >
+	                       <option value="" selected>全部</option> 
+	                       <option value="0" >形式审查中</option>
+	                       <option value="1" >补充材料</option>
+	                       <option value="2" >形式审查通过项目评审中</option>
+	                       <option value="3" >项目评审通过</option>
+	                       <option value="4" >项目评审未通过</option>	                       
+	                </select>
+                  </td>                             
+                  <td>
+                      <a href="#" id="querybtn" class="butt01" title="查询" style=" color:#fff;">查询</a>
+                  </td>
+                 </tr>
+                  </table>
+              </form> 
+                             	
+         <table class="table03" width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr> 
+	            <th width="6%" scope="col">序号</th>
+	            <th width="20%" scope="col">项目名称</th>
+	            <th width="6%" scope="col">年度</th>
+	             <th width="25%" scope="col">形式审查意见</th>
+	             <th width="18%" scope="col">状态</th>
+	            <th width="25%" scope="col">评审意见</th>
+	        </tr>	        	        
+	        <#list declarationPage.getList() as x>	         
+				<tr>
+					<td scope="col">${(((declarationPage.pageNumber-1)*declarationPage.pageSize)+(x_index+1))?int}   <!-- 按分页来显示递增显示序号 --></td>
+					<td scope="col"><a href="${ctx_path}/declaration/show?id=${x.id}">${x.Name!}</a></td>									
+					 <td scope="col">${x.Year!}</td>
+					 <td scope="col">${x.FormalReviewOpinion!}</td>
+					 <td scope="col"> <!-- 未通过的显示最后一次审查意见  根据项目编号和登录账户 可查看历史评审意见 -->	
+						 <#if x.FormalReviewStatus == 0>
+						          形式审查中
+						 <#elseif  x.FormalReviewStatus == 1>
+						 <a href="${ctx_path}/declaration/repairView?id=${x.id}">补充材料</a>						           
+						 <#elseif  x.FormalReviewStatus == 2>
+						           形式审查通过项目评审中
+						 <#elseif  x.FormalReviewStatus == 3>
+						           项目评审通过
+						 <#elseif  x.FormalReviewStatus == 4>
+						           项目评审未通过
+						 <#else>
+						          其他
+						 </#if>
+					 </td>
+					 <td scope="col">${x.ReviewOpinion!}</td>
+				</tr>
+			 </#list>                
+    </table>
+    
+         <#include "/common/_paginate.html" />
+			 <@paginate currentPage=declarationPage.pageNumber totalPage=declarationPage.totalPage actionUrl="${ctx_path}/declaration/hasDeclarationList" 
+			 urlParas="_query.Year=${queryParam.Year!}&_query.Name=${queryParam.Name!}&_query.FormalReviewStatus=${queryParam.FormalReviewStatus!}"/>
+	          
+        
+        </div>
+        <div class="clearfix"></div>
+    </div> 
+</div>
+<script type="text/javascript">
+
+$(function () {
+	//普通查询
+    $("#querybtn").click(function () {
+    	
+    	var path="${ctx_path}/declaration/hasDeclarationList"
+    	$('#querysForm').attr("action", path).submit();  
+    	
+    });
+        
+});
+
+//新增、编辑
+function openWin(ProjectID,AdminID){
+	var html = '形式审查 ：<input  type="radio"  id="rStatus" name="rStatus" value="1" checked />通过';
+	    html += '<input  type="radio" id="rStatus" name="rStatus" value="0"  />不 通过';
+	    html += '</br></br>形式审查意见:<textarea style="width:200px;height:100px;" id="Note"  name="Note"   />';
+		 demoDG1 = $.dialog({ 
+		 	title:'审核 ', 
+		 	content: html,
+		 	width: '500px',
+		     height: 200,
+			    button:[
+					{
+					    name: '保存',
+					    callback: function () {
+					    	var rStatus =$("input[name='rStatus']:checked").val() ;
+					    	var Note = $("#Note").val();
+					    	if(rStatus=='0' && Note=='')
+					    	{
+					     		alert("状态为不同意，审查意见 不能为空!");
+					     		return false;  //阻止窗体关闭
+					    	}else
+					    	{
+					    		save(ProjectID,AdminID);  
+					    	}
+					    	
+					    },
+					    focus: true
+					}
+			    ]
+			});
+}
+
+//新增、修改入库
+function save(ProjectID,AdminID){
+	
+	var rStatus =$("input[name='rStatus']:checked").val() ;
+	var Note = $("#Note").val();
+
+	var data = {'fromreview.ProjectID':ProjectID,'fromreview.AdminID':AdminID,'fromreview.Note':Note,'fromreview.Status':rStatus};
+	$.ajax({
+		type: "POST",
+		url: "${ctx_path}/technology/register/saveReview",
+		data: data,
+		success: function(result) {
+			if(result.success){
+				alert("操作成功");
+				window.location.reload();
+			}else{
+				alert("操作失败");
+			}
+		}
+	});
+}
+
+//查看历史审查记录
+function openWinReview(ProjectID,AdminID)
+{
+	demoDG2 = $.dialog({ 
+		title:'查看历史审查记录', 
+		content: 'url:${ctx_path}/technology/register/seeReview?ProjectID='+ProjectID+'&AdminID='+AdminID,
+		width: '500px',
+	    height: 500
+		});
+}
+</script>
+</body>
+</html>

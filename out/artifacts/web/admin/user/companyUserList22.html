@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>单位帐号管理</title>
+</head>
+
+<body>
+
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+     <#include "/admin/_topmenu.html"/>
+     <div class="main">         
+          <div class="main_content">
+           
+               <#include "/admin/_leftmenu.html"/>
+
+				<div class="right">
+
+					<div class="toplist03">
+						<ul>
+							<li><a href="${ctx_path}/admin/user" class="active">申报账号管理</a></li>
+						 	<li><a href="${ctx_path}/admin/user/expertUser">专家账号管理</a></li> 
+							<li><a href="${ctx_path}/admin/user/adminUser">管理员账号管理</a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+
+					<form id="queryForm" action="${ctx_path}/admin/user" method="post">
+						<table class="table04" width="100%" border="0" cellpadding="0"
+							cellspacing="0">
+							<tr>
+
+								<td class="c2"><label>账号:</label></td>
+								<td><input type="text" name="_query.Username" class="text" value="${queryParam.Username!}"/></td>
+
+								<td class="c2"><label>单位名称:</label></td>
+								<td><input type="text" name="_query.CompanyName" class="text" value="${queryParam.CompanyName!}"/></td>
+							</tr>
+
+							<tfoot>
+								<tr>
+									<td colspan="8"><a href="#" id="querybtn" class="butt01" title="查询"
+										style="color: #fff;">查询</a></td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
+
+
+					<table class="table03" width="100%" border="0" cellpadding="0"
+						cellspacing="0">
+						<thead>
+							<tr>
+								<td colspan="12"><input type="submit" class="submit01" id="delbtn"
+									value="删除" /> <input type="submit" class="submit01" id="addbtn"
+									value="新增账号" /></td>
+							</tr>
+						</thead>
+						<tr>
+
+							<th width="5%" scope="col"><input type="checkbox"
+								id="checkall" name="checkall" class="checkall" onclick="javascript:checkall();"/><label
+								for="checkbox"></label></th>
+
+							<th width="10%" scope="col">账号</th>
+							<th width="8%" scope="col">联系人</th>
+							<th width="12%" scope="col">电话</th>
+							<th width="10%" scope="col">电子邮件</th>
+							<th width="10%" scope="col">单位名称</th>
+							<th width="10%" scope="col">单位地址</th>
+							<th width="10%" scope="col">是否会员</th>
+							<th width="10%" scope="col">是否申报项目</th>
+							<th width="15%" scope="col">最后登录时间</th>
+							<th width="5%" scope="col">操作</th>
+						</tr>
+						
+						<#list companyPage.getList() as x>
+						<tr>
+							<td scope="col"><input type="checkbox" name="ids" value="${x.id!}" /></td>
+							<td scope="col"><a href="${ctx_path}/admin/user/edit?id=${x.id!}">${x.Username!}</a></td>
+							<td scope="col">${x.LinkmanName!}</td>
+							<td scope="col">${x.LinkmanPhone!}</td>
+							<td scope="col">${x.Email!}</td>
+							<td scope="col">${x.CompanyName!}</td>
+							<td scope="col">${x.CompanyAddress!}</td>
+							<td scope="col">${(x.IsMember?? && x.IsMember==1)?string("是", "否")}</td>
+							<td scope="col">${(x.IsMember?? && x.IsMember==1)?string("是", "否")}</td>
+							<td scope="col">${x.LoginTime!}</td>
+							<td scope="col">
+								<#if (x.status??) && x.status == 1>
+									已通过
+								<#else>
+									<!--  <input type="submit" class="submit01" value="审核" onclick="openCheckWin(${x.id!},'${x.Note!}');" /> -->
+									<input type="submit" class="submit01" value="审核" onclick="openCheckWin(${x.id!},'');" />
+								</#if>
+							</td>
+						</tr>
+						</#list>
+
+					</table>
+					
+					<#include "/common/_paginate.html" />
+					<@paginate currentPage=companyPage.pageNumber totalPage=companyPage.totalPage actionUrl="${ctx_path}/admin/user" urlParas="_query.userName=${queryParam.userName!}&_query.companyName=${queryParam.companyName!}"/>
+					
+				</div>
+
+				<div class="clearfix"></div> 
+          </div> 
+    </div>
+</div>
+<script type="text/javascript">
+$(function () {
+    //query
+	$("#querybtn").click(function () {
+    	var path="${ctx_path}/admin/user";
+    	$('#queryForm').attr("action", path).submit();  
+    });
+    //add
+    $("#addbtn").click(function () {
+    	var path="${ctx_path}/admin/user/add";
+    	location.href = path;
+    });
+    
+    /* del */
+	$("#delbtn").click(function() {
+
+	var status = '${company.status!}';
+	
+	if(status=='1'){
+	alert("账号已经审核通过，不允许删除");
+	}else{
+	delRecord("${ctx_path}/admin/user/delete");
+	
+		}
+});
+});
+
+//示例3中的相关代码
+function openCheckWin(id,Note){
+    demoDG1 = $.dialog({ 
+    	title:'审核', 
+    	content:'<textarea cols="50" rows="25" id="Note" name="Note">'+ Note +'</textarea>',
+    	width: '500px',
+        height: 400,
+        //okVal:'通过',
+   		//ok: function(){
+   		//	check(id,1);
+   	    //},
+   	    button:[
+			{
+			    name: '通过',
+			    callback: function () {
+			    	check(id,1);
+			        return false;
+			    },
+			    focus: true
+			},
+			{
+			    name: '不通过',
+			    callback: function () {
+			    	check(id,0);
+			    }
+			}
+   	    ]
+   	    /* cancelVal: '不通过',
+   	    cancel: function(){
+   	    	check(id,0);
+   	    } */
+   	});
+};
+
+function check(id,status){
+	var Note = $("#Note").val();
+	$.ajax({
+		type: "POST",
+		url: "${ctx_path}/admin/user/check",
+		data: {'Note':Note,'status':status,'id':id},
+		success: function(result) {
+			if(result.success){
+				alert("操作成功");
+				window.location.reload();
+			}else{
+				alert("操作失败");
+			}
+		}
+	});
+	return false;
+}
+
+</script>
+</body>
+</html>

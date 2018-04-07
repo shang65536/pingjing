@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style>  
+body{  
+font-family:SimSun;  
+font-size:14px;  
+}  
+</style>  
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" content="no-cache"/>
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" >
+</script>
+ <!--[if lte IE 6]>
+<script type="text/javascript" src="${ctx_path}/js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>无标题文档</title>
+<script>
+ function load()
+ {
+	 //用来赋值  页面跳转后 动态下拉框的值
+	 $("#Category").val(${queryParam.Category!});
+	 $("#Status").val(${queryParam.Status!});
+	 
+	 //申报状态是否已结束  如果结束 不显示新增项目
+	 var StatusSb='${prize.StatusSb!}';
+	 if(StatusSb=='0')  //结束  隐藏申报按钮
+	 {
+		 $(document.getElementById("addId")).hide();
+	 }
+ }
+ 
+//删除
+ function toExcel()
+ {
+	 
+	var check = document.getElementsByName("ids");
+	 var len=check.length;
+	 var idAll="";
+	 for(var i=0;i<len;i++)
+	 {
+		 if(check[i].checked)
+		 {
+			 idAll+=check[i].value+",";
+		 }
+		 
+	 }	 
+	idAll=idAll.substr(0, idAll.length-1);
+	location.href='${ctx_path}/project/toExcel?_query.ApplyYear=${queryParam.ApplyYear!}&_query.ProjectCN=${queryParam.ProjectCN!}&_query.Category=${queryParam.Category!}&_query.Status=${queryParam.Status!}&ids='+idAll; 	 
+ }
+ function  checkAll(o)   
+ {   
+      var  a  =  document.getElementsByName("ids");   
+      for  (var  i=0;  i<a.length;  i++){   
+          a[i].checked  =  o.checked;   
+      }   
+
+ }
+
+</script>
+</head>
+
+<body onload="load()">
+<#include "/common/_header1.html"/> 
+<@header username=user.Username detailUrl="${ctx_path}/company/detail"/>
+
+<div class="container_12">
+  
+	<div class="toplist">
+          <ul>
+          <li><a href="${ctx_path}/project" class="active" style="border-left:1px solid #ccc;"><h6>航空科技奖</h6></a></li> 
+          <li><a href="${ctx_path}/declaration/declarationList" ><h6>其他奖励与评估</h6></a></li>
+          <span style="float:right; color: red;">申报时间：${ApplyStartTime!}至${ApplyEndTime!}</span>	 
+         </ul>
+     </div>
+	
+	<div class="main">
+    <div class="main_content">
+    
+     <form id='queryForm' action="" method="post"> 
+              <table class="table04" width="100%" border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td><label for="cbo" >年度:</label></td>          
+                  <td>
+                      <select name="_query.ApplyYear"  id="cbo" class="select" >   	
+	                	 <#list years as year>
+	                	 	<option value="${year!}" ${queryParam.ApplyYear!?ends_with(year+"")?string("selected='selected'", "")}>${year!}</option>
+						 </#list>
+	                  </select> 
+                  </td> 
+                  <td><label>项目名称:</label></td>
+                  <td colspan="2"><input type="text" class="text" name='_query.ProjectCN' value='${queryParam.ProjectCN!}'/></td>
+                 </tr>
+                 <tr> 
+                  <td><label>评奖类别:</label></td>
+                  <td><select name="_query.Category" id="Category" class="select"  >
+                            <option value="" selected>全部</option>
+			             <#list CategoryList as c>                
+                           <option  value="${c.id}" >${c.Name!}</option>                    
+                         </#list>
+                   </select>
+                  </td>
+                   <td><label>评奖状态:</label></td>
+                  <td><select name="_query.Status" id="Status" class="select"  >
+                            <option value="">全部</option>                        
+                			<option value="1">形式审查中</option>
+			                <option value="2">形式审查合格，项目评审中</option>
+			                <option value="3">形式审查不合格</option>
+			                <!-- <option value="4">形式审查不合格</option> -->
+			                <option value="5">特等奖</option>
+			                <option value="6">一等奖</option>
+			                <option value="7">二等奖</option>
+			                <option value="8">三等奖</option>
+			                <option value="9">未得奖</option>
+			                <option value="0">项目还没提交</option>
+                   </select>
+                  </td>
+                  <td >
+                     <a href="#" id="querybtn" class="butt01" title="查询" style=" color:#fff;">查询</a>                    
+                  </td>
+                  </tr>
+                  </table>
+              </form> 
+    
+    
+     <!-- <form id="queryForm" action="${ctx_path}/project" method="post">     
+            <p>
+               <label for="cbo" >年度:</label> 
+               
+               		 <select name="_query.ApplyYear"  id="cbo" class="select" >   	
+	                	 <#list years as year>
+	                	 	<option value="${year!}" ${queryParam.ApplyYear!?ends_with(year+"")?string("selected='selected'", "")}>${year!}</option>
+						 </#list>
+	                  </select>
+                      <input class="Wdate" type="text"  name="_query.ApplyYear" 
+                       onfocus="WdatePicker({isShowClear:false,readOnly:true,startDate:'%y',dateFmt:'yyyy'})" value="${queryParam.ApplyYear!}" />     
+                      
+                      
+                      <input type='hidden' id='type' name='type'  />    
+                <label>项目名称:</label><input type="text" class="text" name="_query.ProjectCN" value="${queryParam.ProjectCN!}"/>
+                 <label>评奖类别:</label>
+                <select name="_query.Category" id="Category" class="select" style="width:120px;" >
+                
+                       <option value="" selected>全部</option> 
+                       
+                <#list CategoryList as c>
+                
+                       <option  value="${c.id}" >${c.Name!}</option>
+                     
+                </#list>
+                </select>
+               
+                <label for="cbo">评奖状态:</label>
+            
+              <select name="_query.Status" id="Status" class="select">
+                <option value="">全部</option>
+                <option value="1">形式审查中</option>
+                <option value="2">形式审查通过</option>
+                <option value="3">项目评审中</option>
+                <option value="4">形式审查不合格</option>
+                <option value="5">特等奖</option>
+                <option value="6">一等奖</option>
+                <option value="7">二等奖</option>
+                <option value="8">三等奖</option>
+                <option value="9">未得奖</option>
+            
+            </select>
+            <input type="submit" class="submit" value="查询" />
+            </p>
+     </form>     -->   
+     </div>
+     </div>       	
+    <table class="table01" width="100%" border="0" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr><td colspan="8">
+        <input type="submit" class="submit01" onclick="toExcel();"  value="导出" />        
+        <input type="submit" id='addId' class="submit02" onclick="location.href='${ctx_path}/project/apply?step=1'"  value="申报新项目" /></td></tr></thead>
+        <tr>
+        
+            <th width="5%" scope="col">
+			<input type="checkbox" id="checkbox" name="checkalls" class="checkalls" onclick="checkAll(this);" /><label for="checkbox"></label>
+			</th>
+            <th width="8%" scope="col">序号</th>
+            <th width="23%" scope="col">项目名称</th>
+            <th width="12%" scope="col">年度</th>
+            <th width="15%" scope="col">评奖类别</th>
+            <th width="17%" scope="col">形式审查意见</th>
+            <th width="10%" scope="col">评奖状态</th>
+            <th width="10%" scope="col">项目导出PDF</th>
+        </tr>
+        <#list projectList.getList() as x>
+        <tr>
+        	   <td scope="col"><input type="checkbox" id="checkbox" name="ids"  value="${x.id}"/></td>
+	            <td scope="col">
+	              ${(((projectList.pageNumber-1)*projectList.pageSize)+(x_index+1))?int}   <!-- 按分页来显示递增显示序号 -->
+	            </td> 
+	            <td scope="col"><a href="${ctx_path}/project/apply?step=1&id=${x.id}">${x.ProjectCN!}</a></td>
+	            <td scope="col">${x.ApplyYear!}</td>
+	            <td scope="col">${x.Category_name!}</td>
+	            <td scope="col">${x.Note!}</td>
+	            <td scope="col" style="color: red;">
+	           <#if x.Status ==0> 
+	                                              项目还没提交
+	            <#elseif x.Status ==1>
+	            	形式审查中
+	            <#elseif x.Status ==2>
+	            	形式审查合格，项目评审中
+	             <#elseif x.Status ==3>
+	             	形式审查不合格
+	              <#elseif x.Status ==5>
+	                                                        特等奖
+	              <#elseif x.Status ==6>
+	                                                          一等奖
+	              <#elseif x.Status ==7>
+	                                                      二等奖
+	              <#elseif x.Status ==8>
+	                                                   三等奖
+	              <#elseif x.Status ==9>
+	                                                  未得奖
+	              <#else>
+	              	
+	              </#if> 
+	            <!-- <#if x.Status ==0>
+	              <input type="submit" id="projectTj" onclick="projectTj(${x.id})" class="submit01" value="提交" />                                      
+	             <#else> 已提交的项目
+	                <#if x.recom_results?? >  如果管理员推荐了的项目  获奖结果为空  就显示评审进行中  如果没有推荐的项目 就显示未得奖
+	                   <#if x.winning_results?? >
+	                      ${x.winning_results!}
+	                   <#else>
+	                                                                  项目评审中
+	                   </#if>
+	                <#else>
+	                                                       未得奖
+	                </#if>
+	             </#if>   -->
+	           </td>
+           <td scope="col"><a href="${ctx_path}/admin/set/project/exp?id=${x.id!}" class="submit01" >导出</a></td>
+        </tr>   
+         </#list>  
+        
+
+    </table>
+
+           
+      <#include "/common/_paginate.html" />
+	<@paginate currentPage=projectList.pageNumber  totalPage=projectList.totalPage actionUrl="${ctx_path}/project/" urlParas="_query.ApplyYear=${queryParam.ApplyYear!}&_query.ProjectCN=${queryParam.ProjectCN!}&_query.Category=${queryParam.Category!}&_query.Status=${queryParam.Status!}" />    
+       
+          
+</div>
+<script type="text/javascript">
+$(function () { 
+	//普通查询
+	 $("#querybtn").click(function () {
+	 	var path="${ctx_path}/project/index"
+	 	$('#queryForm').attr("action", path).submit();;  
+	 });
+});
+//验证项目完成情况 并提交 
+function projectTj(id){
+	$.ajax({
+		type: "POST",
+		url: "${ctx_path}/project/projectYz",
+		data: {'id':id},
+		success: function(result) {
+			
+			if(result.msg=="")
+			{
+				location.href="${ctx_path}/project/projectTj?id="+id;
+			}else
+			{
+				alert(result.msg);
+			}
+		}
+	});
+	return false;
+}
+</script>
+</body>
+</html>

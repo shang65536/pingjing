@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/lhgdialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" >
+
+
+//新增、编辑
+function openWin(id,name,Group_Year,type,Status){
+	var html = '评审组名称：<input type="text" id="tname'+id+'" name="tname" class="text smaller" value="'+ name +'"/>';
+    demoDG1 = $.dialog({ 
+    	title:'专业评审组管理', 
+    	content: html,
+    	width: '300px',
+        height: 100,
+   	    button:[
+			{
+			    name: '保存',
+			    callback: function () {
+			    	save(id,Group_Year,type,Status);  //默认有效
+			        return false;
+			    },
+			    focus: true
+			}
+   	    ]
+   	});
+};
+
+
+//根据年份切换 专家组信息
+function loadYearExpert(value)
+{
+	//得到改变的时间值
+	var path="${ctx_path}/technology/groupexpert/indexzh?group_year="+value;
+	window.location.href = path;
+}
+
+$(function () {
+	/* 添加人员 */
+    $("#addbtn").click(function () {
+    	
+		demoDG2 = $.dialog({ 
+        	title:'添加人员', 
+        	content: 'url:${ctx_path}/baseinfo/addList?group_id=${group.id!}',
+        	width: '1100px',
+            height: 600
+       	});
+    });
+	
+    
+	
+	/* 清空群组 */
+	$("#qkbtn").click(function() {
+		$.ajax({
+    		type: "POST",
+    		url: "${ctx_path}/baseinfo/deleteZHByGId?group_id=${group.id!}",
+    		success: function(result) {
+    			if(result.success){
+    				alert("操作成功");
+    				window.location.reload();
+    			}else{
+    				alert("该群组已被指定项目，不可进行清空操作！ ");
+    			}
+    		}
+    	});
+	});
+	
+	
+	/* del */
+	$("#delbtn").click(function() {
+		delRecordDelbtn("${ctx_path}/baseinfo/deleteZH");
+	});
+	
+	function delRecordDelbtn(url){
+		// 判断是否至少选择一项
+		var checkedNum = $("input[name='ids']:checked").length;
+		if(checkedNum == 0) {
+			alert("请选择至少一项！");
+			return;
+		}
+		// 批量选择
+		if(confirm("确定要删除所选记录吗？")) {
+			var checkedList = new Array();
+			$("input[name='ids']:checked").each(function() {
+				checkedList.push($(this).val());
+			});
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {'ids':checkedList.toString(),'group_id':${group.id!}},
+				success: function(result) {
+					alert(result.msg);
+					$("[name ='ids']:checkbox").attr("checked", false);
+					window.location.reload();					
+				}
+			});
+		}
+	}
+	
+	/* 标记为 */
+	$("#bjbtn").click(function() {
+		
+		// 判断是否至少选择一项
+		var checkedNum = $("input[name='ids']:checked").length;
+		if(checkedNum == 0) {
+			alert("请选择至少一项！");
+			return;
+		}
+		// 批量选择
+		var checkedList = new Array();
+		$("input[name='ids']:checked").each(function() {
+			checkedList.push($(this).val());
+		});
+		
+		var html = '标记为： <select name="status" id="status" class="select" style="width:120px;" >';
+	    html += '<option value="1" selected>主任委员</option>';
+	    html += '<option value="2" >副主任委员</option>';
+	    html += '<option value="3" >委员</option>';
+	    html += '</select>';
+	    
+        demoDG3 = $.dialog({ 
+    	title:'标记为', 
+    	content: html,
+    	width: '300px',
+        height: 100,
+   	    button:[
+			{
+			    name: '保存',
+			    callback: function () {
+			    	var status = $("#status").val();
+			    	
+			    	$.ajax({
+						type: "POST",
+						url: "${ctx_path}/baseinfo/egstatus",
+						data: {'ids':checkedList.toString(),'status':status},
+						success: function(result) {
+							if(result.success){
+								alert("操作成功");
+								$("[name ='ids']:checkbox").attr("checked", false);
+								window.location.reload();
+							}else{
+								alert("操作失败");
+							}
+						}
+					});
+			    	
+			        return false;
+			    },
+			    focus: true
+			}
+   	    ]
+   	  });
+	});
+	
+	/* 导出 */
+	$("#excelbtn").click(function() {
+		
+		location.href='${ctx_path}/technology/groupexpert/toExpertExcel?group_id=${group.id!}';
+		
+	});
+	
+});
+
+//验证只能操作当前年份的数据  其他年份灰掉相关操作按钮
+function check()
+{
+	//选择的时间 
+	var gyear = ${gyear!};
+	//系统时间 
+	var today=new Date();
+	var y=today.getFullYear();
+	
+	if(y==gyear)  //相等  显示操作   
+	{
+		
+	}else
+	{
+		$(document.getElementById("addbtn")).hide();
+		$(document.getElementById("delbtn")).hide();
+		$(document.getElementById("bjbtn")).hide();
+		$(document.getElementById("qkbtn")).hide();
+	}
+}
+</script>
+           <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>科技奖</title>
+</head>
+
+<body onload="check()">
+<#include "/common/_header.html"/>
+<@header username=user.AdminName detailUrl="${ctx_path}/admin/userDetail"/>
+
+<div class="container_12">
+     <#include "/customawards/_topmenu.html"/>
+     <div class="main">        
+        <div class="main_content">
+        <h6>自定义奖项名称：${baseinfo.Name!}</h6>
+        </br>
+              <div class="toplist03">
+                    <ul>                     
+                        <li><h8><a href="${ctx_path}/baseinfo/groupExperList?id=${baseinfo.id!}" class="active">专家组</a></h8></li>	
+                        <li><h8><a href="${ctx_path}/baseinfo/recommendList?baseinfoID=${baseinfo.id!}">推荐项目简表</a></h8></li>
+                        <li><h8><a href="${ctx_path}/baseinfo/examinationList?baseinfoID=${baseinfo.id!}">形式审查表</a></h8></li>
+                        <li><h8><a href="${ctx_path}/baseinfo/reviewResultList?baseinfoID=${baseinfo.id!}">评审结果表</a></h8></li>
+                       <!--  <li><h8><a href="${ctx_path}/baseinfo/list">返回自定义列表</a></h8></li> -->
+                    </ul>      
+              </div>           
+              <div class="tab_box" style="padding: 0px 0px;">  
+                     <!-- 专业评审开始  -->
+                     <!-- 综合评审开始  -->
+                     <div class="tjzw">
+                                      	
+                         <table class="table03" width="100%" border="0" cellpadding="0" cellspacing="0">
+						       <thead>
+						        <tr>
+						         <td colspan="10">
+						         
+						         <input type="submit" class="submit01"  id="delbtn" value="删除" /> 
+					             <input type="submit" class="submit01"  id="addbtn" value="添加人员" />
+					             <input type="submit" class="submit01"  id="bjbtn" value="标记为" />
+					             <input type="submit" class="submit02"  id="qkbtn" value="清空群组" />
+						         </td>
+						         </tr>
+						        </thead>
+						        <tr>
+							        
+							            <th width="5%" scope="col">
+							              <input type="checkbox" id="checkall" name="checkall" class="checkall" onclick="javascript:checkall();" /><label for="checkbox"></label>
+							            </th>
+							            <th width="10%" scope="col">序号</th>
+							            <th width="10%" scope="col">姓名</th>
+							            <th width="10%" scope="col">标记为</th>
+							            <th width="10%" scope="col">性别</th>
+							            <th width="15%" scope="col">工作单位</th>
+							            <th width="12%" scope="col">技术职称</th>
+							            <th width="15%" scope="col">从事专业</th>
+							            <th width="11%" scope="col">电话</th>
+							            <th width="12%" scope="col">邮箱</th>
+							        </tr>
+							     <#list gePage as x>
+							        <tr>
+							            <td scope="col"><input type="checkbox" name="ids"  value="${x.id}"/></td>
+							            <td scope="col">${x_index+1}</td> 
+							            <td scope="col">${x.Name!}</td>
+							            <td scope="col"><span style="color:blue;">${x.bj!}</span></td>
+							            <td scope="col">
+							             <#if x.Sex?? >
+								               <#if x.Sex ==0>
+								                                                             女
+								               <#elseif x.Sex ==1>
+								                                                             男
+								               </#if>                                              
+							              </#if>
+							            </td>
+							            <td scope="col">${x.Job!}</td>
+							            <td scope="col">${x.TechTitle!}</td>
+							            <td scope="col">${x.Working!}</td>
+							            <td scope="col">${x.Phone!}</td>
+							            <td scope="col">${x.Email!}</td>
+							        </tr>
+							       </#list>
+        
+                           </table> 
+                   
+                     </div>
+                      <!-- 综合评审结束 -->
+              </div>       
+            
+        
+        </div>
+    </div> 
+</div>
+</body>
+</html>

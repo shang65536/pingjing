@@ -1,0 +1,123 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+
+
+<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx_path}/js/jquery.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/jquery.form.js"></script>
+ <!--[if lte IE 6]>
+<script type="text/javascript" src="${ctx_path}/js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+<![endif]--> 
+<title>无标题文档</title>
+<script type="text/javascript"> 
+$(function () {
+	$('#formdata').submit(function() {
+	   var file1=document.getElementById("FilePath");
+ 	   var ErrMsg="";   
+ 	   if(file1.value!="")
+ 	   {
+ 		   var type=".xls,.doc,.docx";//允许上传的文件类型 0为无限制 每个扩展名后边要加一个"," 小写字母表示
+ 		   
+ 		   var fileName=file1.value.substr(file1.value.lastIndexOf(".")).toLowerCase(); 
+ 		   if(type.indexOf(fileName)==-1)//判断文件类型是否允许上传 
+ 		   { 
+ 		     ErrMsg+="\n该文件类型不允许上传。请上传 "+type+" 类型的文件，当前文件类型为"+fileName;   
+ 		   }
+ 	   }
+ 	   if(ErrMsg!="")
+ 	   {
+ 		   alert(ErrMsg);
+ 		   return false;
+ 	   }
+		
+		var options = {
+	            url: '${ctx_path}/projectreview/other/psAdd',
+	            type: 'post',
+	            dataType: 'json',
+	            data: $("#formdata").serialize(),
+	            success: function (data) {
+	                if (data.success == true || data.success == "true"){
+	                	alert("保存成功");
+	                	location.href="${ctx_path}/projectreview/other";
+	                }else{
+	                	alert("保存失败");
+	                }
+	            }
+	        };
+			//alert("aaa");
+			$(this).ajaxSubmit(options);
+	        //$.ajax(options);
+	        return false;
+	});
+});
+
+</script>
+
+
+</head>
+
+<#include "/common/_header.html"/>
+<@header username=UserName detailUrl="${ctx_path}/expert/detail"/>
+
+<div class="container_12">
+      <div class="toplist">
+          <ul>
+          <li><a href="${ctx_path}/projectreview" ><h6>科技奖</h6></a></li> 
+          <li><a href="" style="border-left:1px solid #ccc;" class="active"><h6>其他奖</h6></a></li> 
+         </ul>
+     </div>
+     <div class="main">         
+          <div class="main_content">
+           
+                <div class="pstitle">
+        	<p>项目名称：<span style=" color:#333; font-weight:bold;">${ProjectCN!}</span></p>
+            <p>登记号:<span>${RegisterNum!}</span></p>
+        </div>
+
+<div class=Section1 style='layout-grid:15.6pt'>
+
+<div align=center>
+
+ <form  id="formdata"  action="" method="post" enctype="multipart/form-data" > 
+<table width="100%" border="0" style="tj_table">
+         <tr>
+            <td>上传评分表</td>
+            <td colspan="2"><input  type="file" name="projectReviewOther.FilePath" id="FilePath"  /><span style="color:#e40202;">${ts!}</span></td>
+          </tr>
+          <tr>
+            <td width="20%">是否推荐 </td>
+            <#assign fz='${pro.Recommend!}'>
+            <#if fz=='1'>
+                <td><input type="radio" onclick="showTr(1)"  name="projectReviewOther.Recommend" value="1"  checked/>推荐</td>
+                <td><input type="radio" onclick="showTr(0)"  name="projectReviewOther.Recommend" value="0" />不推荐</td>
+             <#else>
+                <td><input type="radio" onclick="showTr(1)"  name="projectReviewOther.Recommend" value="1"  />推荐</td>
+                <td><input type="radio" onclick="showTr(0)"  name="projectReviewOther.Recommend" value="0" checked />不推荐</td>
+            </#if>
+            
+          </tr>
+          <tr>
+            <td>推荐意见</td>
+            <td colspan="2"><textarea class="textarea" name="projectReviewOther.Note">${pro.Note!}</textarea></td>
+          </tr>
+           <tr>
+            <td></td>
+           <td colspan="2"  align='center'><input type="submit" id="okbtn"  class="submit" value="保存" /></td></tr>
+          
+        </table>      
+        <input type="hidden" name="projectReviewOther.ProjectID" value='${ProjectID}'> 
+        <input type="hidden" name="projectReviewOther.ExpertID" value='${ExpertID}'> 
+        <input type="hidden" name="projectReviewOther.id" value='${pro.id!}'> 
+  </form>
+ <div class="clearfix"></div> 
+
+</div>
+</div>
+</body>
+
+</html>

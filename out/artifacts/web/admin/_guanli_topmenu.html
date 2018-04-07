@@ -1,0 +1,28 @@
+<div class="toplist02">
+	<ul>
+		<li><a href="${ctx_path}/technology/groupexpert/indexzj"  ${(requestURL?index_of("${ctx_path}/technology/groupexpert") != -1)?string("class='active'", "")} style="border-left:1px solid #ccc;">专家组</a></li>
+		<li><a href="${ctx_path}/technology/register/index" ${(requestURL?index_of("${ctx_path}/technology/register/index") != -1 )?string("class='active'", "")}>项目登记表</a></li>
+		<li><a href="${ctx_path}/technology/register/reviewIndex" ${(requestURL?index_of("${ctx_path}/technology/register/reviewIndex") != -1 )?string("class='active'", "")}>形式审查表</a></li>
+		<li><a href="${ctx_path}/technology/register/caseIndex" ${(requestURL?index_of("${ctx_path}/technology/register/caseIndex") != -1 )?string("class='active'", "")}>受理公示表</a></li>
+		<li><a href="${ctx_path}/technology/profe/project" ${(requestURL?index_of("${ctx_path}/technology/profe/project") != -1 )?string("class='active'", "")}>专业评审项目表</a></li>
+		<li><a href="${ctx_path}/technology/profe/results" ${(requestURL?index_of("${ctx_path}/technology/profe/results") != -1 )?string("class='active'", "")}>专业评审结果汇总表</a></li>
+		<li><a href="${ctx_path}/technology/profe/recomm" ${(requestURL?index_of("${ctx_path}/technology/profe/recomm") != -1 )?string("class='active'", "")}>专业评审推荐项目汇总表</a></li>
+		<li><a href="${ctx_path}/technology/profe/total" ${(requestURL?index_of("${ctx_path}/technology/profe/total") != -1 )?string("class='active'", "")}>综合评审总分排序表</a></li>
+		<li><a href="${ctx_path}/technology/profe/type" ${(requestURL?index_of("${ctx_path}/technology/profe/type") != -1 )?string("class='active'", "")}>投票类别分配表</a></li>
+		<li><a href="${ctx_path}/technology/profe/statis" ${(requestURL?index_of("${ctx_path}/technology/profe/statis") != -1 )?string("class='active'", "")}>票数统计表</a></li>
+		<li><a href="${ctx_path}/technology/profe/winning" ${(requestURL?index_of("${ctx_path}/technology/profe/winning") != -1 )?string("class='active'", "")}>获奖项目列表</a></li>
+	</ul>
+	<div class="clearfix"></div>
+</div>
+
+
+<script type="text/javascript" >
+	function exportExcel(url){
+		var arr = $("select[name='_query.ApplyYear']");
+		var year = '';
+		if(arr.length > 0){
+			year = $(arr).val();
+		}
+		location.href = url + "&_query.year=" + year;
+	}
+</script>
