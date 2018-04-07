@@ -128,7 +128,6 @@ public class IndexController extends Controller {
 		String adminName = "";
 		String adminPwd = "";
 
-		List<CentrlaEnterprises> areas=CentrlaEnterprises.me.search("中国");
 
 		// 验证本地是否已经记住了相应登陆信息
 		Cookie cokLoginName = CookieTool.getCookieByName(request, "adminName");
