@@ -22,6 +22,7 @@ import com.ccoa.project.KeyPerson;
 import com.ccoa.project.MajorCompany;
 import com.ccoa.project.Project;
 import com.ccoa.project.Property;
+import com.ccoa.recommend.Recommend;
 import com.ccoa.utils.EncryptionUtil;
 import com.ccoa.utils.StringUtils;
 import com.jfinal.core.Controller;
@@ -57,6 +58,8 @@ public class IndexController extends Controller {
 		if (company != null) {
 			userName = company.getStr("Username");
 		}
+
+		//推荐人登录
 
 		String type = getPara("type"); // 1表示 新闻模块 2 表示模板下载 3表示科技奖 4表示其他奖
 		if (type != null) {
@@ -485,12 +488,42 @@ public class IndexController extends Controller {
 						EncryptionUtil.md5Encrypt(password));
 				if (company == null) {
 					renderText("用户名或密码错误！");
-				} else if( company.get("status")==null){
-					renderText("资格审查中！");
-				}else if( company.getInt("status")!=1){
-					renderText("审查不通过！");
 				}else {
 					setSessionAttr(Constants.Company_User_Session, company);
+					int loginMaxAge = 30 * 24 * 60 * 60; // 定义账户密码的生命周期，这里是一个月。单位为秒
+					if (StringUtils.isNotEmpty(remb)) // 需要记住密码
+					{
+						CookieTool.addCookie(response, "companyName", username,
+								loginMaxAge);
+						CookieTool.addCookie(response, "companyPwd", password,
+								loginMaxAge);
+						// System.out.println("打印保存的用户名:"+CookieTool.getCookieByName(request,
+						// "adminName").getValue());
+					} else {
+						Cookie cokLoginName = CookieTool.getCookieByName(
+								request, "companyName");
+						Cookie cokLoginPwd = CookieTool.getCookieByName(
+								request, "companyPwd");
+						// 清空
+						if (cokLoginName != null && cokLoginPwd != null
+								&& cokLoginName.getValue() != null
+								&& cokLoginPwd.getValue() != null) {
+
+							CookieTool.addCookie(response, "companyName", null,
+									0); // 清除Cookie
+							CookieTool.addCookie(response, "companyPwd", null,
+									0); // 清除Cookie
+						}
+					}
+					redirect("/project");
+				}
+			}else if(type.equals("recommend")){
+				Recommend recommend = Recommend.me.login(username,
+						EncryptionUtil.md5Encrypt(password));
+				if (recommend == null) {
+					renderText("用户名或密码错误！");
+				}else {
+					setSessionAttr(Constants.Company_User_Session, recommend);
 					int loginMaxAge = 30 * 24 * 60 * 60; // 定义账户密码的生命周期，这里是一个月。单位为秒
 					if (StringUtils.isNotEmpty(remb)) // 需要记住密码
 					{
@@ -527,6 +560,7 @@ public class IndexController extends Controller {
 		removeSessionAttr(Constants.Admin_User_Session);
 		removeSessionAttr(Constants.Company_User_Session);
 		removeSessionAttr(Constants.Expert_User_Session);
+		removeSessionAttr(Constants.Company_User_Recommend);
 		removeSessionAttr(Constants.SESSION_USER_TYPE);
 		redirect("/");
 	}
