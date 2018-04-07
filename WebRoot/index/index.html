@@ -61,13 +61,11 @@
 <![endif]-->
 
 
-<title>中国航空学会科技奖励系统</title>
+<title>人工智能与经济实体深度融合百佳创新项目申报系统</title>
 </head>
 
 <body>
-	wewewewe
-	<#if userName !=""> <#include "/common/_header.html"/> <@header
-	username=userName detailUrl="${ctx_path}/admin/userDetail"/> <#else>
+	<#if userName !=""> <#include "/common/_header.html"/> <@header username=userName detailUrl="${ctx_path}/admin/userDetail"/> <#else>
 	<!-- 未登录的情况 -->
 	<div id="header" class="png_bg">
 		<div id="head_wrap" class="container_12">
@@ -91,6 +89,7 @@
 							<li><a href="${ctx_path}/project">申报平台</a></li>
 							<li><a href="${ctx_path}/projectreview">专家平台</a></li>
 							<li><a href="${ctx_path}/technology/groupexpert/indexzj">管理平台</a></li>
+							<li><a href="${ctx_path}/technology/groupexpert/indexzj">推荐单位平台</a></li>
 						</ul>
 
 					</div>
@@ -99,7 +98,8 @@
 			</div>
 		</div>
 	</div>
-	<div id="sub_nav"></div></#if>
+	<div id="sub_nav"></div>
+</#if>
 
 	<div class="container_12">
 
@@ -214,88 +214,6 @@
 			</div>
 		</div>
 		<div class="clear"></div>
-	</div>
-
-	<div class="container_12">
-
-		<div class="grid_7" style=" margin-top:23px;">
-			<div class="tab_menu">
-				<ul>
-					<li class="selected" id="kjjdj" onclick="jx(1);">航空科技奖</li>
-					<li id="qtdj" onclick="jx(2);">其他奖励与评估</li>
-				</ul>
-			</div>
-
-			<div class="tab_box">
-				<div class="tjzw" id="kjj">
-					<div class="list">
-						<ul>
-							<#list WinningPage.getList() as x>
-							<li><a href="${ctx_path}/index/winningSee?parentID=${x.id!}">${x.winName!}</a>
-							</li>
-							</#list>
-						</ul>
-					</div>
-					<#include "/common/_paginateIndex.html" />
-					<@paginate currentPage=WinningPage.pageNumber
-					totalPage=WinningPage.totalPage type=3
-					actionUrl="${ctx_path}/index" />
-				</div>
-				<div class="tjzw hide" id="qt">
-					<div class="list">
-						<ul>
-							<#list baseinfoPage.getList() as x>
-							<li><a
-								href="${ctx_path}/index/reciewResult?baseinfoID=${x.id!}">${x.Year!}年${x.Name!}评审结果</a>
-							</li>
-							</#list>
-						</ul>
-					</div>
-					<#include "/common/_paginateIndex.html" />
-					<@paginate currentPage=baseinfoPage.pageNumber
-					totalPage=baseinfoPage.totalPage type=4
-					actionUrl="${ctx_path}/index" />
-				</div>
-
-				<div class="tjzw hide">
-					<div class="list">
-						<ul>
-							<#list newsPage.getList() as x>
-							<li><a href="">${x.NewsTitle!}</a> <span>${x.NewsDate!}</span>
-							</li>
-							</#list>
-						</ul>
-					</div>
-					<#include "/common/_paginateIndex.html" />
-					<@paginate currentPage=newsPage.pageNumber
-					totalPage=newsPage.totalPage type=1 actionUrl="${ctx_path}/index"
-					/>
-				</div>
-			</div>
-
-		</div>
-
-
-		<div class="grid_5" style=" margin-top:6px;">
-			<div class="title">
-				<h2>模板下载</h2>
-			</div>
-
-			<div class="list">
-				<ul>
-					<#list templatePate.getList() as x>
-					<li><a href="${ctx_path}/index/templateOut?id=${x.id!}">
-							${x.Title!} </a></li>
-					</#list>
-				</ul>
-			</div>
-			<#include "/common/_paginateIndex.html" />
-			<@paginate currentPage=templatePate.pageNumber
-			totalPage=templatePate.totalPage type=2 actionUrl="${ctx_path}/index"
-			/>
-
-		</div>
-
 	</div>
 </body>
 </html>
