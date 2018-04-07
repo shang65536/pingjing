@@ -5,6 +5,18 @@ import com.jfinal.core.Controller;
 
 public class RecommendController extends Controller {
 
+
+    public void index() {
+        Recommend user = (Recommend) getSessionAttr(Constants.Company_User_Recommend);
+        // setAttr("companyPage", Company.me.paginate(getParaToInt(0, 1),
+        // 10,getPara(1),getPara(2)));
+        if (user == null) {
+            redirect("/");
+        } else {
+            render("edit.html");
+        }
+    }
+
     /**
      * 编辑推荐人信息
      */
