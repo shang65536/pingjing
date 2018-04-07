@@ -1,5 +1,7 @@
 package com.ccoa.company;
 
+import com.ccoa.area.Area;
+import com.ccoa.centralenterprises.CentrlaEnterprises;
 import org.apache.log4j.Logger;
 
 import com.ccoa.admin.UserController;
@@ -8,6 +10,8 @@ import com.ccoa.interceptor.CompanyUserInterceptor;
 import com.ccoa.utils.EncryptionUtil;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
+
+import java.util.List;
 
 /**
  * companyController 所有 sql 与业务逻辑写在 Model 或 Service 中
@@ -208,5 +212,20 @@ public class CompanyController extends Controller {
 			renderJson("success", true);
 		}
 	}
-	
+
+	public  void getArea()
+    {
+        List<Area> areas = Area.me.getArea();
+        setAttr("areas", areas);
+    }
+
+    /**
+     * 获取央企列表
+     */
+    public void getCentralEnerprises() {
+        String param = getPara("param");
+        List<CentrlaEnterprises> centrlaEnterprises = CentrlaEnterprises.me.search(param);
+        setAttr("CentrlaEnterprises", centrlaEnterprises);
+    }
+
 }
