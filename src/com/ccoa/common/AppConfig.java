@@ -146,7 +146,7 @@ public class AppConfig extends JFinalConfig {
 	 */
 	public  void centralenertprises(Routes me)
 	{
-		me.add("/centralenertprises",CentrlaEnterprisesController.class);
+		 me.add("/centralenertprises",CentrlaEnterprisesController.class);
 	}
 
 	//首页路由

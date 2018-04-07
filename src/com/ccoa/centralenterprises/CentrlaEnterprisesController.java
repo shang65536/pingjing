@@ -12,6 +12,8 @@ public class CentrlaEnterprisesController extends Controller {
     public void getCentralEnerprises() {
         String param = getPara("param");
         List<CentrlaEnterprises> centrlaEnterprises = CentrlaEnterprises.me.search(param);
-        setAttr("CentrlaEnterprises", centrlaEnterprises);
+        //setAttr("CentrlaEnterprises", centrlaEnterprises);
+
+        renderJson("success", centrlaEnterprises);
     }
 }
