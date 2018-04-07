@@ -216,7 +216,8 @@ public class CompanyController extends Controller {
 	public  void getArea()
     {
         List<Area> areas = Area.me.getArea();
-        setAttr("areas", areas);
+      //  setAttr("areas", areas);
+		renderJson("success", areas);
     }
 
     /**
@@ -225,7 +226,8 @@ public class CompanyController extends Controller {
     public void getCentralEnerprises() {
         String param = getPara("param");
         List<CentrlaEnterprises> centrlaEnterprises = CentrlaEnterprises.me.search(param);
-        setAttr("CentrlaEnterprises", centrlaEnterprises);
+        //setAttr("CentrlaEnterprises", centrlaEnterprises);
+		renderJson("success", centrlaEnterprises);
     }
 
 }
