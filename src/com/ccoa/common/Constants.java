@@ -12,6 +12,8 @@ public class Constants {
 	public static final String Company_User_Session = "company_user_session";
 	// 评审专家
 	public static final String Expert_User_Session = "expert_user_session";
+	//推荐企业
+	public  static  final	 String Company_User_Recommend="company_user_recommend";
 	// 回调地址
 	public static final String BEFORE_URL = "before_url";
 	// 开发模式
