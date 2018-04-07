@@ -37,23 +37,32 @@ public class CompanyController extends Controller {
 			String LinkmanPhone = getPara("LinkmanPhone");
 			String Email = getPara("Email");
 			String CompanyName = getPara("CompanyName");
-			String CompanyAddress = getPara("CompanyAddress");
+			String AffiliatedArea = getPara("AffiliatedArea");
 			String ZipCode = getPara("ZipCode");
 			String CompanyPhone = getPara("CompanyPhone");
-			String CompanyFax = getPara("CompanyFax");
-			String IsMember = getPara("IsMember");
-			String MemberCode = getPara("MemberCode");
+			//String CompanyFax = getPara("CompanyFax");
+			String IsCentralEnterprises = getPara("IsCentralEnterprises");
+			String CreditCode = getPara("CreditCode");
+
 			String Note = getPara("Note");
-			String AccountType = getPara("AccountType");
+			String AreaCode = getPara("AreaCode");
+			String CentralEnterprisesName = getPara("CentralEnterprisesName");
+			String CentralEnterprisesCode = getPara("CentralEnterprisesCode");
+
 			Company company = Company.me.findById(id);
 			company.set("LinkmanName", LinkmanName)
-					.set("LinkmanPhone", LinkmanPhone).set("Email", Email)
+					.set("LinkmanPhone", LinkmanPhone)
+					.set("Email", Email)
 					.set("CompanyName", CompanyName)
-					.set("CompanyAddress", CompanyAddress)
-					.set("ZipCode", ZipCode).set("CompanyPhone", CompanyPhone)
-					.set("CompanyFax", CompanyFax).set("IsMember", IsMember)
-					.set("MemberCode", MemberCode).set("Note", Note)
-					.set("AccountType", AccountType).update();
+					.set("AffiliatedArea", AffiliatedArea)
+					.set("ZipCode", ZipCode)
+					.set("CompanyPhone", CompanyPhone)
+					.set("IsCentralEnterprises", IsCentralEnterprises)
+					.set("CreditCode", CreditCode)
+					.set("Note", Note)
+					.set("AreaCode", AreaCode)
+					.set("CentralEnterprisesName", CentralEnterprisesName)
+					.set("CentralEnterprisesCode",CentralEnterprisesCode).update();
 			renderText("修改成功！");
 		}
 	}
