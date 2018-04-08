@@ -461,7 +461,7 @@ public class ProjectController extends BaseController {
                     render("step/step" + (step + 1) + ".html");
                     break;
 
-                case 2:// 项目详细内容更新
+                case 2:// 申报项目基本情况
                     p.set("Content", getPara("Content"))
                             .set("Content1", getPara("Content1"))
                             .set("Content2", getPara("Content2"))
@@ -472,28 +472,44 @@ public class ProjectController extends BaseController {
                     setAttr("step", step + 1); // 用于页面导航条 判断是否默认样式
                     render("step/step" + (step + 1) + ".html");
                     break;
-                case 3:// 应用情况更新
-                    p.set("AppSituation", getPara("AppSituation")).set("Step", "7") // 已完成步骤
+                case 3:// 申报项目实施情况
+                    p.set("ImplementationPlans", getPara("ImplementationPlans"))
+                            .set("CurrentSituation", getPara("CurrentSituation"))
+                            .set("StartingPlan", getPara("StartingPlan"))
+                            .set("Step", "7") // 已完成步骤
                             .update();
 
                     // 调用经济效益列表
                     Economies es = new Economies();
                     setAttr("EcList",
                             es.selectEconmiesbyId(getParaToInt(0, 1), 20, id));
+
+                    List<Accessory> zylzsfyjList = Accessory.me.selectAybyIdType(id, "申报单位相关荣誉证明材料");
+                    setAttr("zylzsfyjList", zylzsfyjList);
+                    List<Accessory> btryyqkjsfjyList = Accessory.me.selectAybyIdType(id, "申报单位研发能力证明材料");
+                    setAttr("btryyqkjsfjyList", btryyqkjsfjyList);
+                    List<Accessory> kxpjzmList = Accessory.me.selectAybyIdType(id, "申报单位研发能力证明材料");
+                    setAttr("kxpjzmList", kxpjzmList);
+                    List<Accessory> jspjzmList = Accessory.me.selectAybyIdType(id, "申报单位研发投入证明材料");
+                    setAttr("jspjzmList", jspjzmList);
+                    List<Accessory> yyzmList = Accessory.me.selectAybyIdType(id, "项目的平台架构、关键技术等获得专利、标准、知识产权的相关证明材料");
+                    setAttr("yyzmList", yyzmList);
+                    List<Accessory> qtzmList = Accessory.me.selectAybyIdType(id, "项目的推广效果证明材料");
+                    setAttr("qtzmList", qtzmList);
                     setAttr("id", id);
                     setAttr("p", p);
                     setAttr("step", step + 1); // 用于页面导航条 判断是否默认样式
                     render("step/step" + (step + 1) + ".html");
                     break;
 
-                case 4:// 上传附件后提交
+                case 4:// 证明材料提交
                     p.set("Step", "4").update();
                     setAttr("id", id);
                     setAttr("step", step+1); // 用于页面导航条 判断是否默认样式
                     render("step/step" + (step + 1) + ".html");
                     break;
 
-                case 5:// 推荐单位意见更新
+                case 5:// 企业责任声明
                     // 上传附件
                     UploadFile fileyj = getFile("Recommended",
                             PathKit.getWebRootPath() + "/upload/dwyj",
@@ -506,18 +522,6 @@ public class ProjectController extends BaseController {
 
                     p.set("Recommended", pathyj).set("Step", "5").update();
 
-//                    List<Accessory> zylzsfyjList = Accessory.me.selectAybyIdType(id, "申报单位相关荣誉证明材料");
-//                    setAttr("zylzsfyjList", zylzsfyjList);
-//                    List<Accessory> btryyqkjsfjyList = Accessory.me.selectAybyIdType(id, "申报单位研发能力证明材料");
-//                    setAttr("btryyqkjsfjyList", btryyqkjsfjyList);
-//                    List<Accessory> kxpjzmList = Accessory.me.selectAybyIdType(id, "申报单位研发能力证明材料");
-//                    setAttr("kxpjzmList", kxpjzmList);
-//                    List<Accessory> jspjzmList = Accessory.me.selectAybyIdType(id, "申报单位研发投入证明材料");
-//                    setAttr("jspjzmList", jspjzmList);
-//                    List<Accessory> yyzmList = Accessory.me.selectAybyIdType(id, "项目的平台架构、关键技术等获得专利、标准、知识产权的相关证明材料");
-//                    setAttr("yyzmList", yyzmList);
-//                    List<Accessory> qtzmList = Accessory.me.selectAybyIdType(id, "项目的推广效果证明材料");
-                    //setAttr("qtzmList", qtzmList);
 
                     setAttr("recommended", fileyjName);
                     setAttr("id", id);
