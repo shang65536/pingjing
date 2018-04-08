@@ -10,6 +10,6 @@ public class AreaController extends Controller {
      */
     public void getArea() {
         List<Area> areas = Area.me.getArea();
-        setAttr("areas", areas);
+        renderJson("success", areas);
     }
 }

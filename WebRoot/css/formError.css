@@ -1,0 +1,31 @@
+input.input-validation-error {
+    border: 1px solid #ff0000 !important;
+}
+
+textarea.input-validation-error {
+    border: 1px solid #ff0000 !important;
+}
+
+select.input-validation-error {
+    border: 1px solid #ff0000 !important;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #ff0000 !important;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.field-validation-error {
+    color: #ff0000 !important;
+}
+
+.field-validation-valid {
+    display: none;
+}

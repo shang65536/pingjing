@@ -1,7 +1,9 @@
 package com.ccoa.recommend;
 
 import com.ccoa.common.Constants;
+import com.ccoa.company.Company;
 import com.jfinal.core.Controller;
+import com.ccoa.utils.EncryptionUtil;
 
 public class RecommendController extends Controller {
 
@@ -13,6 +15,7 @@ public class RecommendController extends Controller {
         if (user == null) {
             redirect("/");
         } else {
+            setAttr("recommend", user);
             render("edit.html");
         }
     }
@@ -22,9 +25,10 @@ public class RecommendController extends Controller {
      */
     public void edit() {
         String method = getRequest().getMethod();
-        Integer id = getParaToInt("id");
+        Recommend user = (Recommend) getSessionAttr(Constants.Company_User_Recommend);
+
         if (method.equalsIgnoreCase(Constants.RequestMethod.GET)) {
-            setAttr("recommend", Recommend.me.findById(id));
+            setAttr("recommend", user);
             render("edit.html");
         } else if (method.equalsIgnoreCase(Constants.RequestMethod.POST)) {
             String PassWord = getPara("PassWord");
@@ -33,12 +37,14 @@ public class RecommendController extends Controller {
             String LinkPhone = getPara("LinkPhone");
             String Email = getPara("Email");
 
-            Recommend recommend = Recommend.me.findById(id);
-            recommend.set("PassWord", PassWord)
-                    .set("LinkUserName", LinkUserName)
+            if (!user.get("PassWord").equals(PassWord)) {
+                user.set("PassWord", EncryptionUtil.md5Encrypt(PassWord));
+            }
+            user.set("LinkUserName", LinkUserName)
                     .set("LinkPhone", LinkPhone)
                     .set("Email", Email).update();
-            renderText("修改成功！");
+
+            renderJson("success", true);
         }
     }
 
