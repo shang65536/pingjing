@@ -89,7 +89,7 @@
 							<li><a href="${ctx_path}/project">申报平台</a></li>
 							<li><a href="${ctx_path}/projectreview">专家平台</a></li>
 							<li><a href="${ctx_path}/technology/groupexpert/indexzj">管理平台</a></li>
-							<li><a href="${ctx_path}/technology/groupexpert/indexzj">推荐单位平台</a></li>
+							<li><a href="${ctx_path}/recommend">推荐单位平台</a></li>
 						</ul>
 
 					</div>
@@ -126,6 +126,7 @@
 				<li><a href="#tab1">申报单位</a></li>
 				<li><a href="#tab2">总会管理</a></li>
 				<li><a href="#tab3">专家登陆</a></li>
+				<li><a href="#tab4">推荐单位</a></li>
 			</ul>
 
 
@@ -188,26 +189,52 @@
 				<!-- 专家登陆平台登录框 -->
 				<div id="tab3" class="tab_content">
 					<form class="dl_loginform" id="expert_from"
-						action="${ctx_path}/login" method="post">
+						  action="${ctx_path}/login" method="post">
 						<input type="hidden" name="type" value="expert" />
 						<ul>
 							<li><input type="text" name="username" class="username"
-								value="${(expertName?? && expertName !="
+									   value="${(expertName?? && expertName !="
 								")?string("${expertName!}","用户名")}"  onfocus="this.value=''"
 								onblur="if(this.value==''){this.value='用户名'}" /></li>
 							<li><input type="password" name="password" class="password"
-								value="${(expertPwd?? && expertPwd !="
+									   value="${(expertPwd?? && expertPwd !="
 								")?string("${expertPwd!}","")}"  onfocus="this.value=''"
 								onblur="if(this.value==''){this.value=''}" /></li>
 							<!--       <li><div class="d_buto"><span><input type="checkbox" checked='checked' name="remb" class="remb">&nbsp;&nbsp;记住密码</span><a href="javascript:openWin('expert')">忘记密码？</a></div></li> -->
 							<li><div class="d_buto">
 									<span><input type="checkbox" checked='checked'
-										name="remb" class="remb">&nbsp;&nbsp;记住密码</span><a
-										href="${ctx_path}/company/newpassword">忘记密码？</a>
-								</div></li>
+												 name="remb" class="remb">&nbsp;&nbsp;记住密码</span><a
+									href="${ctx_path}/company/newpassword">忘记密码？</a>
+							</div></li>
 							<li><a
-								onclick="document.getElementById('expert_from').submit();"
-								class="login" title="登陆">登陆</a></li>
+									onclick="document.getElementById('expert_from').submit();"
+									class="login" title="登陆">登陆</a></li>
+						</ul>
+					</form>
+				</div>
+				<!-- 推荐单位平台登录框 -->
+				<div id="tab4" class="tab_content">
+					<form class="dl_loginform" id="recommend_from"
+						  action="${ctx_path}/login" method="post">
+						<input type="hidden" name="type" value="recommend" />
+						<ul>
+							<li><input type="text" name="username" class="username"
+									   value="${(recoName?? && recoName !="
+								")?string("${expertName!}","用户名")}"  onfocus="this.value=''"
+								onblur="if(this.value==''){this.value='用户名'}" /></li>
+							<li><input type="password" name="password" class="password"
+									   value="${(recoPwd?? && recoPwd !="
+								")?string("${expertPwd!}","")}"  onfocus="this.value=''"
+								onblur="if(this.value==''){this.value=''}" /></li>
+							<!--       <li><div class="d_buto"><span><input type="checkbox" checked='checked' name="remb" class="remb">&nbsp;&nbsp;记住密码</span><a href="javascript:openWin('expert')">忘记密码？</a></div></li> -->
+							<li><div class="d_buto">
+									<span><input type="checkbox" checked='checked'
+												 name="remb" class="remb">&nbsp;&nbsp;记住密码</span><a
+									href="${ctx_path}/company/newpassword">忘记密码？</a>
+							</div></li>
+							<li><a
+									onclick="document.getElementById('recommend_from').submit();"
+									class="login" title="登陆">登陆</a></li>
 						</ul>
 					</form>
 				</div>

@@ -17,7 +17,8 @@
                             <li><a href="${ctx_path}/index">首页 </a></li>
                             <li><a href="${ctx_path}/project" ${(session_user_type?? && session_user_type=="company")?string("class='active'", "")}>申报平台</a></li>
                             <li><a href="${ctx_path}/projectreview" ${(session_user_type?? && session_user_type=="expert")?string("class='active'", "")}>专家平台</a></li>
-                            <li><a href="${ctx_path}/technology/groupexpert/indexzj" ${(session_user_type?? && session_user_type=="admin")?string("class='active'", "")}>管理平台</a></li>  
+                            <li><a href="${ctx_path}/technology/groupexpert/indexzj" ${(session_user_type?? && session_user_type=="admin")?string("class='active'", "")}>管理平台</a></li>
+                            <li><a href="${ctx_path}/recommend" ${(session_user_type?? && session_user_type=="recommend")?string("class='active'", "")}>推荐单位平台</a></li>
                         </ul>
                    </div>
                     
