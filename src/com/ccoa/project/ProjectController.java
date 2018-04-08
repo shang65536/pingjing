@@ -1151,7 +1151,7 @@ public class ProjectController extends BaseController {
     // 下载单位推荐意见模板
     public void rcNoteOut() throws Exception {
         renderFile(new File(PathKit.getWebRootPath()
-                + "/upload/project/doc/rcNote.docx"));
+                + "/upload/project/doc/rcNote.doc"));
     }
 
     // 下载项目基本情况 保存到wrod
