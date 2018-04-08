@@ -4,109 +4,81 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
-           <!--[if lte IE 6]>
-<script type="text/javascript" src="${ctx_path}/js/DD_belatedPNG_0.0.8a.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/kindeditor/kindeditor.js"></script>
+<script type="text/javascript">
+    var isSub = true;
+	//加载富文本 
+	KindEditor.ready(function(KE) {
+		var editor = KE.create('textarea[name="AppSituation"]', 
+		    {
+			uploadJson : '${ctx_path}/js/kindeditor/jsp/upload_json.jsp',
+			urlType:'domain',
+			allowImageRemote : false,
+			afterChange : function(){
+			  $('#ts1').html(this.count('text'));  //验证输入字符数  字数统计包含纯文本、IMG、EMBED，不包含换行符，IMG和EMBED算一个文字
+		      //限制字数
+		      var limitNum = 800;  //设定限制字数
+		      var pattern = '还可以输入' + limitNum + '字'; 
+		      $('#ts2').html(pattern); //输入显示
+		      if(this.count('text') > limitNum) {
+		           pattern = ('字数超过限制，请适当删除部分内容');
+			       //超过字数限制自动截取
+			      /*  var strValue = editor.text();
+			       strValue = strValue.substring(0,limitNum);
+			       editor.text(strValue); */  
+		           isSub = false;
+		       } else {
+			       //计算剩余字数
+			       var result = limitNum - this.count('text'); 
+			       pattern = '还可以输入' +  result + '字';
+			       isSub = true;
+		       }
+		       $('#ts2').html(pattern); //输入显示
+			},
+			afterBlur: function () { 
+				this.sync();
+			}
+			
+		});
+	});
+	
+    function check()
+    {
+ 	     var content11=document.getElementById("content11").value;
+ 	     if(content11=="")
+ 	     {
+ 	    	 alert("应用情况不能为空!");
+ 	    	 return false;
+ 	     }
+ 	   /*  if(!isSub){
+	    	 alert("字数超过限制，请适当删除部分内容");
+	    	 return false;
+	     } */
+    }
+    
+    function load()
+    {
+    	//申报状态是否已结束  如果结束 不能提交操作
+    	//  var StatusSb='${prize.StatusSb!}';
+    	//  if(StatusSb=='0')  //结束  隐藏申报按钮
+    	 // {
+    	//	 $(document.getElementById("add")).hide();
+    	 // }
+    	  var status='${project.Status!}'; //等于0未提交 3形式审查未审核通过的项目 才能操作 
+    	  if(status !='0' && status!='3')
+    	  {
+    		  $(document.getElementById("add")).hide();
+    	  }
+    }
+  
+  </script>
+             <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
     <script type="text/javascript">
         DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
     </script>
 <![endif]--> 
-<title>项目申报--主要完成人员</title>
-<script type="text/javascript">
-//实现全选与不选
- function  checkAll(o)   
- {   
-      var  a  =  document.getElementsByName("checkbox");   
-      for  (var  i=0;  i<a.length;  i++){   
-          a[i].checked  =  o.checked;   
-      }   
-
- }
- function  checkOne(o)   
- {   
-      var b =true;
-      if(o.checked){
-    	 var  a  =  document.getElementsByName("checkbox");
-    	 for  (var  i=0;  i<a.length;  i++){ 
-    		 if(!a[i].checked){
-    			b = false; 
-    			 break; 
-    		 }    		   		  
-         }
-    	 document.getElementById("checkbox").checked  =  b;  
-    	  
-      }else{
-		 document.getElementById("checkbox").checked = o.checked;    	  
-      }
- } 
- //
- //删除
- function delKP()
- {
-	 var check = document.getElementsByName("checkbox");
-	 var len=check.length;
-	 var idAll="";
-	 for(var i=0;i<len;i++)
-	 {
-		 if(check[i].checked)
-		 {
-			 idAll+=check[i].value+",";
-		 }
-		 
-	 }
-	 if(idAll=="")
-	 {
-		 alert("请选择要删除的数据！");
-	 }else
-     {
-		 idAll=idAll.substr(0, idAll.length-1);
-		 location.href='${ctx_path}/project/delKP?ProjectID=${id}&ids='+idAll; 
-     }
-	 
- }
-
- //跳转到下一步
- function NextKP()
- {
-	 var nk=${KPList.getList().size()};
-	 if(nk>0)
-	 {
-		 //跳转到下一步
-		 location.href='${ctx_path}/project/step4?ProjectID=${id}'; 
-	 }else
-	 {
-		 alert("请添加该项目主要完成人员!");
-	 }
- }
- 
- function load()
- {
-	//申报状态是否已结束  如果结束 不能提交操作
-	//  var StatusSb='${prize.StatusSb!}';
-	 // if(StatusSb=='0')  //结束  隐藏申报按钮
-	//  {
-		 //$(document.getElementById("add")).hide();
-		// $(document.getElementById("del")).hide();
-	//	 $(document.getElementById("add"));
-	//	 $(document.getElementById("del"));
-	//  }
-	  var status='${project.Status!}'; //等于0未提交 3形式审查未审核通过的项目 才能操作 
-	  if(status !='0' && status!='3')
-	  {
-		 // $(document.getElementById("add"));
-	     // $(document.getElementById("del"));
-	      $(document.getElementById("add")).hide();
-	     $(document.getElementById("del")).hide();
-	  }
-	  var ts='${ts!}';
-		 if(ts!=""){
-			alert(ts); 
-		 }
- }
-
-</script>
-
- 
-
+<title>无标题文档</title>
 </head>
 
 <body onload="load()">
@@ -116,66 +88,26 @@
 <div class="container_12">
     
 	<#include "/project/_step_topmenu.html"/>
-	
-     <div class="clearfix">&nbsp;</div>
-      <h5><b>主要完成人员</b></h5>
-      
-    <table class="table01" width="100%" border="0" cellpadding="0" cellspacing="0">
-    <thead>
-        <tr>
-        <td colspan="10">
-        <#if project.Status==0 || project.Status==3>
-        <input type="submit" id="add" onclick="location.href='${ctx_path}/project/step3_xz?ProjectID=${id}'" class="submit01" value="增加" />
-        <input type="button" id="del" class="submit01" onclick="delKP()" value="删除" /> 
-        
-        </#if>
-        </td></tr></thead>
-        <tr>        
-            <th width="5%" scope="col">
-            <input type="checkbox" name="checkboxF" id="checkbox" class="checkall" onclick="checkAll(this)" /></th>
+    <div class="clearfix">&nbsp;</div>
+    
+    <form action="${ctx_path}/project/apply" method="post" onSubmit="return check()">
             
-            <th width="10%" scope="col">排名</th>
-            <th width="10%" scope="col">姓名</th>
-            <th width="10%" scope="col">党派名称</th>
-            <th width="12%" scope="col">工作单位</th>
-            <th width="10%" scope="col">联系电话</th>
-            <th width="11%" scope="col">邮箱</th>
-            <th width="10%" scope="col">文化程度</th>
-            <th width="10%" scope="col">学位</th>
-            <th width="12%" scope="col">毕业学校</th>
-        </tr>
-        
-        <#list KPList.getList() as x>
-        <tr>
-        
-            <td scope="col"><input type="checkbox" name="checkbox" id="checkbox${x.id}" value="${x.id}" onclick="checkOne(this)"/></td>
-            <td scope="col">
-            ${x_index+1}&nbsp;&nbsp;
-             <#if x_index!=0>
-            <a href="${ctx_path}/project/shengXuKP?ProjectID=${id}&Sort=${x.Sort!}&id=${x.id}"><img src="${ctx_path}/images/shengxu.jpg" alt="向上" /></a>
-            </#if>
-            </td> 
-            <td scope="col"><a href="${ctx_path}/project/step3_xz?ProjectID=${id}&id=${x.id}">${x.Name!}</a></td>
-            <td scope="col">${x.Parties!}</td>
-            <td scope="col">${x.Company!}</td>
-            <td scope="col">${x.ContactPhone!}</td>
-            <td scope="col">${x.EMail!}</td>
-            <td scope="col">${x.Education!}</td>
-            <td scope="col">${x.Degree!}</td>
-            <td scope="col">${x.School!}</td>
-        </tr>     
-        </#list>
-
-    </table>
-       
-     
-  <div class="anniu">
-  <#if project.Status==0 || project.Status==3>
-  <a  onclick="NextKP()" class="login" title="保存" >下一步</a>
-  </#if>
-  <a href="${ctx_path}/project/toKpExcel?ProjectID=${id}" class="register" title="导出" >导出</a> 
-  <a href="javascript:history.go(-1)" class="register" title="返回" >返回</a></div>
-
+         <input type="hidden" name="step" value='7'/> 
+         <input type="hidden" name="id" value='${id}' />
+         
+      <h5><b>应用情况（不超过800个汉字）</b></h5>
+      
+    
+       <textarea id="content11" name="AppSituation" style="width:1010x;height:400px;visibility:hidden;">${p.AppSituation!}</textarea>
+       <div>
+                                    您当前输入了<span  id="ts1">0</span>个字 ,  
+            <span  id="ts2"></span>
+          </div>  
+     <div class="anniu"><input type="submit" id="add" class="register"  value="保存" >
+     <a href="javascript:history.go(-1)" class="register" title="返回" >返回</a>
+     <!-- <a href="" class="register" title="导出" >导出</a> -->
+     </div>
+  </form>
 </div>
 </body>
 </html>

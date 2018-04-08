@@ -4,110 +4,34 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
-           <!--[if lte IE 6]>
-<script type="text/javascript" src="${ctx_path}/js/DD_belatedPNG_0.0.8a.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/kindeditor/kindeditor.js"></script>
+
+             <!--[if lte IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
     <script type="text/javascript">
         DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
     </script>
 <![endif]--> 
-<title>项目申报--主要完成单位</title>
+
 <script type="text/javascript">
-//实现全选与不选
- function  checkAll(o)   
- {   
-      var  a  =  document.getElementsByName("checkbox");   
-      for  (var  i=0;  i<a.length;  i++){   
-          a[i].checked  =  o.checked;   
-      }   
 
- }
- 
- function  checkOne(o)   
- {   
-      var b =true;
-      if(o.checked){
-    	 var  a  =  document.getElementsByName("checkbox");
-    	 for  (var  i=0;  i<a.length;  i++){ 
-    		 if(!a[i].checked){
-    			b = false; 
-    			 break; 
-    		 }    		   		  
-         }
-    	 document.getElementById("checkbox").checked  =  b;  
-    	  
-      }else{
-		 document.getElementById("checkbox").checked = o.checked;    	  
-      }
- } 
- //删除
- function delMc()
- {
-	 var check = document.getElementsByName("checkbox");
-	 var len=check.length;
-	 var idAll="";
-	 for(var i=0;i<len;i++)
-	 {
-		 if(check[i].checked)
-		 {
-			 idAll+=check[i].value+",";
-		 }
-		 
-	 }
-	 if(idAll=="")
-	 {
-		 alert("请选择要删除的数据！");
-	 }else
-     {
-		 idAll=idAll.substr(0, idAll.length-1);
-		 location.href='${ctx_path}/project/delMC?ProjectID=${id}&ids='+idAll; 
-     }
-	 
- }
-
- //跳转到下一步
- function NextKP()
- {
-	 var nk=${MCList.getList().size()};
-	 if(nk>0)
-	 {
-		 //跳转到下一步
-		 location.href='${ctx_path}/project/step3?ProjectID=${id}'; 
-	 }else
-	 {
-		 alert("请添加该项目主要完成单位!");
-	 }
- }
- 
- function load()
- {
+function load()
+{
 	//申报状态是否已结束  如果结束 不能提交操作
-	 // var StatusSb='${prize.StatusSb!}';
-	  //if(StatusSb=='0')  //结束  隐藏申报按钮
-	  //{
-	//	 $(document.getElementById("add"));
-	//	 $(document.getElementById("del"));
-		// $(document.getElementById("add")).hide();
-		// $(document.getElementById("del")).hide();
+	//  var StatusSb='${prize.StatusSb!}';
+	 // if(StatusSb=='0')  //结束  隐藏申报按钮
+	 // {
+	//	 $(document.getElementById("add")).hide();
 	//  }
-	  
-	 /*  var status='${project.Status!}'; //等于0未提交 3形式审查未审核通过的项目 才能操作 
+	  var status='${project.Status!}'; //等于0未提交 3形式审查未审核通过的项目 才能操作 
 	  if(status !='0' && status!='3')
 	  {
-		  $(document.getElementById("add"));
-		  $(document.getElementById("del"));
-		//  $(document.getElementById("add")).hide();
-		//  $(document.getElementById("del")).hide();
-	  } */
-	 var ts='${ts!}';
-	 if(ts!=""){
-		alert(ts); 
-	 }
- }
- 
+		  $(document.getElementById("add")).hide();
+	  }
+}
 </script>
 
- 
-
+<title>无标题文档</title>
 </head>
 
 <body onload="load()">
@@ -117,58 +41,237 @@
 <div class="container_12">
     
 	<#include "/project/_step_topmenu.html"/>
-	
-     <div class="clearfix">&nbsp;</div>
-      <h5><b>主要完成单位</b></h5>
-      
-    <table class="table01" width="100%" border="0" cellpadding="0" cellspacing="0" id="tb1">
-    <thead>
-        <tr><td colspan="7">       
-        <#if project.Status==0 || project.Status==3>
-        <input type="submit" id="add" onclick="location.href='${ctx_path}/project/step2_xz?ProjectID=${id}'" class="submit01" value="增加" />
-        <input type="button" id="del" class="submit01" onclick="delMc()" value="删除" /> 
-        
-        </#if>
-        </td></tr></thead>
-        <tr>
-        
-            <th width="5%" scope="col">
-            <input type="checkbox" name="checkboxF" id="checkbox" class="checkall" onclick="checkAll(this)" /></th>
+    
+    <div class="clearfix">&nbsp;</div>
+    
+    <form action="${ctx_path}/project/apply" method="post" onSubmit="return check()">
             
-            <th width="8%" scope="col">排名</th>
-            <th width="23%" scope="col">单位名称</th>
-            <th width="25%" scope="col">通讯地址</th>
-            <th width="10%" scope="col">邮政编码</th>
-            <th width="12%" scope="col">项目申报联系人</th>
-            <th width="17%" scope="col">联系电话</th>
-        </tr>
-         <#list MCList.getList() as x>
-        <tr>
-        
-            <td scope="col"><input type="checkbox" name="checkbox" id="checkbox${x.id}" value="${x.id}" onclick="checkOne(this)"/></td>
-            <td scope="col">${x_index+1}&nbsp;&nbsp;
-             <#if x_index!=0>
-            <a href="${ctx_path}/project/shengXuMC?ProjectID=${id}&Sort=${x.Sort!}&id=${x.id}"><img src="${ctx_path}/images/shengxu.jpg" alt="向上" /></a>
-            </#if>
-            </td> 
-            <td scope="col"><a href="${ctx_path}/project/step2_xz?ProjectID=${id}&id=${x.id}">${x.CompanyName!}</a></td>
-            <td scope="col">${x.CompanyAddress!}</td>
-            <td scope="col">${x.ZipCode!}</td>
-            <td scope="col">${x.LinkMan!}</td>
-            <td scope="col">${x.LinkPhone!}</td>
-        </tr>     
-        </#list>
-
-    </table> 
-          <div class="clear"></div>   
-  <div class="anniu">
-  <#if project.Status==0 || project.Status==3>
-  <a onclick="NextKP()" class="login" title="下一步" >下一步</a>
-  </#if>
-   <a href="${ctx_path}/project/toMcExcel?ProjectID=${id}" class="register" title="导出" >导出</a> 
-   <a href="javascript:history.go(-1)" class="register" title="返回" >返回</a>
-  </div>
-
+         <input type="hidden" name="step" value='6'/> 
+         <input type="hidden" name="id" value='${id}' />
+		     
+		      <h5><b>立项背景（不超过800个汉字）</b></h5>
+		      <textarea id="content7" name="Content" style="width:1010px;height:400px;visibility:hidden;">${p.Content!}</textarea>
+          <div>您当前输入了<span  id="ts1">0</span>个字 ,<span  id="ts2"></span></div>
+          
+          <div class="clearfix">&nbsp;</div>
+		      <h5><b>详细科学技术内容</b></h5>
+		      <textarea id="content4" name="Content4" style="width:1010px;height:400px;visibility:hidden;">${p.Content4!}</textarea>
+          
+           <div class="clearfix">&nbsp;</div>
+		      <h5><b>发现/发明及创新点（不超过400个汉字）</b></h5>
+		      <textarea id="content8" name="Content1" style="width:1010px;height:400px;visibility:hidden;">${p.Content1!}</textarea>
+          <div>您当前输入了<span  id="ts3">0</span>个字 ,<span  id="ts4"></span></div>
+          
+          <!-- <div class="clearfix">&nbsp;</div>
+		      <h5><b>保密要点（不超过100个汉字）</b></h5>
+		      <textarea id="content9" name="Content2" style="width:1010px;height:400px;visibility:hidden;">${p.Content2!}</textarea>
+          <div>您当前输入了<span  id="ts5">0</span>个字 ,<span  id="ts6"></span></div> -->
+          <div class="clearfix">&nbsp;</div>
+		      <h5><b>与当前国内外同类研究、同类技术的综合比较（不超过800个汉字）</b></h5>
+		      <textarea id="content10" name="Content3" style="width:1010px;height:400px;visibility:hidden;">${p.Content3!}</textarea>
+          <div>您当前输入了<span  id="ts7">0</span>个字 ,<span  id="ts8"></span></div>
+         
+     <div class="anniu"><input type="submit" id="add" class="register"  value="保存" >
+     <a href="javascript:history.go(-1)" class="register" title="返回" >返回</a>
+     <!-- <a href="" class="register" title="导出" >导出</a> --></div>
+</form>
 </div>
+<script type="text/javascript">
+    var isSub1 = true;
+    var isSub2 = true;
+    var isSub3 = true;
+    var isSub4 = true;
+	//加载富文本 
+	KindEditor.ready(function(KE) {
+		//项目立项 
+		var editor = KE.create('textarea[name="Content"]', 
+		    {
+			uploadJson : '${ctx_path}/js/kindeditor/jsp/upload_json.jsp',
+			urlType:'domain',
+			allowImageRemote : false,
+			afterChange : function(){
+			  $('#ts1').html(this.count('text'));  //验证输入字数  字数统计包含纯文本、IMG、EMBED，不包含换行符，IMG和EMBED算一个文字
+		      //限制字数
+		      var limitNum = 800;  //设定限制字数
+		      var pattern = '还可以输入' + limitNum + '字'; 
+		      $('#ts2').html(pattern); //输入显示
+		      if(this.count('text') > limitNum) {
+		           pattern = ('字数超过限制，请适当删除部分内容');
+		           isSub1 = false;
+			       //超过字数限制自动截取
+			    /*    var strValue = editor.text();
+			       strValue = strValue.substring(0,limitNum);
+			       editor.text(strValue);  */     
+		       } else {
+			       //计算剩余字数
+			       var result = limitNum - this.count('text'); 
+			       pattern = '还可以输入' +  result + '字'; 
+			       isSub1 = true;
+		       }
+		       $('#ts2').html(pattern); //输入显示
+			},
+			afterBlur: function () { 
+				this.sync();
+			}
+			
+		});
+		//详细科学技术内容
+		var editor1 = KE.create('textarea[name="Content4"]', 
+			{
+				uploadJson : '${ctx_path}/js/kindeditor/jsp/upload_json.jsp',
+				urlType:'domain',
+				allowImageRemote : false,
+				afterChange : function(){				 
+				},
+				afterBlur: function () { 
+					this.sync();
+				}
+				
+			});
+		//发现/发明及创新点
+		var editor1 = KE.create('textarea[name="Content1"]', 
+			{
+				uploadJson : '${ctx_path}/js/kindeditor/jsp/upload_json.jsp',
+				urlType:'domain',
+				allowImageRemote : false,
+				afterChange : function(){
+				  $('#ts3').html(this.count('text'));  //验证输入字数  字数统计包含纯文本、IMG、EMBED，不包含换行符，IMG和EMBED算一个文字
+			      //限制字数
+			      var limitNum = 400;  //设定限制字数
+			      var pattern = '还可以输入' + limitNum + '字'; 
+			      $('#ts4').html(pattern); //输入显示
+			      if(this.count('text') > limitNum) {
+			           pattern = ('字数超过限制，请适当删除部分内容');
+				      /*  //超过字数限制自动截取
+				       var strValue = editor1.text();
+				       strValue = strValue.substring(0,limitNum);
+				       editor1.text(strValue); */    
+			           isSub2 = false;
+			       } else {
+				       //计算剩余字数
+				       var result = limitNum - this.count('text'); 
+				       pattern = '还可以输入' +  result + '字'; 
+				       isSub2 = true;
+			       }
+			       $('#ts4').html(pattern); //输入显示
+				},
+				afterBlur: function () { 
+					this.sync();
+				}
+				
+			});
+		
+	/* 	//保密要点
+		var editor2 = KE.create('textarea[name="Content2"]', 
+			{
+				uploadJson : '${ctx_path}/js/kindeditor/jsp/upload_json.jsp',
+				urlType:'domain',
+				allowImageRemote : false,
+				afterChange : function(){
+				  $('#ts5').html(this.count('text'));  //验证输入字数  字数统计包含纯文本、IMG、EMBED，不包含换行符，IMG和EMBED算一个文字
+			      //限制字数
+			      var limitNum = 100;  //设定限制字数
+			      var pattern = '还可以输入' + limitNum + '字'; 
+			      $('#ts6').html(pattern); //输入显示
+			      if(this.count('text') > limitNum) {
+			           pattern = ('字数超过限制，请适当删除部分内容');
+				       //超过字数限制自动截取
+				       // var strValue = editor2.text();
+				       //strValue = strValue.substring(0,limitNum);
+				       //editor2.text(strValue); 
+			           //isSub3 = false;
+				       
+			       } else {
+				       //计算剩余字数
+				       var result = limitNum - this.count('text'); 
+				       pattern = '还可以输入' +  result + '字'; 
+				       isSub3 = true;
+			       }
+			       $('#ts6').html(pattern); //输入显示
+				},
+				afterBlur: function () { 
+					this.sync();
+				}
+				
+			}); */
+		
+		//与当前国内外同类研究、同类技术的综合比较
+		var editor3 = KE.create('textarea[name="Content3"]', 
+			{
+				uploadJson : '${ctx_path}/js/kindeditor/jsp/upload_json.jsp',
+				urlType:'domain',
+				allowImageRemote : false,
+				afterChange : function(){
+				  $('#ts7').html(this.count('text'));  //验证输入字数  字数统计包含纯文本、IMG、EMBED，不包含换行符，IMG和EMBED算一个文字
+			      //限制字数
+			      var limitNum = 800;  //设定限制字数
+			      var pattern = '还可以输入' + limitNum + '字'; 
+			      $('#ts8').html(pattern); //输入显示
+			      if(this.count('text') > limitNum) {
+			           pattern = ('字数超过限制，请适当删除部分内容');
+				       //超过字数限制自动截取
+				      /*  var strValue = editor3.text();
+				       strValue = strValue.substring(0,limitNum);
+				       editor3.text(strValue); */   
+			           isSub4 = false;
+			       } else {
+				       //计算剩余字数
+				       var result = limitNum - this.count('text'); 
+				       pattern = '还可以输入' +  result + '字'; 
+				       isSub4 = true;
+			       }
+			       $('#ts8').html(pattern); //输入显示
+				},
+				afterBlur: function () { 
+					this.sync();
+				}
+				
+			});
+	});
+
+	//提交前验证 
+	function check()
+	{ 
+		 var content7=document.getElementById("content7").value;
+	     if(content7=="" || content7=="<br />")
+	     {
+	    	 alert("立项背景不能为空!");
+	    	return false;
+	     }
+	     var content4=document.getElementById("content4").value;
+	     if(content4=="" || content4=="<br />")
+	     {
+	    	 alert("详细科学技术内容不能为空!");
+	    	return false;
+	     }
+	     
+	     
+	     var content8=document.getElementById("content8").value;
+	     if(content8=="" || content8=="<br />")
+	     {
+	    	 alert("发现/发明及创新点不能为空!");
+	    	return false;
+	     }
+	     
+	   /*   var content9=document.getElementById("content9").value;
+	     if(content9=="" || content9=="<br />")
+	     {
+	    	 alert("保密要点不能为空!");
+	    	return false;
+	     } */
+	     
+	     var content10=document.getElementById("content10").value;
+	     if(content10=="" || content10=="<br />")
+	     {
+	    	 alert("与当前国内外同类研究、同类技术的综合比较不能为空!");
+	    	return false;
+	     }
+	    /*  if(!isSub1||!isSub2||!isSub3||!isSub4){
+ 	    	 alert("字数超过限制，请适当删除部分内容");
+ 	    	 return false;
+ 	     } */
+	}
+    
+  </script>
 </body>
 </html>
