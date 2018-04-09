@@ -170,7 +170,6 @@
                     dataType: 'json',
                     data: companyModel,
                     success: function (data) {
-                        alert(JSON.stringify(data));
                         if (data.success == true || data.success == "true") {
                             alert("修改成功");
                             location.href = "${ctx_path}/company/detail";
