@@ -271,7 +271,12 @@ public class ProjectSetController extends BaseController {
 
         }
         //企业责任声明
-        String recommended = project.getStr("recommended") == null ? "" : project.getStr("recommended");
+        String recommended = project.getStr("Recommended") == null ? "" : project.getStr("Recommended");
+        if(!("").equals(recommended))
+        {
+            int a = recommended.lastIndexOf("/");
+            recommended = recommended.substring(a + 1, recommended.length());
+        }
         content = content.replaceAll("project.recommended", recommended);
         return content;
     }

@@ -244,7 +244,7 @@ public class Project extends Model<Project> {
         selectStr.append("(select Name from project_group sc where sc.id=p.GroupZY) Group_name,p.GroupZY, ");
         selectStr.append("(case when p.Secret='1' then '是' else '否' end ) Secret_name,Secret,SecretTime,PlanFund, ");
         selectStr.append("RecommendCompany,FromTask,FromOther,StartTime,EndTime,ApplyYear,");
-        selectStr.append("ImplementationPlans ,CurrentSituation ,StartingPlan from project p where id =" + id);
+        selectStr.append("ImplementationPlans ,CurrentSituation ,StartingPlan ,Recommended from project p where id =" + id);
 
         return find(selectStr.toString());
     }
