@@ -64,8 +64,8 @@
       <file leaf-file-name="ProjectSetController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/ccoa/admin/set/ProjectSetController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="268" column="72" lean-forward="true" selection-start-line="268" selection-start-column="72" selection-end-line="268" selection-end-column="72" />
+            <state relative-caret-position="412">
+              <caret line="222" column="107" lean-forward="true" selection-start-line="222" selection-start-column="107" selection-end-line="222" selection-end-column="107" />
             </state>
           </provider>
         </entry>
@@ -109,15 +109,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProjectController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/ccoa/project/ProjectController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="286" column="83" lean-forward="true" selection-start-line="286" selection-start-column="15" selection-end-line="286" selection-end-column="83" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="step4.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WebRoot/project/step/step4.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -142,8 +133,8 @@
       <file leaf-file-name="projectAllInfo.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WebRoot/admin/set_project/projectAllInfo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="838" column="19" selection-start-line="838" selection-start-column="8" selection-end-line="838" selection-end-column="19" />
+            <state relative-caret-position="171">
+              <caret line="702" column="16" selection-start-line="702" selection-start-column="16" selection-end-line="702" selection-end-column="16" />
               <folding>
                 <element signature="e#6220#6257#0" expanded="true" />
                 <element signature="e#449#596#0" expanded="true" />
@@ -380,8 +371,12 @@
                 <element signature="e#36233#36342#0" expanded="true" />
                 <element signature="e#36447#36527#0" expanded="true" />
                 <element signature="e#36555#36664#0" expanded="true" />
-                <element signature="e#36746#36826#0" expanded="true" />
+                <element signature="e#37476#37556#0" expanded="true" />
+                <element signature="e#37609#37718#0" expanded="true" />
+                <element signature="e#37809#37889#0" expanded="true" />
                 <element signature="e#36867#36976#0" expanded="true" />
+                <element signature="e#38117#38197#0" expanded="true" />
+                <element signature="e#38250#38359#0" expanded="true" />
                 <element signature="e#37081#37161#0" expanded="true" />
                 <element signature="e#37189#37298#0" expanded="true" />
                 <element signature="e#37322#37348#0" expanded="true" />
@@ -421,28 +416,6 @@
                 <element signature="e#41465#41545#0" expanded="true" />
                 <element signature="e#41586#41696#0" expanded="true" />
                 <element signature="e#41720#41746#0" expanded="true" />
-                <element signature="e#41818#41928#0" expanded="true" />
-                <element signature="e#41952#41978#0" expanded="true" />
-                <element signature="e#42028#42176#0" expanded="true" />
-                <element signature="e#42200#42226#0" expanded="true" />
-                <element signature="e#42272#42420#0" expanded="true" />
-                <element signature="e#42444#42470#0" expanded="true" />
-                <element signature="e#42516#42664#0" expanded="true" />
-                <element signature="e#42688#42714#0" expanded="true" />
-                <element signature="e#42760#42908#0" expanded="true" />
-                <element signature="e#42932#42958#0" expanded="true" />
-                <element signature="e#43004#43152#0" expanded="true" />
-                <element signature="e#43176#43202#0" expanded="true" />
-                <element signature="e#43248#43396#0" expanded="true" />
-                <element signature="e#43420#43446#0" expanded="true" />
-                <element signature="e#43492#43640#0" expanded="true" />
-                <element signature="e#43664#43690#0" expanded="true" />
-                <element signature="e#43736#43884#0" expanded="true" />
-                <element signature="e#43908#43934#0" expanded="true" />
-                <element signature="e#43980#44128#0" expanded="true" />
-                <element signature="e#44152#44178#0" expanded="true" />
-                <element signature="e#44224#44372#0" expanded="true" />
-                <element signature="e#44396#44422#0" expanded="true" />
                 <element signature="e#44502#44631#0" expanded="true" />
                 <element signature="e#44643#44754#0" expanded="true" />
                 <element signature="e#44892#44915#0" expanded="true" />
@@ -632,19 +605,6 @@
               <item name="pingjing" type="b2602c69:ProjectViewProjectNode" />
               <item name="pingjing" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="pingjing" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pingjing" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="pingjing" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pingjing" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="ccoa" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="pingjing" type="b2602c69:ProjectViewProjectNode" />
@@ -965,7 +925,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93519000" />
+    <option name="totallyTimeSpent" value="93529000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1693" height="1023" extended-state="6" />
@@ -981,14 +941,14 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24962063" />
       <window_info id="UI Designer" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.34298956" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.34298956" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Messages" order="7" weight="0.3289256" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="bottom" id="Java Enterprise" order="8" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.26187718" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.26187718" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.4164905" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17247707" />
@@ -997,12 +957,39 @@
       <window_info id="Learn" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="right" id="Coverage" order="4" side_tool="true" visible="true" weight="0.19166666" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4164905" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17247707" />
+      <window_info id="Learn" order="2" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="right" id="Coverage" order="4" side_tool="true" visible="true" weight="0.19166666" />
+      <window_info anchor="bottom" id="Java Enterprise" order="8" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.24962063" />
+      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info id="Web" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.26187718" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Application Servers" order="8" weight="0.3289256" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.34298956" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3289256" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info id="Designer" order="2" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1271,13 +1258,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2622">
           <caret line="182" column="42" selection-start-line="182" selection-start-column="42" selection-end-line="182" selection-end-column="42" />
-          <folding>
-            <element signature="e#1488#2070#0" />
-            <element signature="e#2568#3477#0" />
-            <element signature="e#3510#3577#0" />
-            <element signature="n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#div#9;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1285,9 +1265,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4655">
           <caret line="256" column="48" selection-start-line="256" selection-start-column="30" selection-end-line="256" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1295,9 +1272,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="950">
           <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
-          <folding>
-            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1305,9 +1279,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="21" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1357,12 +1328,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="130" column="18" selection-start-line="130" selection-start-column="18" selection-end-line="130" selection-end-column="18" />
-          <folding>
-            <element signature="e#3737#3738#0" expanded="true" />
-            <element signature="e#3774#3775#0" expanded="true" />
-            <element signature="e#13132#13133#0" expanded="true" />
-            <element signature="e#13172#13173#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1420,8 +1385,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/WebRoot/admin/set_project/projectAllInfo.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="838" column="19" selection-start-line="838" selection-start-column="8" selection-end-line="838" selection-end-column="19" />
+        <state relative-caret-position="171">
+          <caret line="702" column="16" selection-start-line="702" selection-start-column="16" selection-end-line="702" selection-end-column="16" />
           <folding>
             <element signature="e#6220#6257#0" expanded="true" />
             <element signature="e#449#596#0" expanded="true" />
@@ -1658,8 +1623,12 @@
             <element signature="e#36233#36342#0" expanded="true" />
             <element signature="e#36447#36527#0" expanded="true" />
             <element signature="e#36555#36664#0" expanded="true" />
-            <element signature="e#36746#36826#0" expanded="true" />
+            <element signature="e#37476#37556#0" expanded="true" />
+            <element signature="e#37609#37718#0" expanded="true" />
+            <element signature="e#37809#37889#0" expanded="true" />
             <element signature="e#36867#36976#0" expanded="true" />
+            <element signature="e#38117#38197#0" expanded="true" />
+            <element signature="e#38250#38359#0" expanded="true" />
             <element signature="e#37081#37161#0" expanded="true" />
             <element signature="e#37189#37298#0" expanded="true" />
             <element signature="e#37322#37348#0" expanded="true" />
@@ -1699,28 +1668,6 @@
             <element signature="e#41465#41545#0" expanded="true" />
             <element signature="e#41586#41696#0" expanded="true" />
             <element signature="e#41720#41746#0" expanded="true" />
-            <element signature="e#41818#41928#0" expanded="true" />
-            <element signature="e#41952#41978#0" expanded="true" />
-            <element signature="e#42028#42176#0" expanded="true" />
-            <element signature="e#42200#42226#0" expanded="true" />
-            <element signature="e#42272#42420#0" expanded="true" />
-            <element signature="e#42444#42470#0" expanded="true" />
-            <element signature="e#42516#42664#0" expanded="true" />
-            <element signature="e#42688#42714#0" expanded="true" />
-            <element signature="e#42760#42908#0" expanded="true" />
-            <element signature="e#42932#42958#0" expanded="true" />
-            <element signature="e#43004#43152#0" expanded="true" />
-            <element signature="e#43176#43202#0" expanded="true" />
-            <element signature="e#43248#43396#0" expanded="true" />
-            <element signature="e#43420#43446#0" expanded="true" />
-            <element signature="e#43492#43640#0" expanded="true" />
-            <element signature="e#43664#43690#0" expanded="true" />
-            <element signature="e#43736#43884#0" expanded="true" />
-            <element signature="e#43908#43934#0" expanded="true" />
-            <element signature="e#43980#44128#0" expanded="true" />
-            <element signature="e#44152#44178#0" expanded="true" />
-            <element signature="e#44224#44372#0" expanded="true" />
-            <element signature="e#44396#44422#0" expanded="true" />
             <element signature="e#44502#44631#0" expanded="true" />
             <element signature="e#44643#44754#0" expanded="true" />
             <element signature="e#44892#44915#0" expanded="true" />
@@ -1810,8 +1757,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ccoa/admin/set/ProjectSetController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="268" column="72" lean-forward="true" selection-start-line="268" selection-start-column="72" selection-end-line="268" selection-end-column="72" />
+        <state relative-caret-position="412">
+          <caret line="222" column="107" lean-forward="true" selection-start-line="222" selection-start-column="107" selection-end-line="222" selection-end-column="107" />
         </state>
       </provider>
     </entry>

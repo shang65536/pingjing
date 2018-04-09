@@ -201,8 +201,27 @@ public class ProjectSetController extends BaseController {
         String recommendCompany = project.getStr("ProjectCN") == null ? "" : project.getStr("RecommendCompany");
         content = content.replaceAll("project.RecommendCompany", recommendCompany);
         //替换申报日期
-        String applytime = project.getStr("Applytime") == null ? "" : project.getStr("Applytime");
+        Date applytimeDate =  project.getDate("Applytime");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日");
+        String applytime = df.format(applytimeDate);
         content = content.replaceAll("project.applytime", applytime);
+
+        //起止日期
+        Date startDate =  project.getDate("Applytime");
+        Date endDate =  project.getDate("Applytime");
+        String start = df.format(startDate);
+        String end = df.format(endDate);
+        content = content.replaceAll("project.StartEnd", start+"-"+end);
+
+        //总投资
+        String TotalFund = project.getStr("TotalFund") == null ? "" : project.getStr("TotalFund");
+        content = content.replaceAll("project.TotalFund", TotalFund);
+
+        //创新应用
+        String InnovationField = project.getStr("InnovationField") == null ? "" : project.getStr("InnovationField");
+        //项目描述
+        String Introduction = project.getStr("Introduction") == null ? "" : project.getStr("Introduction");
+        content = content.replaceAll("project.Introduction", Introduction);
 
         //项目承担方资质与能力
         String content0 = project.getStr("Content") == null ? "" : project.getStr("Content");
