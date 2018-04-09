@@ -432,7 +432,22 @@ public class ProjectController extends BaseController {
                     // 转换日期格式
                     SimpleDateFormat sdfdate = new SimpleDateFormat("yyyy-MM-dd");
 
-                    Project project = getModel(Project.class); // 获取页面表单数据
+                    String _ProjectCN=getPara("ProjectCN");
+                    String _StartTime=getPara("StartTime");
+                    String _EndTime=getPara("EndTime");
+                    String _TotalFund=getPara("TotalFund");
+                    String _InnovationField=getPara("InnovationField");
+                    String _Introduction=getPara("Introduction");
+
+                    Project project=new Project();
+
+                    project.set("ProjectCN",_ProjectCN);
+                    project.set("StartTime",_StartTime);
+                    project.set("EndTime",_EndTime);
+                    project.set("TotalFund",_TotalFund);
+                    project.set("InnovationField",_InnovationField);
+                    project.set("Introduction",_Introduction);
+
                     String[] FromTaskAll = getRequest().getParameterValues("FromTaskAll");
                     String str1 = StringUtils.join(FromTaskAll, ",");
                     project.set("FromTask", str1);
@@ -459,7 +474,8 @@ public class ProjectController extends BaseController {
                             mc1.selectMCbyId(getParaToInt(0, 1), 20, xmId));
                     setAttr("id", xmId);
                     setAttr("step", step + 1); // 用于页面导航条 判断是否默认样式
-                    render("step/step" + (step + 1) + ".html");
+                    //render("step/step" + (step + 1) + ".html");
+                    renderJson("success","/project/step?step=2&ProjectID="+xmId);
                     break;
 
                 case 2:// 申报项目基本情况
