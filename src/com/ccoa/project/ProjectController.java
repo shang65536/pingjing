@@ -465,7 +465,7 @@ public class ProjectController extends BaseController {
                     p.set("Content", getPara("Content"))
                             .set("Content1", getPara("Content1"))
                             .set("Content2", getPara("Content2"))
-                            .set("Content3", getPara("Content3")).set("Content4", getPara("Content4")).set("Step", "6")
+                            .set("Content3", getPara("Content3")).set("Content4", getPara("Content4")).set("Step", "2")
                             .update(); // 已完成步骤
                     setAttr("id", id);
                     setAttr("p", p);
@@ -476,7 +476,7 @@ public class ProjectController extends BaseController {
                     p.set("ImplementationPlans", getPara("ImplementationPlans"))
                             .set("CurrentSituation", getPara("CurrentSituation"))
                             .set("StartingPlan", getPara("StartingPlan"))
-                            .set("Step", "7") // 已完成步骤
+                            .set("Step", "3") // 已完成步骤
                             .update();
 
                     // 调用经济效益列表
@@ -1048,7 +1048,7 @@ public class ProjectController extends BaseController {
             redirect("/");
             return;
         } else {
-            String msg = "";
+            StringBuilder msg=new StringBuilder();
 
             int id = getParaToInt("id", 0);
             Project p = Project.me.findById(id);
@@ -1056,74 +1056,76 @@ public class ProjectController extends BaseController {
             // 先判断是否已经进行了提交操作 否则不允许提交
             String Status = p.getInt("Status") + "";// 状态
             if (!"0".equals(Status) && !"3".equals(Status)) {
-                msg += "项目已提交，不允许重复操作!";
+                msg.append( "项目已提交，不允许重复操作!");
             } else {
-                // 先验证 所有内容 是否都填写完整 除 社会效益
-                String Fundamentals = p.getStr("Fundamentals") + ""; // 盖章回传
-                String Introduction = p.getStr("Introduction") + ""; // 项目简介
-                String Content = p.getStr("Content") + ""; // 项目详情 立项背景
-                String Content1 = p.getStr("Content1") + ""; // 项目详情
-                // 详细科学技术内容、发现/发明及创新点
-                String Content2 = p.getStr("Content2") + ""; // 项目详情 保密要点
-                String Content3 = p.getStr("Content3") + ""; // 项目详情
-                // 与当前国内外同类研究、同类技术的综合比较
-                String AppSituation = p.getStr("AppSituation") + ""; // 应用情况
-                String Social = p.getStr("Social") + ""; // 社会效益
-                String Recommended = p.getStr("Recommended") + ""; // 推荐单位意见回传
 
-                if ("null".equals(Fundamentals) || "".equals(Fundamentals)) {
-                    msg += "\n基本情况页盖章回传还未上传;";
-                }
-                if ("null".equals(Introduction) || "".equals(Introduction)) {
-                    msg += "\n项目简介还未填写;";
-                }
+                // 先验证 所有内容 是否都填写完整
+                //企业基本信息
+
+                //申报项目基本情况
+                String Content = p.getStr("Content") + ""; // 项目承担方资质与能力
                 if ("null".equals(Content) || "".equals(Content)) {
-                    msg += "\n立项背景还未填写;";
+                    msg.append( "\n项目承担方资质与能力还未填写;");
                 }
+                String Content1 = p.getStr("Content1") + ""; // 项目负责人与项目团队实力
                 if ("null".equals(Content1) || "".equals(Content1)) {
-                    msg += "\n详细科学技术内容、发现/发明及创新点还未填写;";
+                    msg.append( "\n项目负责人与项目团队实力还未填写;");
                 }
-				/*if ("null".equals(Content2) || "".equals(Content2)) {
-					msg += "\n保密要点还未填写;";
-				}*/
+                String Content2 = p.getStr("Content2") + ""; // 产学研用联合协作情况
+                if ("null".equals(Content2) || "".equals(Content2)) {
+                    msg.append( "\n产学研用联合协作情况还未填写;");
+                }
+                String Content3 = p.getStr("Content3") + ""; // 项目实施的创新性
                 if ("null".equals(Content3) || "".equals(Content3)) {
-                    msg += "\n与当前国内外同类研究、同类技术的综合比较还未填写;";
+                    msg.append( "\n项目实施的创新性还未填写;");
                 }
-                if ("null".equals(AppSituation) || "".equals(AppSituation)) {
-                    msg += "\n应用情况还未填写;";
+                String Content4 = p.getStr("Content4") + ""; // 项目的可推广性
+                if ("null".equals(Content4) || "".equals(Content4)) {
+                    msg.append( "\n项目的可推广性还未填写;");
                 }
-                if ("null".equals(Social) || "".equals(Social)) {
-                    msg += "\n社会效益还未填写;";
+                //申报项目实施情况
+                String ImplementationPlans = p.getStr("ImplementationPlans") + ""; // 产学研用联合协作情况
+                if ("null".equals(ImplementationPlans) || "".equals(ImplementationPlans)) {
+                    msg.append( "\n产学研用联合协作情况还未填写;");
                 }
+                String CurrentSituation = p.getStr("CurrentSituation") + ""; // 项目实施的创新性
+                if ("null".equals(CurrentSituation) || "".equals(CurrentSituation)) {
+                    msg.append( "\n项目实施的创新性还未填写;");
+                }
+                String StartingPlan = p.getStr("StartingPlan") + ""; // 项目的可推广性
+                if ("null".equals(StartingPlan) || "".equals(StartingPlan)) {
+                    msg.append( "\n项目的可推广性还未填写;");
+                }
+                //证明材料
+                List<Accessory> zylzsfyjList = Accessory.me.selectAybyIdType(id, "申报单位相关荣誉证明材料");
+                if(zylzsfyjList.size()==0)
+                {
+                    msg.append( "\n申报单位相关荣誉证明材料还未上传;");
+                }
+                List<Accessory> btryyqkjsfjyList = Accessory.me.selectAybyIdType(id, "申报单位研发能力证明材料");
+                if(btryyqkjsfjyList.size()==0)
+                {
+                    msg.append( "\n申报单位研发能力证明材料还未上传;");
+                }
+                List<Accessory> kxpjzmList = Accessory.me.selectAybyIdType(id, "申报单位研发能力证明材料");
+                if(kxpjzmList.size()==0)
+                {
+                    msg.append( "\n申报单位研发能力证明材料还未上传;");
+                }
+                List<Accessory> jspjzmList = Accessory.me.selectAybyIdType(id, "申报单位研发投入证明材料");
+                if(jspjzmList.size()==0)
+                {
+                    msg.append( "\n申报单位研发投入证明材料还未上传;");
+                }
+                //企业责任声明
+                String Recommended = p.getStr("Recommended") + "";
                 if ("null".equals(Recommended) || "".equals(Recommended)) {
-                    msg += "\n推荐单位意见回传还未上传;";
+                    msg.append( "\n企业责任声明还未上传;");
                 }
 
-                List mc = MajorCompany.me.selectMCbyId(getParaToInt(0, 1), 20,
-                        id).getList();
-                if (mc.size() == 0) {
-                    msg += "\n完成单位还未填写;";
-                }
-
-                List kp = KeyPerson.me.selectKPbyId(getParaToInt(0, 1), 20, id)
-                        .getList();
-                if (kp.size() == 0) {
-                    msg += "\n完成人员还未填写;";
-                }
-
-                List py = Property.me.selectPtbyId(getParaToInt(0, 1), 20, id)
-                        .getList();
-                if (py.size() == 0) {
-                    msg += "\n知识产权还未填写;";
-                }
-
-                /**
-                 * List ay=Accessory.me.selectAybyId(id); if(ay.size()==0) {
-                 * msg+="\n申报单位相关荣誉证明材料等还未上传;"; }
-                 */
 
             }
-            renderJson("msg", msg); // 提示验证信息
+            renderJson("msg", msg.toString()); // 提示验证信息
 
         }
 
