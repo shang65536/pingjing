@@ -47,8 +47,9 @@ public class PDFWaterPrint extends Controller {
 		String waterMarkContentString="";
 		Prize prize = Prize.me.findMaxPrize();
 		if(prize!=null){
-			 waterMarkContentString =  Prize.me.findMaxPrize().getStr("Watermark");
-		}	
+			 waterMarkContentString =  "";//Prize.me.findMaxPrize().getStr("Watermark");
+		}
+
 		try { // 设置字体
 			//用itext-asian.jar中的字体，用的中文不支持
 			//base = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H",BaseFont.NOT_EMBEDDED);

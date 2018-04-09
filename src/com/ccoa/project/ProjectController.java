@@ -330,19 +330,20 @@ public class ProjectController extends BaseController {
                 break;
 
             case 2:// 项目详情
-                setAttr("p", p);
+                setAttr("project", p);
                 render("step/step" + step + ".html");
                 break;
             case 3:// 应用情况
-                setAttr("p", p);
+                setAttr("project", p);
                 render("step/step" + step + ".html");
                 break;
             case 5:// 推荐单位意见
-                setAttr("p", p);
+                setAttr("project", p);
                 render("step/step" + (step) + ".html");
                 break;
             case 4:// 上传附件
                 setAttr("id", id);
+                setAttr("project", p);
                 render("step/step" + (step) + ".html");
                 break;
         }
@@ -468,7 +469,7 @@ public class ProjectController extends BaseController {
                             .set("Content3", getPara("Content3")).set("Content4", getPara("Content4")).set("Step", "2")
                             .update(); // 已完成步骤
                     setAttr("id", id);
-                    setAttr("p", p);
+                   // setAttr("p", p);
                     setAttr("step", step + 1); // 用于页面导航条 判断是否默认样式
                     render("step/step" + (step + 1) + ".html");
                     break;
@@ -497,7 +498,7 @@ public class ProjectController extends BaseController {
                     List<Accessory> qtzmList = Accessory.me.selectAybyIdType(id, "项目的推广效果证明材料");
                     setAttr("qtzmList", qtzmList);
                     setAttr("id", id);
-                    setAttr("p", p);
+                   // setAttr("p", p);
                     setAttr("step", step + 1); // 用于页面导航条 判断是否默认样式
                     render("step/step" + (step + 1) + ".html");
                     break;
@@ -555,8 +556,6 @@ public class ProjectController extends BaseController {
                     //以json格式进行渲染
                     renderJson();
                     break;
-
-
             }
 
             setAttr("project", p);
