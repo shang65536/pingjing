@@ -51,13 +51,7 @@ import com.ccoa.expertzjk.ExpertzjkuController;
 import com.ccoa.handler.GlobalHandler;
 import com.ccoa.handler.HtmlHandler;
 import com.ccoa.index.IndexController;
-import com.ccoa.project.Accessory;
-import com.ccoa.project.Economies;
-import com.ccoa.project.KeyPerson;
-import com.ccoa.project.MajorCompany;
-import com.ccoa.project.Project;
-import com.ccoa.project.ProjectController;
-import com.ccoa.project.Property;
+import com.ccoa.project.*;
 import com.ccoa.projectreview.ProjectReview;
 import com.ccoa.projectreview.ProjectReviewController;
 import com.ccoa.projectreview.ProjectReviewOtherController;
@@ -258,6 +252,7 @@ public class AppConfig extends JFinalConfig {
 
         //company 公司
         arp.addMapping("company", Company.class);
+        arp.addMapping("project_enterprise", Enterprise.class);
         //project 项目
         arp.addMapping("project", Project.class);
         arp.addMapping("project_group", ProjectGroup.class); //专业评审组
