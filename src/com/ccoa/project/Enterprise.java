@@ -10,7 +10,7 @@ public class Enterprise extends Model<Enterprise> {
      * @param projectID
      * @return
      */
-    public Enterprise getEnterprise(int projectID)
+    public Enterprise getEnterprise(Long projectID)
     {
         String sql="select * from project_enterprise where project_id="+projectID;
         return this.findFirst(sql);

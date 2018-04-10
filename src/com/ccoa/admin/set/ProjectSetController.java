@@ -9,18 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+import com.ccoa.project.*;
 import org.apache.log4j.Logger;
 
 import com.ccoa.common.BaseController;
 import com.ccoa.common.Constants;
 import com.ccoa.common.PDFWaterPrint;
 import com.ccoa.interceptor.CompanyUserInterceptor;
-import com.ccoa.project.Accessory;
-import com.ccoa.project.Economies;
-import com.ccoa.project.KeyPerson;
-import com.ccoa.project.MajorCompany;
-import com.ccoa.project.Project;
-import com.ccoa.project.Property;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.jfinal.aop.Before;
@@ -147,8 +142,9 @@ public class ProjectSetController extends BaseController {
                 List acList = Accessory.me.selectAybyId(id);
                 // 读取页面内容
                 String content = readFile(filepath);
-                // 替换页面 标签内容
-                //	String contentAfter = this.replaceProject(content, ps, kpList,mcList, esList, pyList,acList);
+                //获取企业基础信息
+                Enterprise enterprise=Enterprise.me.getEnterprise(id);
+                //替换字符串
                 String contentAfter = replaceProject(content, pp, acList);
                 boolean flag = this.writeWordFile(fileWrodPath, contentAfter);
                 //doc转换成pdf
