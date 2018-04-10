@@ -149,7 +149,7 @@ public class ProjectSetController extends BaseController {
                 String content = readFile(filepath);
                 // 替换页面 标签内容
                 //	String contentAfter = this.replaceProject(content, ps, kpList,mcList, esList, pyList,acList);
-                String contentAfter = replaceProject(content, pp,acList);
+                String contentAfter = replaceProject(content, pp, acList);
                 boolean flag = this.writeWordFile(fileWrodPath, contentAfter);
                 //doc转换成pdf
                 wordToPDF(fileWrodPath, pDFfile1);
@@ -198,20 +198,20 @@ public class ProjectSetController extends BaseController {
         String applyCompany = project.getStr("ProjectCN") == null ? "" : project.getStr("ProjectCN");
         content = content.replaceAll("project.applyCompany", applyCompany);
         //推荐单位
-        String recommendCompany = project.getStr("ProjectCN") == null ? "" : project.getStr("RecommendCompany");
+        String recommendCompany = project.getStr("RecommendCompany") == null ? "" : project.getStr("RecommendCompany");
         content = content.replaceAll("project.RecommendCompany", recommendCompany);
         //替换申报日期
-        Date applytimeDate =  project.getDate("Applytime");
+        Date applytimeDate = new Date(project.getStr("Applytime"));
         SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日");
         String applytime = df.format(applytimeDate);
         content = content.replaceAll("project.applytime", applytime);
 
         //起止日期
-        Date startDate =  project.getDate("Applytime");
-        Date endDate =  project.getDate("Applytime");
+        Date startDate = new Date(project.getStr("StartTime"));
+        Date endDate = new Date(project.getStr("EndTime"));
         String start = df.format(startDate);
         String end = df.format(endDate);
-        content = content.replaceAll("project.StartEnd", start+"-"+end);
+        content = content.replaceAll("project.StartEnd", start + "-" + end);
 
         //总投资
         String TotalFund = project.getStr("TotalFund") == null ? "" : project.getStr("TotalFund");
@@ -219,6 +219,22 @@ public class ProjectSetController extends BaseController {
 
         //创新应用
         String InnovationField = project.getStr("InnovationField") == null ? "" : project.getStr("InnovationField");
+        int index=0;
+        if(!("").equals(InnovationField))
+        {
+            String[] temp=InnovationField.split(",");
+            index=Integer.parseInt(temp[1]);
+        }
+        for (int i = 4; i <= 12; i++) {
+            if(i==index)
+            {
+                content = content.replaceAll(" project.InnovationField" + i, "☑");
+            }else {
+                content = content.replaceAll(" project.InnovationField" + i, "□");
+            }
+
+        }
+
         //项目描述
         String Introduction = project.getStr("Introduction") == null ? "" : project.getStr("Introduction");
         content = content.replaceAll("project.Introduction", Introduction);
@@ -291,8 +307,7 @@ public class ProjectSetController extends BaseController {
         }
         //企业责任声明
         String recommended = project.getStr("Recommended") == null ? "" : project.getStr("Recommended");
-        if(!("").equals(recommended))
-        {
+        if (!("").equals(recommended)) {
             int a = recommended.lastIndexOf("/");
             recommended = recommended.substring(a + 1, recommended.length());
         }

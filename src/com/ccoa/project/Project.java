@@ -235,7 +235,7 @@ public class Project extends Model<Project> {
     // 根据项目ID获取 项目基本信息
     public List<Project> selectProjectById(long id) {
         StringBuilder selectStr = new StringBuilder();
-        selectStr.append("select p.id as ProjectID,  p.ProjectCN, p.ProjectEN, p.Category ,Applytime,RegisterNum,Introduction,");
+        selectStr.append("select p.id as ProjectID,  p.ProjectCN, p.ProjectEN, p.Category ,DATE_FORMAT(Applytime,'%Y/%m/%d') as Applytime,RegisterNum,Introduction,");
         selectStr.append("Content ,Content1,Content2,Content3,Content4,AppSituation ,TotalFund,Payback,Calculations,Social,  ");
         selectStr.append("(select Name from set_category sc where sc.id=p.Category) Category_name, ");
         selectStr.append("(SELECT GROUP_CONCAT(CompanyName ORDER BY Sort asc SEPARATOR ';') CompanyName  FROM project_major_company pmc WHERE pmc.ProjectID=p.id) CompanyName, ");
@@ -243,8 +243,8 @@ public class Project extends Model<Project> {
         selectStr.append("(SELECT GROUP_CONCAT(Name SEPARATOR ';') Name  FROM set_fromtask sf WHERE FIND_IN_SET(sf.id,p.FromTask)) sfName, ");
         selectStr.append("(select Name from project_group sc where sc.id=p.GroupZY) Group_name,p.GroupZY, ");
         selectStr.append("(case when p.Secret='1' then '是' else '否' end ) Secret_name,Secret,SecretTime,PlanFund, ");
-        selectStr.append("RecommendCompany,FromTask,FromOther,StartTime,EndTime,ApplyYear,");
-        selectStr.append("ImplementationPlans ,CurrentSituation ,StartingPlan ,Recommended from project p where id =" + id);
+        selectStr.append("RecommendCompany,FromTask,FromOther,DATE_FORMAT(StartTime,'%Y/%m/%d') as StartTime,DATE_FORMAT(EndTime,'%Y/%m/%d') as EndTime,ApplyYear,");
+        selectStr.append("ImplementationPlans ,CurrentSituation ,StartingPlan ,Recommended,InnovationField from project p where id =" + id);
 
         return find(selectStr.toString());
     }
