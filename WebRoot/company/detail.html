@@ -124,13 +124,14 @@
                 });
 
 
-            var _IsCentralEnterprises = ${company.IsCentralEnterprises!};
+            var _IsCentralEnterprises = "${company.IsCentralEnterprises!}";
             if (_IsCentralEnterprises == "1") {
                 $(".IsCentralEnterprises[value=1]").prop("checked", true);
                 $("#SelectCentralEnterprises").show();
                 companyModel.IsCentralEnterprises = 1;
                 companyModel.CentralEnterprisesName = "${company.CentralEnterprisesName!}";
-                companyModel.CentralEnterprisesCode = ${company.CentralEnterprisesCode!};
+                companyModel.CentralEnterprisesCode = "${company.CentralEnterprisesCode!}";
+                $("#CentralEnterprises").val("${company.CentralEnterprisesName!}");
             } else {
                 $(".IsCentralEnterprises[value=0]").prop("checked", true);
                 $("#SelectCentralEnterprises").hide();
@@ -154,7 +155,7 @@
                     return false;
                 }
                 // 获取参数
-                companyModel.id = ${company.id!};
+                companyModel.id = "${company.id!}";
                 companyModel.Username = $("#Username").val();
                 companyModel.Password = $("#Password").val();
                 companyModel.CompanyName = $("#CompanyName").val();
@@ -162,6 +163,11 @@
                 companyModel.LinkmanName = $("#LinkmanName").val();
                 companyModel.LinkmanPhone = $("#LinkmanPhone").val();
                 companyModel.Email = $("#Email").val();
+                companyModel.IsCentralEnterprises = $(".IsCentralEnterprises:checked").prop("value");
+                if(companyModel.IsCentralEnterprises=="0"){
+                    companyModel.CentralEnterprisesName = "";
+                    companyModel.CentralEnterprisesCode = "";
+                }
 
                 // 提交数据
                 $.ajax({
@@ -170,13 +176,8 @@
                     dataType: 'json',
                     data: companyModel,
                     success: function (data) {
-                        if (data.success == true || data.success == "true") {
-                            alert("修改成功");
-                            location.href = "${ctx_path}/company/detail";
-                            //$("#responseText").text(data);
-                        } else {
-                            alert("修改失败");
-                        }
+                        alert("操作成功");
+                        location.href = "/";
                     },
                     error:function (data) {
                         alert("error:"+JSON.stringify(data));
@@ -199,7 +200,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">用户名</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="Username" data-val="true" value="${company.Username!}"
+                <input type="text" class="form-control" id="Username" disabled="disabled" data-val="true" value="${company.Username!}"
                        name="company.Username" data-val-required="用户名不能为空" placeholder="用户名">
             </div>
             <div class="col-sm-4">
@@ -210,7 +211,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">密码</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="Password" data-val="true" value="${company.Password!}"
+                <input type="Password" class="form-control" id="Password" data-val="true" value="${company.Password!}"
                        name="company.Password" data-val-required="密码不能为空" placeholder="密码">
             </div>
             <div class="col-sm-4">
@@ -221,12 +222,13 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">确认密码</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="Password2" data-val="false" value="${company.Password!}"
+                <input type="Password" class="form-control" id="Password2" data-val="false" value="${company.Password!}"
+                       name = "Password2"
                        data-val-required="确认密码不能为空" placeholder="确认密码"
                        data-val-equalto="密码和确认密码不匹配。" data-val-equalto-other="company.Password"/>
             </div>
             <div class="col-sm-4">
-                <span class="field-validation-valid help-block" data-valmsg-for=""
+                <span class="field-validation-valid help-block" data-valmsg-for="Password2"
                       data-valmsg-replace="true"></span>
             </div>
         </div>

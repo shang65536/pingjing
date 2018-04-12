@@ -55,6 +55,12 @@ public class Project extends Model<Project> {
         return paginate(pageNumber, pageSize, sql, sqlStr.toString());
     }
 
+    public  Project getLastAppYear(int companyId)
+    {
+        String sql=String.format("select *  from project where CompanyID = %d order by ApplyYear desc",companyId);
+        return this.findFirst(sql);
+    }
+
     /**
      * 查询
      */

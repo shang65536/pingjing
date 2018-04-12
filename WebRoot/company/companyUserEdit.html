@@ -78,6 +78,11 @@
                 companyModel.LinkmanName = $("#LinkmanName").val();
                 companyModel.LinkmanPhone = $("#LinkmanPhone").val();
                 companyModel.Email = $("#Email").val();
+                companyModel.IsCentralEnterprises = $("#IsCentralEnterprises:checked").prop("value");
+                if(companyModel.IsCentralEnterprises=="0"){
+                    companyModel.CentralEnterprisesName = "";
+                    companyModel.CentralEnterprisesCode = "";
+                }
             }
 
             /*获取央企子公司的的数据并填充页面*/
@@ -149,14 +154,9 @@
                     dataType: 'json',
                     data:companyModel,
                     success: function (data) {
-                        if (data.success == true
-                            || data.success == "true") {
-                            alert("恭喜注册成功,管理员审核通过后才能登陆!");
-                            location.href = "${ctx_path}/login";
-                            //$("#responseText").text(data);
-                        } else {
-                            alert("注册失败");
-                        }
+                        alert("恭喜注册成功!");
+                        window.location.href = "${ctx_path}/login";
+                        return false;
                     }
                 });
             });
@@ -215,7 +215,8 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">用户名</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="Username" data-val="true" value="${company.Username!}"
+                <input type="text"  class="form-control" data-val-remote="用户名已经被注册！" data-val-remote-url="${ctx_path}/company/checkName"
+                       id="Username" data-val="true" value="${company.Username!}"
                        name="company.Username" data-val-required="用户名不能为空" placeholder="用户名">
             </div>
             <div class="col-sm-4">
@@ -226,7 +227,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">密码</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="Password" data-val="true" value="${company.Password!}"
+                <input type="Password" class="form-control" id="Password" data-val="true" value="${company.Password!}"
                        name="company.Password" data-val-required="密码不能为空" placeholder="密码">
             </div>
             <div class="col-sm-4">
@@ -237,7 +238,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">确认密码</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="Password2" data-val="false" value="${company.Password!}"
+                <input type="Password" class="form-control" id="Password2" data-val="false" value="${company.Password!}"
                        data-val-required="确认密码不能为空" placeholder="确认密码"
                        data-val-equalto="密码和确认密码不匹配。" data-val-equalto-other="company.Password"/>
             </div>

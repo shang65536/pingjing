@@ -1,357 +1,132 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
-<script type="text/javascript" src="${ctx_path}/js/commons.js"></script>
-<link href="${ctx_path}/js/uploadify/uploadify.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${ctx_path}/js/uploadify/jquery.uploadify.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+    <script type="text/javascript" src="${ctx_path}/js/kindeditor/kindeditor.js"></script>
+    <script type="text/javascript">
+        var isSub = true;
+        //加载富文本
+        KindEditor.ready(function (KE) {
+            //项目实施方案
+            var editor = KE.create('textarea[name="ImplementationPlans"]',
+                {
+                    uploadJson: '${ctx_path}/js/kindeditor/jsp/upload_json.jsp',
+                    urlType: 'domain',
+                    allowImageRemote: false,
+                    afterChange: function () {
+                       // $('#ts1').html(this.count('text'));  //验证输入字符数  字数统计包含纯文本、IMG、EMBED，不包含换行符，IMG和EMBED算一个文字
+                    },
+                    afterBlur: function () {
+                        this.sync();
+                    }
 
+                });
+//项目实施现状
+            var editor2 = KE.create('textarea[name="CurrentSituation"]',
+                {
+                    uploadJson: '${ctx_path}/js/kindeditor/jsp/upload_json.jsp',
+                    urlType: 'domain',
+                    allowImageRemote: false,
+                    afterChange: function () {
+                       // $('#ts1').html(this.count('text'));  //验证输入字符数  字数统计包含纯文本、IMG、EMBED，不包含换行符，IMG和EMBED算一个文字
+                    },
+                    afterBlur: function () {
+                        this.sync();
+                    }
 
-           <!--[if lte IE 6]>
-<script type="text/javascript" src="${ctx_path}/js/DD_belatedPNG_0.0.8a.js"></script>
+                });
+//项目实施计划
+            var editor3 = KE.create('textarea[name="StartingPlan"]',
+                {
+                    uploadJson: '${ctx_path}/js/kindeditor/jsp/upload_json.jsp',
+                    urlType: 'domain',
+                    allowImageRemote: false,
+                    afterChange: function () {
+                      // $('#ts1').html(this.count('text'));  //验证输入字符数  字数统计包含纯文本、IMG、EMBED，不包含换行符，IMG和EMBED算一个文字
+                    },
+                    afterBlur: function () {
+                        this.sync();
+                    }
+
+                });
+        });
+
+        function check() {
+            var content11 = document.getElementById("content11").value;
+            if (content11 == "") {
+                alert("项目实施方案不能为空!");
+                return false;
+            }
+            var content12 = document.getElementById("content12").value;
+            if (content12 == "") {
+                alert("项目实施现状不能为空!");
+                return false;
+            }
+            var content13 = document.getElementById("content13").value;
+            if (content13 == "") {
+                alert("项目实施计划不能为空!");
+                return false;
+            }
+            /*  if(!isSub){
+                 alert("字数超过限制，请适当删除部分内容");
+                 return false;
+             } */
+        }
+
+        function load() {
+            //申报状态是否已结束  如果结束 不能提交操作
+            //  var StatusSb='${prize.StatusSb!}';
+            //  if(StatusSb=='0')  //结束  隐藏申报按钮
+            // {
+            //	 $(document.getElementById("add")).hide();
+            // }
+            var status = '${project.Status!}'; //等于0未提交 3形式审查未审核通过的项目 才能操作
+            if (status != '0' && status != '3') {
+                $(document.getElementById("add")).hide();
+            }
+        }
+
+    </script>
+    <!--[if lte IE 6]>
+    <script type="text/javascript" src="js/DD_belatedPNG_0.0.8a.js"></script>
     <script type="text/javascript">
         DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
     </script>
-<![endif]-->
-<script type="text/javascript">
-var a=0;
-var isTrue = true;
-//验证
-function check()
-{
-	isTrue = true;
-	var zylzfyj = $("#zylzfyj").html();
-	var btryyqk = $("#btryyqk").html();
-	var kxpjzm = $("#kxpjzm").html();
-	var jspjzm = $("#jspjzm").html();
-
-	if(zylzfyj.indexOf("<span")<1 && btryyqk.indexOf("<span")<1 && kxpjzm.indexOf("<span")<1 && jspjzm.indexOf("<span")<1 ){
-		isTrue = false;
-		alert("至少上传一个文件，才能进行保存操作!");
-	}
-}
-$(function () {
-    $("#add").click(function () {
-    	check();;
-    	 if(isTrue){
-	    	$('#addForm').submit();
-    	}
-
-    });
-});
-
- function load()
- {
- 	//申报状态是否已结束  如果结束 不能提交操作
- 	/*   var StatusSb='${prize.StatusSb!}';
- 	  if(StatusSb=='0')  //结束  隐藏申报按钮
- 	  {
- 		$(document.getElementById("add")).hide();
- 	  } */
- 	  var status='${project.Status!}'; //等于0未提交 3形式审查未审核通过的项目 才能操作
-	  if(status !='0' && status!='3')
-	  {
-		  $(document.getElementById("add")).hide();
-	  }
- }
-function delAccessory(ycid,id,type,fileName){
-	if(confirm("确认删除?")){
-		$.ajax({
-			type : "POST",
-			url : "${ctx_path}/project/delAccessory",
-			data : {
-				'id' : id,
-				'type' : type,
-				'fileName' : encodeURIComponent(fileName),
-			},
-			success : function(result) {
-				if(result.success){
-					$("#"+ycid).remove();
-				}else{
-					alert("删除失败！");
-				}
-			}
-		});
-	}
-}
-		$(function(){
-			$("#file_upload1").uploadify({
-				//校验数据
-				'swf': '${ctx_path}/js/uploadify/uploadify.swf',
-		        'uploader':"${ctx_path}/project/apply?id=${id}&step=7&type=1",
-				'auto' : true, //自动上传
-				'buttonImage' : '${ctx_path}/js/uploadify/uploadify-browse.png', //浏览按钮背景图片
-				'multi' : true, //单文件上传
-				'fileTypeExts' : '*.doc; *.docx; *.pdf;*.jpg; *.png;', //允许上传的文件后缀
-				'removeCompleted':true,
-				'fileSizeLimit' : '50MB', //上传文件的大小限制，单位为B, KB, MB, 或 GB
-				'successTimeout' : 30, //成功等待时间
-				'onUploadSuccess' : function(file, data, response) {
-					a =a+1;
-					//每成功完成一次文件上传时触发一次
-					var image=eval("["+data+']')[0];
-					//alert('===file:'+file);
-					//alert('===data:'+data);//json格式
-					//alert('===response:'+response);//true
-					//alert('===image:'+image);
-					 //alert('===image.fileName:'+image.fileName);
-					$('#zylzfyj').append("<span id='yc"+a+"' style='color: red;'><b>已上传文件：</b>"+image.fileName+"&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href='#' onClick='javascript:delAccessory(\"yc"+a+"\",${id},1,\""+image.fileName+"\")'  title='删除'>删除</a></#if></br></span>");
-					/* var image=eval(data);
-					alert(image[0]["big"]); */
-				},
-				'onUploadError' : function(file, data, response) {
-					var image=eval("["+data+']')[0];
-					alert(image.fileName+"上传失败!");
-					//当上传返回错误时触发
-					//$('#url').append("<li>" + data + "</li>");
-				}
-
-			});
-		});
-
-		$(function(){
-			$("#file_upload2").uploadify({
-				//校验数据
-				'swf': '${ctx_path}/js/uploadify/uploadify.swf',
-		        'uploader':"${ctx_path}/project/apply?id=${id}&step=7&type=2",
-				'auto' : true, //自动上传
-				'buttonImage' : '${ctx_path}/js/uploadify/uploadify-browse.png', //浏览按钮背景图片
-				'multi' : true, //单文件上传
-				'fileTypeExts' : '*.doc; *.docx; *.pdf;*.jpg; *.png;', //允许上传的文件后缀
-				'removeCompleted':true,
-				'fileSizeLimit' : '50MB', //上传文件的大小限制，单位为B, KB, MB, 或 GB
-				'successTimeout' : 30, //成功等待时间
-				'onUploadSuccess' : function(file, data, response) {
-					a =a+1;
-					//每成功完成一次文件上传时触发一次
-					var image=eval("["+data+']')[0];
-					//alert('===file:'+file);
-					//alert('===data:'+data);//json格式
-					//alert('===response:'+response);//true
-					//alert('===image:'+image);
-					 //alert('===image.fileName:'+image.fileName);
-					$('#btryyqk').append("<span id='yc"+a+"'  style='color: red;'><b>已上传文件：</b>"+image.fileName+"&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href='#' onClick='javascript:delAccessory(\"yc"+a+"\",${id},2,\""+image.fileName+"\")'  title='删除'>删除</a></#if></br></span>");
-					/* var image=eval(data);
-					alert(image[0]["big"]); */
-				},
-				'onUploadError' : function(file, data, response) {
-					var image=eval("["+data+']')[0];
-					alert(image.fileName+"上传失败!");
-					//当上传返回错误时触发
-					//$('#url').append("<li>" + data + "</li>");
-				}
-
-			});
-		});
-
-		$(function(){
-			$("#file_upload3").uploadify({
-				//校验数据
-				'swf': '${ctx_path}/js/uploadify/uploadify.swf',
-		        'uploader':"${ctx_path}/project/apply?id=${id}&step=7&type=3",
-				'auto' : true, //自动上传
-				'buttonImage' : '${ctx_path}/js/uploadify/uploadify-browse.png', //浏览按钮背景图片
-				'multi' : true, //单文件上传
-				'fileTypeExts' : '*.doc; *.docx; *.pdf;*.jpg; *.png;', //允许上传的文件后缀
-				'removeCompleted':true,
-				'fileSizeLimit' : '50MB', //上传文件的大小限制，单位为B, KB, MB, 或 GB
-				'successTimeout' : 30, //成功等待时间
-				'onUploadSuccess' : function(file, data, response) {
-					a =a+1;
-					//每成功完成一次文件上传时触发一次
-					var image=eval("["+data+']')[0];
-					//alert('===file:'+file);
-					//alert('===data:'+data);//json格式
-					//alert('===response:'+response);//true
-					//alert('===image:'+image);
-					 //alert('===image.fileName:'+image.fileName);
-					$('#kxpjzm').append("<span id='yc"+a+"'  style='color: red;'><b>已上传文件：</b>"+image.fileName+"&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href='#' onClick='javascript:delAccessory(\"yc"+a+"\",${id},3,\""+image.fileName+"\")'  title='删除'>删除</a></#if></br></span>");
-					/* var image=eval(data);
-					alert(image[0]["big"]); */
-				},
-				'onUploadError' : function(file, data, response) {
-					var image=eval("["+data+']')[0];
-					alert(image.fileName+"上传失败!");
-					//当上传返回错误时触发
-					//$('#url').append("<li>" + data + "</li>");
-				}
-
-			});
-		});
-
-		$(function(){
-			$("#file_upload4").uploadify({
-				//校验数据
-				'swf': '${ctx_path}/js/uploadify/uploadify.swf',
-		        'uploader':"${ctx_path}/project/apply?id=${id}&step=7&type=4",
-				'auto' : true, //自动上传
-				'buttonImage' : '${ctx_path}/js/uploadify/uploadify-browse.png', //浏览按钮背景图片
-				'multi' : true, //单文件上传
-				'fileTypeExts' : '*.doc; *.docx; *.pdf;*.jpg; *.png;', //允许上传的文件后缀
-				'removeCompleted':true,
-				'fileSizeLimit' : '50MB', //上传文件的大小限制，单位为B, KB, MB, 或 GB
-				'successTimeout' : 30, //成功等待时间
-				'onUploadSuccess' : function(file, data, response) {
-					a =a+1;
-					//每成功完成一次文件上传时触发一次
-					var image=eval("["+data+']')[0];
-					//alert('===file:'+file);
-					//alert('===data:'+data);//json格式
-					//alert('===response:'+response);//true
-					//alert('===image:'+image);
-					 //alert('===image.fileName:'+image.fileName);
-					$('#jspjzm').append("<span id='yc"+a+"'  style='color: red;'><b>已上传文件：</b>"+image.fileName+"&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href='#' onClick='javascript:delAccessory(\"yc"+a+"\",${id},4,\""+image.fileName+"\")'  title='删除'>删除</a></#if></br></span>");
-					/* var image=eval(data);
-					alert(image[0]["big"]); */
-				},
-				'onUploadError' : function(file, data, response) {
-					var image=eval("["+data+']')[0];
-					alert(image.fileName+"上传失败!");
-					//当上传返回错误时触发
-					//$('#url').append("<li>" + data + "</li>");
-				}
-
-			});
-		});
-
-		$(function(){
-			$("#file_upload5").uploadify({
-				//校验数据
-				'swf': '${ctx_path}/js/uploadify/uploadify.swf',
-		        'uploader':"${ctx_path}/project/apply?id=${id}&step=7&type=5",
-				'auto' : true, //自动上传
-				'buttonImage' : '${ctx_path}/js/uploadify/uploadify-browse.png', //浏览按钮背景图片
-				'multi' : true, //单文件上传
-				'fileTypeExts' : '*.doc; *.docx; *.pdf;*.jpg; *.png;', //允许上传的文件后缀
-				'removeCompleted':true,
-				'fileSizeLimit' : '50MB', //上传文件的大小限制，单位为B, KB, MB, 或 GB
-				'successTimeout' : 30, //成功等待时间
-				'onUploadSuccess' : function(file, data, response) {
-					a =a+1;
-					//每成功完成一次文件上传时触发一次
-					var image=eval("["+data+']')[0];
-					//alert('===file:'+file);
-					//alert('===data:'+data);//json格式
-					//alert('===response:'+response);//true
-					//alert('===image:'+image);
-					 //alert('===image.fileName:'+image.fileName);
-					$('#yyzm').append("<span id='yc"+a+"'  style='color: red;'><b>已上传文件：</b>"+image.fileName+"&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href='#' onClick='javascript:delAccessory(\"yc"+a+"\",${id},5,\""+image.fileName+"\")'  title='删除'>删除</a></#if></br></span>");
-					/* var image=eval(data);
-					alert(image[0]["big"]); */
-				},
-				'onUploadError' : function(file, data, response) {
-					var image=eval("["+data+']')[0];
-					alert(image.fileName+"上传失败!");
-					//当上传返回错误时触发
-					//$('#url').append("<li>" + data + "</li>");
-				}
-
-			});
-		});
-
-		$(function(){
-			$("#file_upload6").uploadify({
-				//校验数据
-				'swf': '${ctx_path}/js/uploadify/uploadify.swf',
-		        'uploader':"${ctx_path}/project/apply?id=${id}&step=7&type=6",
-				'auto' : true, //自动上传
-				'buttonImage' : '${ctx_path}/js/uploadify/uploadify-browse.png', //浏览按钮背景图片
-				'multi' : true, //单文件上传
-				'fileTypeExts' : '*.doc; *.docx; *.pdf;*.jpg; *.png;', //允许上传的文件后缀z
-				'removeCompleted':true,
-				'fileSizeLimit' : '50MB', //上传文件的大小限制，单位为B, KB, MB, 或 GB
-				'successTimeout' : 30, //成功等待时间
-				'onUploadSuccess' : function(file, data, response) {
-					a =a+1;
-					//每成功完成一次文件上传时触发一次
-					var image=eval("["+data+']')[0];
-					//alert('===file:'+file);
-					//alert('===data:'+data);//json格式
-					//alert('===response:'+response);//true
-					//alert('===image:'+image);
-					 //alert('===image.fileName:'+image.fileName);
-					$('#qtzm').append("<span id='yc"+a+"'  style='color: red;'><b>已上传文件：</b>"+image.fileName+"&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href='#' onClick='javascript:delAccessory(\"yc"+a+"\",${id},6,\""+image.fileName+"\")'  title='删除'>删除</a></#if></br></span>");
-					/* var image=eval(data);
-					alert(image[0]["big"]); */
-				},
-				'onUploadError' : function(file, data, response) {
-					var image=eval("["+data+']')[0];
-					alert(image.fileName+"上传失败!");
-					//当上传返回错误时触发
-					//$('#url').append("<li>" + data + "</li>");
-				}
-
-			});
-		});
-
-</script>
+    <![endif]-->
+    <title>申报项目实施情况</title>
 </head>
 
-<body  onload="load()">
-
+<body onload="load()">
 <#include "/common/_header.html"/>
 <@header username=user.Username detailUrl="${ctx_path}/company/detail"/>
-<div class="container_12" id="container_12">
 
-	<#include "/project/_step_topmenu.html"/>
+<div class="container_12">
 
-     <div class="clearfix">&nbsp;</div>
-      <h5><b>上传附件</b></h5>
-      <form id="addForm" action="${ctx_path}/project/apply?id=${id}&step=4" method="post" enctype="multipart/form-data">
-		  <p><h4>申报单位相关证明材料</h4></p>
-		  <div>
-	      <p><h7>1、申报单位相关荣誉证明材料（高新技术企业、企业技术中心、重点实验室等相关证明材料）</h7><span>（请上传word、excel、pdf、jpg、png或者gif）</span></p>
-	      <input type="file" name="file_upload1" id="file_upload1"/>
-	       <!-- <input type="submit"  name="uploadbutton" value="上传" /> -->
-		  <div id="zylzfyj">
-		  	<#list zylzsfyjList as zylzsfyj>
-		  	<span id="zylzsfyj${zylzsfyj_index+1}" style="color: red;"><b>已上传文件：</b>${zylzsfyj.fileName!}&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href="#" onClick="javascript:delAccessory('zylzsfyj${zylzsfyj_index+1}',${id},1,'${zylzsfyj.fileName!}')"  title="删除">删除</a></#if></br></span>
-		  	</#list>
-		  </div>
-		  <p><h7>2、申报单位研发能力证明材料（获得专利、标准、知识产权等）</h7><span>（请上传word、excel、pdf、jpg、png或者gif）</span></p>
-	      <input type="file" name="file_upload2" id="file_upload2"/>
-		  <div id="btryyqk">
-		  <#list btryyqkjsfjyList as btryyqkjsfjy>
-		  	<span id="btryyqkjsfjy${btryyqkjsfjy_index+1}" style="color: red;"><b>已上传文件：</b>${btryyqkjsfjy.fileName!}&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href="#" onClick="javascript:delAccessory('btryyqkjsfjy${btryyqkjsfjy_index+1}',${id},2,'${btryyqkjsfjy.fileName!}')"  title="删除">删除</a></#if></br></span>
-		  </#list>
-		  </div>
-		  <p><h7>申报单位主营业务收入证明材料（财务会计报表、纳税证明等）</h7><span>（请上传word、excel、pdf、jpg、png或者gif）</span></p>
-	      <input type="file" name="file_upload3" id="file_upload3"/>
-		  <div id="kxpjzm">
-		  <#list kxpjzmList as kxpjzm>
-		  	<span id="kxpjzm${kxpjzm_index+1}" style="color: red;"><b>已上传文件：</b>${kxpjzm.fileName!}&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href="#" onClick="javascript:delAccessory('kxpjzm${kxpjzm_index+1}',${id},3,'${kxpjzm.fileName!}')"  title="删除">删除</a></#if></br></span>
-		  </#list>
-		  </div>
-		  <p><h7>申报单位研发投入证明材料（财务会计报表等）</h7><span>（请上传word、excel、pdf、jpg、png或者gif）</span></p>
-	      <input type="file" name="file_upload4" id="file_upload4"/>
-		  <div id="jspjzm">
-		  <#list jspjzmList as jspjzm>
-		  	<span id="jspjzm${jspjzm_index+1}" style="color: red;"><b>已上传文件：</b>${jspjzm.fileName!}&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href="#" onClick="javascript:delAccessory('jspjzm${jspjzm_index+1}',${id},4,'${jspjzm.fileName!}')"  title="删除">删除</a></#if></br></span>
-		  </#list>
-		  </div>
-          </div>
-          <p><h4>申报项目相关证明材料</h4></p>
-<div>
-		  <p><h7>项目的平台架构、关键技术等获得专利、标准、知识产权的相关证明材料</h7><span>（请上传word、excel、pdf、jpg、png或者gif）</span></p>
-	      <input type="file" name="file_upload5" id="file_upload5"/>
-		  <div id="yyzm">
-		  <#list yyzmList as yyzm>
-		  	<span id="yyzm${yyzm_index+1}" style="color: red;"><b>已上传文件：</b>${yyzm.fileName!}&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href="#" onClick="javascript:delAccessory('yyzm${yyzm_index+1}',${id},5,'${yyzm.fileName!}')"  title="删除">删除</a></#if></br></span>
-		  </#list>
-		  </div>
-		  <p><h7>项目的推广效果证明材料</h7><span>（请上传word、excel、pdf、jpg、png或者gif）</span></p>
-	      <input type="file" name="file_upload6" id="file_upload6"/>
-		  <div id="qtzm">
-		  <#list qtzmList as qtzm>
-		  	<span id="qtzm${qtzm_index+1}" style="color: red;"><b>已上传文件：</b>${qtzm.fileName!}&nbsp; &nbsp; &nbsp;<#if project.Status==0 || project.Status==3><a href="#" onClick="javascript:delAccessory('qtzm${qtzm_index+1}',${id},6,'${qtzm.fileName!}')"  title="删除">删除</a></#if></br></span>
-		  </#list>
-		  </div>
-</div>
-		  <p><a href="#" id="add" class="login" title="上传" style=" color:#fff;">提交</a>
-	     <!--  <a href="javascript:history.go(-1)" class="register" title="返回" >返回</a> --></p>
-      </form>
+    <#include "/project/_step_topmenu.html"/>
+    <div class="clearfix">&nbsp;</div>
+
+    <form action="${ctx_path}/project/apply" method="post" onSubmit="return check()">
+
+        <input type="hidden" name="step" value='4'/>
+        <input type="hidden" name="id" value='${id}'/>
+
+        <h5><b>（一）项目实施方案</b></h5>
+        <textarea id="content11" name="ImplementationPlans" style="width:1010x;height:400px;visibility:hidden;">${project.ImplementationPlans!}</textarea>
+
+        <h5><b>（二）项目实施现状</b></h5>
+        <textarea id="content12" name="CurrentSituation" style="width:1010x;height:400px;visibility:hidden;">${project.CurrentSituation!}</textarea>
+
+        <h5><b>（三）项目实施计划</b></h5>
+        <textarea id="content13" name="StartingPlan" style="width:1010x;height:400px;visibility:hidden;">${project.StartingPlan!}</textarea>
+
+        <div class="anniu"><input type="submit" id="add" class="register" value="保存">
+            <a href="javascript:history.go(-1)" class="register" title="返回">返回</a>
+            <!-- <a href="" class="register" title="导出" >导出</a> -->
+        </div>
+    </form>
 </div>
 </body>
 </html>
