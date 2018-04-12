@@ -180,7 +180,7 @@ $.fn.extend({
         return _option;
 
     },
-    //层级联动
+    //选择列表组
     zkty_checkoutgroup: function (option) {
         var self = this;
         var _default = {
@@ -291,6 +291,38 @@ $.fn.extend({
 
         return _option;
 
+    },
+    //错误信息展示
+    zkty_Error: function (option) {
+        var self = this;
+        var _default = {
+            DisplayTime: null,
+        }
+        //合并参数
+        var _option = $.extend(_default, option);
+        //取出原有的数据
+        var newContent = $('<div class="zkty-fixed"></div>');
+        //添加关闭按钮
+        var closed = $('<div class="zkty-fixed_hide"></div>');
+        var btn = $('<span>X</span>');
+        btn.bind('click', function () {
+            _option.hide();
+        })
+        closed.append(btn);
+        newContent.append(closed);
+        //为原数据加上壳
+        newContent.append(self);
+        //回填数据
+        $("body").append(newContent);
+
+        _option.show = function () {
+            newContent.show();
+        }
+
+        _option.hide = function () {
+            newContent.hide(500);
+        }
+        return _option;
     }
 });
 ///jQuery的扩展方法

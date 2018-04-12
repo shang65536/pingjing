@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-    <link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css"/>
+    <link href="${ctx_path}/css/styles2.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx_path}/css/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx_path}/css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx_path}/css/formError.css" rel="stylesheet" type="text/css"/>
@@ -43,12 +43,21 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+
+            if("${project.Status}"!="0"){
+                $("#send").hide();
+            }
+
             var linkage = $(".InnovationField").zkty_linkage({
                 initialNode: "${project.InnovationField!}"
             });
 
             $("#send").bind('click', function () {
+                if (!$("#formdata").valid()) {
+                    return false;
+                }
                 var formpar = {
+                    id: "${project.id!}",
                     step: 1,
                     project: $("#project").val(),
                     ProjectCN: $("#ProjectCN").val(),
@@ -84,70 +93,95 @@
     <#include "/project/_step_topmenu.html"/>
     <div class="clearfix"></div>
     <h5><b>项目基本情况</b></h5>
-    <form class="form-horizontal">
+    <form class="form-horizontal" id="formdata">
         <input type="hidden" name="step" value='1'/>
         <input type="hidden" name="id" value='${project.id!}'/>
         <input type="hidden" name="project.id" value='${project.id!}'/>
         <div class="form-group">
-            <label for="" class="col-sm-3 control-label">项目名称</label>
-            <div class="col-sm-6">
+            <label for="" class="col-sm-2 control-label">项目名称</label>
+            <div class="col-sm-10">
                 <input type="text" class="form-control" id="ProjectCN" name="project.ProjectCN"
-                       value='${project.ProjectCN!}'/>
-            </div>
-            <div class="col-sm-3">
+                       value='${project.ProjectCN!}' data-val="true" data-val-required="项目名称不能为空"/>
             </div>
         </div>
         <div class="form-group">
-            <label for="" class="col-sm-3 control-label">起止时间</label>
-            <div class="col-sm-3">
+            <label for="" class="col-sm-2 control-label">起止时间</label>
+            <div class="col-sm-5">
                 <input type="text" class="form-control Wdate" id="StartTime" name="project.StartTime"
-                       onFocus="WdatePicker({isShowClear:false,readOnly:true})" value='${project.StartTime!}'/>
+                       onFocus="WdatePicker({isShowClear:false,readOnly:true})" value='${project.StartTime!}'
+                       data-val="true" data-val-required="起止时间不能为空"/>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-5">
                 <input type="text" class="form-control Wdate" id="EndTime" name="project.EndTime"
-                       onFocus="WdatePicker({isShowClear:false,readOnly:true})" value='${project.EndTime!}'/>
-            </div>
-            <div class="col-sm-3">
+                       onFocus="WdatePicker({isShowClear:false,readOnly:true})" value='${project.EndTime!}'
+                       data-val="true" data-val-required="起止时间不能为空"/>
             </div>
         </div>
         <div class="form-group">
-            <label for="" class="col-sm-3 control-label">项目投资(万元)</label>
-            <div class="col-sm-6">
+            <label for="" class="col-sm-2 control-label">项目投资(万元)</label>
+            <div class="col-sm-10">
                 <input type="text" class="form-control" id="TotalFund" name="project.TotalFund"
-                       value='${project.TotalFund!}'/>
-            </div>
-            <div class="col-sm-3">
+                       value='${project.TotalFund!}' data-val="true" data-val-required="项目投资不能为空"
+                       data-val-digits="只接受数字"/>
             </div>
         </div>
         <div class="form-group">
             <!--InnovationField-->
-            <label for="" class="col-sm-3 control-label">项目创新领域</label>
-            <div class="col-sm-6 InnovationField">
-            </div>
-            <div class="col-sm-3">
+            <label for="" class="col-sm-2 control-label">项目创新领域</label>
+            <div class="col-sm-10 InnovationField">
             </div>
         </div>
         <div class="form-group">
-            <label for="" class="col-sm-3 control-label">项目概述</label>
-            <div class="col-sm-6">
+            <label for="" class="col-sm-2 control-label">项目概述</label>
+            <div class="col-sm-10">
                 <textarea class="form-control" style="height:200px;resize:none;"
-                          id="Introduction" name="project.Introduction">${project.Introduction!}</textarea>
-            </div>
-            <div class="col-sm-3">
+                          id="Introduction" name="project.Introduction" data-val="true" data-val-required="项目概述不能为空">${project.Introduction!}</textarea>
             </div>
         </div>
         <div class="form-group">
-            <label for="" class="col-sm-3 control-label"></label>
-            <div class="col-sm-6">
-                <input value="保存" type="button" class="login" id="send"/>
-                <a href="javascript:history.go(-1)" class="register" title="返回">返回</a>
-            </div>
-            <div class="col-sm-3">
-            </div>
+            <label for="" class="col-sm-2 control-label"></label>
+            <div class="col-sm-6 text-center">
+                <input value="保存" type="submit" class="login" id="send"/>
+            <a href="javascript:history.go(-1)" class="register" title="返回">返回</a>
+        </div>
+        <style>
+            .formError {
+                position: absolute;
+                bottom: 80px;
+                right: 50px;
+                background-color: #ffff00;
+                border-radius: 5px;
+            }
+
+            .formError .field-validation-error {
+                padding: 3px 20px;
+            }
+        </style>
+        <div class="formError">
+            <ul>
+                <li>
+                    <span class="field-validation-valid help-block" data-valmsg-for="project.ProjectCN"
+                          data-valmsg-replace="true"></span>
+                </li>
+                <li>
+                    <span class="field-validation-valid help-block" data-valmsg-for="project.StartTime"
+                          data-valmsg-replace="true"></span>
+                </li>
+                <li>
+                    <span class="field-validation-valid help-block" data-valmsg-for="project.EndTime"
+                          data-valmsg-replace="true"></span>
+                </li>
+                <li>
+                    <span class="field-validation-valid help-block" data-valmsg-for="project.TotalFund"
+                          data-valmsg-replace="true"></span>
+                </li>
+                <li>
+                    <span class="field-validation-valid help-block" data-valmsg-for="project.Introduction"
+                          data-valmsg-replace="true"></span>
+                </li>
+            </ul>
         </div>
     </form>
-</div>
-</form>
 </div>
 </body>
 </html>

@@ -65,6 +65,38 @@
 </head>
 
 <body>
+	<style>
+		.lianxifangshi{
+			position: fixed;
+			right: 5px;
+			top:250px;
+
+			padding: 10px;
+			border: 1px solid red;
+			border-radius: 10px;
+			z-index: 100;
+		}
+		.lianxifangshi li{
+			padding: 5px 0px;
+			font-size: 12px;!important;
+		}
+	</style>
+	<div class="lianxifangshi">
+		<ul>
+			<li>
+				如有问题请加入相应QQ群咨询：
+			</li>
+			<li>
+				申报系统使用咨询群：73210207
+			</li>
+			<li>
+				申报企业咨询群：753427809
+			</li>
+			<li>
+				推荐单位咨询群：752902792
+			</li>
+		</ul>
+	</div>
 	<#if userName !=""> <#include "/common/_header.html"/> <@header username=userName detailUrl="${ctx_path}/admin/userDetail"/> <#else>
 	<!-- 未登录的情况 -->
 	<div id="header" class="png_bg">

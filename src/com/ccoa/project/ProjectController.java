@@ -446,7 +446,7 @@ public class ProjectController extends BaseController {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
                     // 转换日期格式
                     SimpleDateFormat sdfdate = new SimpleDateFormat("yyyy-MM-dd");
-
+                    String _Project_ID = getPara("Project_ID");
                     String _ProjectCN = getPara("ProjectCN");
                     String _StartTime = getPara("StartTime");
                     String _EndTime = getPara("EndTime");
@@ -473,6 +473,7 @@ public class ProjectController extends BaseController {
                     // 如果ID不为空 就修改 为空 就新增
                     int xmId;
                     if (null != id) {
+                        project.set("id",id);
                         project.update();
                         xmId = id;
                     } else {
@@ -542,7 +543,7 @@ public class ProjectController extends BaseController {
                     enterprise.set("sort_type2_income", getPara("sort_type2_income"));
                     enterprise.set("sort_type3_income", getPara("sort_type3_income"));
 
-                    if (getPara("id") != null) {
+                    if (enterprise.get("id") != null) {
                         enterprise.update();
                     } else {
                         enterprise.remove("id");
@@ -550,6 +551,7 @@ public class ProjectController extends BaseController {
                     }
                     setAttr("step", step + 1); // 用于页面导航条 判断是否默认样式
                     //render("step/step" + (step + 1) + ".html");
+                    p.set("Step", 2);
                     renderJson("success", "/project/step?step=3&ProjectID=" + _project_id);
                     break;
 
@@ -557,7 +559,7 @@ public class ProjectController extends BaseController {
                     p.set("Content", getPara("Content"))
                             .set("Content1", getPara("Content1"))
                             .set("Content2", getPara("Content2"))
-                            .set("Content3", getPara("Content3")).set("Content4", getPara("Content4")).set("Step", "2")
+                            .set("Content3", getPara("Content3")).set("Content4", getPara("Content4")).set("Step", "3")
                             .update(); // 已完成步骤
                     setAttr("id", id);
                     // setAttr("p", p);
@@ -646,7 +648,6 @@ public class ProjectController extends BaseController {
                     renderJson();
                     break;
             }
-
             setAttr("project", p);
 
         }

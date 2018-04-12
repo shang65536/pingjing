@@ -116,6 +116,10 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+            if("${project.Status}"!="0"){
+                $("#btn_seave").hide();
+            }
+
             //主营业务
             var mb = $(".MainBusiness").zkty_checkoutgroup({
                 data: business
@@ -132,7 +136,7 @@
                 if ("${enterprise.unit_properties!}" != "") {
                     up.backfill([
                         {
-                            key:"unit_properties",
+                            key: "unit_properties",
                             list: "${enterprise.unit_properties!}",
                             opinput: "${enterprise.unit_properties_explain!}"
                         }
@@ -141,62 +145,62 @@
                 //主营业务
                 mb.backfill([
                     {
-                        key:"brace_business",
+                        key: "brace_business",
                         list: "${enterprise.brace_business!}",
                         opinput: "${enterprise.brace_business_explain!}"
                     },
                     {
-                        key:"technology_business",
+                        key: "technology_business",
                         list: "${enterprise.technology_business!}",
                         opinput: "${enterprise.technology_business_explain!}"
                     },
                     {
-                        key:"app_business",
+                        key: "app_business",
                         list: "${enterprise.app_business!}",
                         opinput: "${enterprise.app_business_explain!}"
                     }
                 ]);
                 //是否为上市公司
                 if ("${enterprise.is_listed_company!}" != "") {
-                    if("${enterprise.is_listed_company!}"=="1"){
-                        $("input[name='is_listed_company'][value='1']").prop("checked",true);
-                    }else{
-                        $("input[name='is_listed_company'][value='0']").prop("checked",true);
+                    if ("${enterprise.is_listed_company!}" == "1") {
+                        $("input[name='is_listed_company'][value='1']").prop("checked", true);
+                    } else {
+                        $("input[name='is_listed_company'][value='0']").prop("checked", true);
                     }
 
                 }
                 //是否出口
                 if ("${enterprise.is_business_export!}" != "") {
-                    if("${enterprise.is_business_export!}"=="1"){
-                        $("input[name='is_business_export'][value='1']").prop("checked",true);
-                    }else{
-                        $("input[name='is_business_export'][value='0']").prop("checked",true);
+                    if ("${enterprise.is_business_export!}" == "1") {
+                        $("input[name='is_business_export'][value='1']").prop("checked", true);
+                    } else {
+                        $("input[name='is_business_export'][value='0']").prop("checked", true);
                     }
                 }
                 //高新技术产业
                 if ("${enterprise.honor_type1!}" != "") {
                     var arry = "${enterprise.honor_type1!}".split(",");
-                    $.each(arry,function(i,dom){
-                        if(dom==1){
-                            $("input[name='honor_type1']").eq(i).prop("checked",true);
+                    $.each(arry, function (i, dom) {
+                        if (dom == 1) {
+                            $("input[name='honor_type1']").eq(i).prop("checked", true);
                         }
                     })
                 }
                 //企业技术中心
                 if ("${enterprise.honor_type2!}" != "") {
                     var arry = "${enterprise.honor_type2!}".split(",");
-                    $.each(arry,function(i,dom){
-                        if(dom==1){
-                            $("input[name='honor_type2']").eq(i).prop("checked",true);
+                    $.each(arry, function (i, dom) {
+                        if (dom == 1) {
+                            $("input[name='honor_type2']").eq(i).prop("checked", true);
                         }
                     })
                 }
                 //重点实验室
                 if ("${enterprise.honor_type3!}" != "") {
                     var arry = "${enterprise.honor_type3!}".split(",");
-                    $.each(arry,function(i,dom){
-                        if(dom==1){
-                            $("input[name='honor_type3']").eq(i).prop("checked",true);
+                    $.each(arry, function (i, dom) {
+                        if (dom == 1) {
+                            $("input[name='honor_type3']").eq(i).prop("checked", true);
                         }
                     })
                 }
@@ -240,10 +244,16 @@
 
             //保存按钮
             $("#btn_seave").bind('click', function () {
+
+                if (!$("#formdata").valid()) {
+                    return false;
+                }
+
                 var formpar = {
                     id: $("#id").val(),
                     step: 2,
-                    project_id:$("#project_id").val(),
+                    enterprise_id:"${enterprise.id}",
+                    project_id: $("#project_id").val(),
                     unit_name: $("#unit_name").val(),
                     contact_name: $("#contact_name").val(),
                     contact_phone: $("#contact_phone").val(),
@@ -289,7 +299,7 @@
                     unit_people: $("#unit_people").val(),
                     dev_people: $("#dev_people").val(),
                     ai_income: $("#ai_income").val(),
-                    other_honor:$("#other_honor").val(),
+                    other_honor: $("#other_honor").val(),
                     sort_type1_income: $("#sort_type1_income").val(),
                     sort_type2_income: $("#sort_type2_income").val(),
                     sort_type3_income: $("#sort_type3_income").val()
@@ -324,11 +334,7 @@
     <#include "/project/_step_topmenu.html"/>
     <div class="clearfix"></div>
     <h5><b>项目基本情况</b></h5>
-    <div class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Warning!</strong> Better check yourself, you're not looking too good.
-    </div>
-    <form class="form-horizontal">
+    <form class="form-horizontal" id="formdata">
         <input type="hidden" name="step" value='2'/>
         <input type="hidden" name="id" value='${enterprise.id!}'/>
         <input type="hidden" name="project_id" id="project_id" value='${project.id!}'/>
@@ -343,43 +349,45 @@
             <label for="" class="col-sm-2 control-label">联系人姓名</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="contact_name" name="enterprise.contact_name"
-                       value='${enterprise.contact_name!}'/>
+                       value='${enterprise.contact_name!}' data-val="true" data-val-required="联系人姓名不能为空"/>
             </div>
             <label for="" class="col-sm-2 control-label">联系人手机</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="contact_phone" name="enterprise.contact_phone"
-                       value='${enterprise.contact_phone!}'/>
+                       value='${enterprise.contact_phone!}' data-val="true" data-val-required="联系人手机不能为空"
+                       data-val-digits="只接受数字"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">联系人职务</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="contact_post" name="enterprise.contact_post"
-                       value='${enterprise.contact_post!}'/>
+                       value='${enterprise.contact_post!}' data-val="true" data-val-required="联系人职务不能为空"/>
             </div>
             <label for="" class="col-sm-2 control-label">联系人传真</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="contact_fax" name="enterprise.contact_fax"
-                       value='${enterprise.contact_fax!}'/>
+                       value='${enterprise.contact_fax!}' data-val="true" data-val-required="联系人传真不能为空"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">联系人邮箱</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="contact_mail" name="enterprise.contact_mail"
-                       value='${enterprise.contact_mail!}'/>
+                       value='${enterprise.contact_mail!}' data-val="true" data-val-required="联系人邮箱不能为空"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">注册资本(万元)</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="registered_capital" name="enterprise.registered_capital"
-                       value='${enterprise.registered_capital!}'/>
+                       value='${enterprise.registered_capital!}' data-val="true" data-val-required="注册资本不能为空"
+                       data-val-digits="只接受数字"/>
             </div>
             <label for="" class="col-sm-2 control-label">法定代表人</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="legal_person" name="enterprise.legal_person"
-                       value='${enterprise.legal_person!}'/>
+                       value='${enterprise.legal_person!}' data-val="true" data-val-required="法定代表人不能为空"/>
             </div>
         </div>
         <div class="form-group">
@@ -387,21 +395,21 @@
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="unit_registration_address"
                        name="enterprise.unit_registration_address"
-                       value='${enterprise.unit_registration_address!}'/>
+                       value='${enterprise.unit_registration_address!}' data-val="true" data-val-required="单位注册地址不能为空"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">单位办公地址</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="unit_office_address" name="enterprise.unit_office_address"
-                       value='${enterprise.unit_office_address!}'/>
+                       value='${enterprise.unit_office_address!}' data-val="true" data-val-required="单位办公地址不能为空"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">组织机构代码/<br/>三证合一码</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="organization_code" name="enterprise.organization_code"
-                       value='${enterprise.organization_code!}'/>
+                       value='${enterprise.organization_code!}' data-val="true" data-val-required="组织机构代码不能为空"/>
             </div>
         </div>
         <div class="form-group">
@@ -426,7 +434,8 @@
             </div>
             <label for="" class="col-sm-1 control-label">上市时间</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="list_time" name="enterprise.list_time"
+                <input type="text" class="form-control Wdate" id="list_time"
+                       onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="enterprise.list_time"
                        value='${enterprise.list_time!}'/>
             </div>
             <label for="" class="col-sm-1 control-label">上市地点</label>
@@ -532,56 +541,61 @@
             <label for="" class="col-sm-2 control-label">研发能力<br/>提供证明材料</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="capability" name="enterprise.capability"
-                       value='${enterprise.capability!}'/>
+                       value='${enterprise.capability!}' data-val="true" data-val-required="研发能力不能为空"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">主营业务收入<br/>提供证明材料</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="main_business_income" name="enterprise.main_business_income"
-                       value='${enterprise.main_business_income!}'/>
+                       value='${enterprise.main_business_income!}' data-val="true" data-val-required="主营业务收入不能为空"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">研发投入<br/>提供证明材料</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="dev_input" name="enterprise.dev_input"
-                       value='${enterprise.dev_input!}'/>
+                       value='${enterprise.dev_input!}' data-val="true" data-val-required="研发投入不能为空"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">上一年度金总额</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="Tax" name="enterprise.Tax"
-                       value='${enterprise.Tax!}'/>
+                       value='${enterprise.Tax!}' data-val="true" data-val-required="上一年度金总额不能为空"
+                       data-val-digits="只接受数字"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">上一年度净利润</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="net_profit" name="enterprise.net_profit"
-                       value='${enterprise.net_profit!}'/>
+                       value='${enterprise.net_profit!}' data-val="true" data-val-required="上一年度净利润不能为空"
+                       data-val-digits="只接受数字"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">单位总人数</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="unit_people" name="enterprise.unit_people"
-                       value='${enterprise.unit_people!}'/>
+                       value='${enterprise.unit_people!}' data-val="true" data-val-required="单位总人数不能为空"
+                       data-val-digits="只接受数字"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">研发人员规模</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="dev_people" name="enterprise.dev_people"
-                       value='${enterprise.dev_people!}'/>
+                       value='${enterprise.dev_people!}' data-val="true" data-val-required="研发人员规模不能为空"
+                       data-val-digits="只接受数字"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">人工智能业务收入</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="ai_income" name="enterprise.ai_income"
-                       value='${enterprise.ai_income!}'/>
+                       value='${enterprise.ai_income!}' data-val="true" data-val-required="人工智能业务收入不能为空"
+                       data-val-digits="只接受数字"/>
             </div>
         </div>
         <div class="form-group">
@@ -593,7 +607,8 @@
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="sort_type1_income"
                                    name="enterprise.sort_type1_income"
-                                   value='${enterprise.sort_type1_income!}'/>
+                                   value='${enterprise.sort_type1_income!}' data-val="true"
+                                   data-val-required="产品收入总额不能为空" data-val-digits="只接受数字"/>
                         </div>
                     </div>
                     <br/>
@@ -602,7 +617,8 @@
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="sort_type2_income"
                                    name="enterprise.sort_type2_income"
-                                   value='${enterprise.sort_type2_income!}'/>
+                                   value='${enterprise.sort_type2_income!}' data-val="true"
+                                   data-val-required="信息技术服务收入总额不能为空" data-val-digits="只接受数字"/>
                         </div>
                     </div>
                     <br/>
@@ -611,7 +627,8 @@
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="sort_type3_income"
                                    name="enterprise.sort_type3_income"
-                                   value='${enterprise.sort_type3_income!}'/>
+                                   value='${enterprise.sort_type3_income!}' data-val="true"
+                                   data-val-required="嵌入式系统软件收入总额不能为空" data-val-digits="只接受数字"/>
                         </div>
                     </div>
                 </div>
@@ -621,7 +638,7 @@
             <label for="" class="col-sm-2 control-label">申报单位简介</label>
             <div class="col-sm-10">
                 <textarea class="form-control" style="height:200px;resize:none;" id="unit_explain"
-                          name="enterprise.unit_explain">${enterprise.unit_explain!}</textarea>
+                          name="enterprise.unit_explain" data-val="true" data-val-required="申报单位简介不能为空">${enterprise.unit_explain!}</textarea>
             </div>
         </div>
         <div class="form-group">
@@ -632,9 +649,104 @@
             </div>
             <div class="col-sm-4">
             </div>
-        </div>
+            <div class="formError">
+                <ul>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.contact_name"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.contact_phone"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.contact_post"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.contact_fax"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.contact_mail"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.registered_capital"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.legal_person"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.unit_registration_address"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.unit_office_address"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.organization_code"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.capability"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.main_business_income"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.dev_input"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.Tax"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.net_profit"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.unit_people"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.dev_people"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.ai_income"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.unit_explain"
+                  data-valmsg-replace="true"></span>
+                    </li>
+                </ul>
+            </div>
     </form>
+    <style>
+        .Wdate {
+            height: auto;
+        }
 
+        .formError {
+            position: fixed;
+            bottom: 80px;
+            right: 50px;
+            background-color: #ffff00;
+            border-radius: 5px;
+        }
+
+        .formError .field-validation-error {
+            padding: 3px 20px;
+        }
+    </style>
 </div>
 </form>
 </div>
