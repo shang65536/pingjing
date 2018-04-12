@@ -153,20 +153,20 @@ public class CompanyController extends Controller {
     // 验证用户名是否存在
     public void checkName() {
         try {
-            String Username = getPara("Username");
+            String Username = getPara("company.Username");
             long c = Company.me.checkName(Username);
 
             if (c > 0) // 说明存在相同的用户
             {
-                renderJson("success", false);
+                renderJson("false");
             } else {
-                renderJson("success", true);
+                renderJson("true");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e);
-            renderJson("success", false);
+            renderJson("false");
         }
     }
 
@@ -183,6 +183,7 @@ public class CompanyController extends Controller {
             String _CompanyFax = getPara("CompanyFax");
             String _LinkmanName = getPara("LinkmanName");
             String _LinkmanPhone = getPara("LinkmanPhone");
+            String _IsCentralEnterprises = getPara("IsCentralEnterprises");
             String _CentralEnterprisesName = getPara("CentralEnterprisesName");
             String _CentralEnterprisesCode = getPara("CentralEnterprisesCode");
             String _AreaCode = getPara("AreaCode");
@@ -196,10 +197,11 @@ public class CompanyController extends Controller {
             company.set("LinkmanName", _LinkmanName);
             company.set("LinkmanPhone", _LinkmanPhone);
             company.set("CentralEnterprisesName", _CentralEnterprisesName);
-            company.set("CentralEnterprisesCode", _CentralEnterprisesCode);
+            company.set("IsCentralEnterprises", _IsCentralEnterprises);
+            company.set("CentralEnterprisesCode", _CentralEnterprisesCode == "" ? 0 : _CentralEnterprisesCode);
             company.set("AreaCode", _AreaCode);
 
-            if (_id == null||_id=="") {
+            if (_id == null || _id == "") {
                 company.set("Password",
                         EncryptionUtil.md5Encrypt(company.getStr("Password")));
                 company.save();

@@ -88,6 +88,7 @@ public class ProjectController extends BaseController {
             setAttr("queryParam", queryParam);
             // 调用显示评奖类别集合 用来显示动态下拉框
             Category me = new Category();
+            //  List<Project> _arryproject = me.findAll();
             setAttr("CategoryList", me.findAll());
             setAttr("projectList", Project.me.paginate(
                     getParaToInt("pageNumber", 1), Constants.PAGE_SIZE, params));
@@ -97,6 +98,14 @@ public class ProjectController extends BaseController {
                 prize = new Prize();
             }
             setAttr("prize", prize);
+            Project lastProject = Project.me.getLastAppYear(Integer.parseInt(String.valueOf(id)));
+            int isApply = 1;
+            SimpleDateFormat _format = new SimpleDateFormat("yyyy");
+            if (lastProject != null && lastProject.get("ApplyYear").equals(_format.format(new Date()))) {
+                isApply = 0;
+            }
+            setAttr("isApply", isApply);
+
             // setAttr("project",Project.me.findById(getPara("id")));
             render("projectList.html");
         }
@@ -293,8 +302,6 @@ public class ProjectController extends BaseController {
         setAttr("fundamentals", fundamentals);
         setAttr("recommended", recommended); // 用于修改页面
         switch (step) {
-            case 0:
-                break;
             case 1:// 项目基本信息
                 List ftList = new ArrayList();
                 HashMap map;
@@ -328,20 +335,30 @@ public class ProjectController extends BaseController {
                 setAttr("fromtaskList", (List) FromTask.me.findAll());
                 render("step/step" + step + ".html");
                 break;
-
-            case 2:// 项目详情
+            case 2://企业及基本信息
+                Enterprise ent = Enterprise.me.getEnterprise(Long.parseLong(id.toString()));
+                if (ent == null) {
+                    ent = new Enterprise();
+                    String unit_name = user.get("CompanyName");
+                    ent.put("unit_name", unit_name);
+                }
+                setAttr("project", p);
+                setAttr("enterprise", ent);
+                render("step/step" + step + ".html");
+                break;
+            case 3:// 项目详情
                 setAttr("project", p);
                 render("step/step" + step + ".html");
                 break;
-            case 3:// 应用情况
+            case 4:// 应用情况
                 setAttr("project", p);
                 render("step/step" + step + ".html");
                 break;
-            case 5:// 推荐单位意见
+            case 6:// 推荐单位意见
                 setAttr("project", p);
                 render("step/step" + (step) + ".html");
                 break;
-            case 4:// 上传附件
+            case 5:// 上传附件
                 setAttr("id", id);
                 setAttr("project", p);
                 render("step/step" + (step) + ".html");
@@ -423,8 +440,6 @@ public class ProjectController extends BaseController {
             }
 
             switch (step) {
-                case 0:
-                    break;
                 case 1:// 项目基本情况更新
                     Calendar c = Calendar.getInstance();
                     // 转换日期格式
@@ -432,21 +447,21 @@ public class ProjectController extends BaseController {
                     // 转换日期格式
                     SimpleDateFormat sdfdate = new SimpleDateFormat("yyyy-MM-dd");
 
-                    String _ProjectCN=getPara("ProjectCN");
-                    String _StartTime=getPara("StartTime");
-                    String _EndTime=getPara("EndTime");
-                    String _TotalFund=getPara("TotalFund");
-                    String _InnovationField=getPara("InnovationField");
-                    String _Introduction=getPara("Introduction");
+                    String _ProjectCN = getPara("ProjectCN");
+                    String _StartTime = getPara("StartTime");
+                    String _EndTime = getPara("EndTime");
+                    String _TotalFund = getPara("TotalFund");
+                    String _InnovationField = getPara("InnovationField");
+                    String _Introduction = getPara("Introduction");
 
-                    Project project=new Project();
+                    Project project = new Project();
 
-                    project.set("ProjectCN",_ProjectCN);
-                    project.set("StartTime",_StartTime);
-                    project.set("EndTime",_EndTime);
-                    project.set("TotalFund",_TotalFund);
-                    project.set("InnovationField",_InnovationField);
-                    project.set("Introduction",_Introduction);
+                    project.set("ProjectCN", _ProjectCN);
+                    project.set("StartTime", _StartTime);
+                    project.set("EndTime", _EndTime);
+                    project.set("TotalFund", _TotalFund);
+                    project.set("InnovationField", _InnovationField);
+                    project.set("Introduction", _Introduction);
 
                     String[] FromTaskAll = getRequest().getParameterValues("FromTaskAll");
                     String str1 = StringUtils.join(FromTaskAll, ",");
@@ -475,25 +490,85 @@ public class ProjectController extends BaseController {
                     setAttr("id", xmId);
                     setAttr("step", step + 1); // 用于页面导航条 判断是否默认样式
                     //render("step/step" + (step + 1) + ".html");
-                    renderJson("success","/project/step?step=2&ProjectID="+xmId);
+                    renderJson("success", "/project/step?step=2&ProjectID=" + xmId);
+                    break;
+                case 2:
+                    String _project_id = getPara("project_id");
+                    Enterprise enterprise = new Enterprise();
+                    enterprise.set("id", getPara("enterprise_id"));
+                    enterprise.set("project_id", _project_id);
+                    enterprise.set("unit_name", getPara("unit_name"));
+                    enterprise.set("contact_name", getPara("contact_name"));
+                    enterprise.set("contact_phone", getPara("contact_phone"));
+                    enterprise.set("contact_post", getPara("contact_post"));
+                    enterprise.set("contact_fax", getPara("contact_fax"));
+                    enterprise.set("contact_mail", getPara("contact_mail"));
+                    enterprise.set("registered_capital", getPara("registered_capital"));
+                    enterprise.set("legal_person", getPara("legal_person"));
+                    enterprise.set("unit_registration_address", getPara("unit_registration_address"));
+                    enterprise.set("unit_office_address", getPara("unit_office_address"));
+                    enterprise.set("organization_code", getPara("organization_code"));
+                    enterprise.set("unit_properties", getPara("unit_properties"));
+                    enterprise.set("unit_properties_explain", getPara("unit_properties_explain"));
+                    enterprise.set("brace_business", getPara("brace_business"));
+                    enterprise.set("brace_business_explain", getPara("brace_business_explain"));
+                    enterprise.set("technology_business", getPara("technology_business"));
+                    enterprise.set("technology_business_explain", getPara("technology_business_explain"));
+                    enterprise.set("app_business", getPara("app_business"));
+                    enterprise.set("app_business_explain", getPara("app_business_explain"));
+                    enterprise.set("is_listed_company", getPara("is_listed_company"));
+                    enterprise.set("list_time", getPara("list_time"));
+                    enterprise.set("list_place", getPara("list_place"));
+                    enterprise.set("stock_code", getPara("stock_code"));
+                    enterprise.set("is_business_export", getPara("is_business_export"));
+                    enterprise.set("export_place", getPara("export_place"));
+                    enterprise.set("unit_explain", getPara("unit_explain"));
+                    enterprise.set("honor_type1", getPara("honor_type1"));
+                    enterprise.set("honor_type2", getPara("honor_type2"));
+                    enterprise.set("honor_type3", getPara("honor_type3"));
+                    enterprise.set("honor_type1_year", getPara("honor_type1_year"));
+                    enterprise.set("honor_type2_year", getPara("honor_type2_year"));
+                    enterprise.set("honor_type3_year", getPara("honor_type3_year"));
+                    enterprise.set("dev_input", getPara("dev_input"));
+                    enterprise.set("main_business_income", getPara("main_business_income"));
+                    enterprise.set("capability", getPara("capability"));
+                    enterprise.set("Tax", getPara("Tax"));
+                    enterprise.set("net_profit", getPara("net_profit"));
+                    enterprise.set("unit_people", getPara("unit_people"));
+                    enterprise.set("dev_people", getPara("dev_people"));
+                    enterprise.set("ai_income", getPara("ai_income"));
+                    enterprise.set("other_honor", getPara("other_honor"));
+                    enterprise.set("sort_type1_income", getPara("sort_type1_income"));
+                    enterprise.set("sort_type2_income", getPara("sort_type2_income"));
+                    enterprise.set("sort_type3_income", getPara("sort_type3_income"));
+
+                    if (getPara("id") != null) {
+                        enterprise.update();
+                    } else {
+                        enterprise.remove("id");
+                        enterprise.save();
+                    }
+                    setAttr("step", step + 1); // 用于页面导航条 判断是否默认样式
+                    //render("step/step" + (step + 1) + ".html");
+                    renderJson("success", "/project/step?step=3&ProjectID=" + _project_id);
                     break;
 
-                case 2:// 申报项目基本情况
+                case 3:// 申报项目基本情况
                     p.set("Content", getPara("Content"))
                             .set("Content1", getPara("Content1"))
                             .set("Content2", getPara("Content2"))
                             .set("Content3", getPara("Content3")).set("Content4", getPara("Content4")).set("Step", "2")
                             .update(); // 已完成步骤
                     setAttr("id", id);
-                   // setAttr("p", p);
+                    // setAttr("p", p);
                     setAttr("step", step + 1); // 用于页面导航条 判断是否默认样式
                     render("step/step" + (step + 1) + ".html");
                     break;
-                case 3:// 申报项目实施情况
+                case 4:// 申报项目实施情况
                     p.set("ImplementationPlans", getPara("ImplementationPlans"))
                             .set("CurrentSituation", getPara("CurrentSituation"))
                             .set("StartingPlan", getPara("StartingPlan"))
-                            .set("Step", "3") // 已完成步骤
+                            .set("Step", "4") // 已完成步骤
                             .update();
 
                     // 调用经济效益列表
@@ -514,19 +589,19 @@ public class ProjectController extends BaseController {
                     List<Accessory> qtzmList = Accessory.me.selectAybyIdType(id, "项目的推广效果证明材料");
                     setAttr("qtzmList", qtzmList);
                     setAttr("id", id);
-                   // setAttr("p", p);
+                    // setAttr("p", p);
                     setAttr("step", step + 1); // 用于页面导航条 判断是否默认样式
                     render("step/step" + (step + 1) + ".html");
                     break;
 
-                case 4:// 证明材料提交
-                    p.set("Step", "4").update();
+                case 5:// 证明材料提交
+                    p.set("Step", "5").update();
                     setAttr("id", id);
-                    setAttr("step", step+1); // 用于页面导航条 判断是否默认样式
+                    setAttr("step", step + 1); // 用于页面导航条 判断是否默认样式
                     render("step/step" + (step + 1) + ".html");
                     break;
 
-                case 5:// 企业责任声明
+                case 6:// 企业责任声明
                     // 上传附件
                     UploadFile fileyj = getFile("Recommended",
                             PathKit.getWebRootPath() + "/upload/dwyj",
@@ -537,15 +612,13 @@ public class ProjectController extends BaseController {
                     String pathyj = PathKit.getWebRootPath() + "/upload/dwyj/"
                             + fileyjName;
 
-                    p.set("Recommended", pathyj).set("Step", "5").update();
+                    p.set("Recommended", pathyj).set("Step", "6").update();
 
 
                     setAttr("recommended", fileyjName);
                     setAttr("id", id);
-                    setAttr("step", step ); // 用于页面导航条 判断是否默认样式
+                    setAttr("step", step); // 用于页面导航条 判断是否默认样式
                     render("step/step" + (step) + ".html");
-                    break;
-                case 6:
                     break;
                 case 7:// 上传附件
                     Integer type = 0;
@@ -1063,7 +1136,7 @@ public class ProjectController extends BaseController {
             redirect("/");
             return;
         } else {
-            StringBuilder msg=new StringBuilder();
+            StringBuilder msg = new StringBuilder();
 
             int id = getParaToInt("id", 0);
             Project p = Project.me.findById(id);
@@ -1071,7 +1144,7 @@ public class ProjectController extends BaseController {
             // 先判断是否已经进行了提交操作 否则不允许提交
             String Status = p.getInt("Status") + "";// 状态
             if (!"0".equals(Status) && !"3".equals(Status)) {
-                msg.append( "项目已提交，不允许重复操作!");
+                msg.append("项目已提交，不允许重复操作!");
             } else {
 
                 // 先验证 所有内容 是否都填写完整
@@ -1080,62 +1153,58 @@ public class ProjectController extends BaseController {
                 //申报项目基本情况
                 String Content = p.getStr("Content") + ""; // 项目承担方资质与能力
                 if ("null".equals(Content) || "".equals(Content)) {
-                    msg.append( "\n项目承担方资质与能力还未填写;");
+                    msg.append("\n项目承担方资质与能力还未填写;");
                 }
                 String Content1 = p.getStr("Content1") + ""; // 项目负责人与项目团队实力
                 if ("null".equals(Content1) || "".equals(Content1)) {
-                    msg.append( "\n项目负责人与项目团队实力还未填写;");
+                    msg.append("\n项目负责人与项目团队实力还未填写;");
                 }
                 String Content2 = p.getStr("Content2") + ""; // 产学研用联合协作情况
                 if ("null".equals(Content2) || "".equals(Content2)) {
-                    msg.append( "\n产学研用联合协作情况还未填写;");
+                    msg.append("\n产学研用联合协作情况还未填写;");
                 }
                 String Content3 = p.getStr("Content3") + ""; // 项目实施的创新性
                 if ("null".equals(Content3) || "".equals(Content3)) {
-                    msg.append( "\n项目实施的创新性还未填写;");
+                    msg.append("\n项目实施的创新性还未填写;");
                 }
                 String Content4 = p.getStr("Content4") + ""; // 项目的可推广性
                 if ("null".equals(Content4) || "".equals(Content4)) {
-                    msg.append( "\n项目的可推广性还未填写;");
+                    msg.append("\n项目的可推广性还未填写;");
                 }
                 //申报项目实施情况
                 String ImplementationPlans = p.getStr("ImplementationPlans") + ""; // 产学研用联合协作情况
                 if ("null".equals(ImplementationPlans) || "".equals(ImplementationPlans)) {
-                    msg.append( "\n产学研用联合协作情况还未填写;");
+                    msg.append("\n产学研用联合协作情况还未填写;");
                 }
                 String CurrentSituation = p.getStr("CurrentSituation") + ""; // 项目实施的创新性
                 if ("null".equals(CurrentSituation) || "".equals(CurrentSituation)) {
-                    msg.append( "\n项目实施的创新性还未填写;");
+                    msg.append("\n项目实施的创新性还未填写;");
                 }
                 String StartingPlan = p.getStr("StartingPlan") + ""; // 项目的可推广性
                 if ("null".equals(StartingPlan) || "".equals(StartingPlan)) {
-                    msg.append( "\n项目的可推广性还未填写;");
+                    msg.append("\n项目的可推广性还未填写;");
                 }
                 //证明材料
                 List<Accessory> zylzsfyjList = Accessory.me.selectAybyIdType(id, "申报单位相关荣誉证明材料");
-                if(zylzsfyjList.size()==0)
-                {
-                    msg.append( "\n申报单位相关荣誉证明材料还未上传;");
+                if (zylzsfyjList.size() == 0) {
+                    msg.append("\n申报单位相关荣誉证明材料还未上传;");
                 }
                 List<Accessory> btryyqkjsfjyList = Accessory.me.selectAybyIdType(id, "申报单位研发能力证明材料");
-                if(btryyqkjsfjyList.size()==0)
-                {
-                    msg.append( "\n申报单位研发能力证明材料还未上传;");
+                if (btryyqkjsfjyList.size() == 0) {
+                    msg.append("\n申报单位研发能力证明材料还未上传;");
                 }
                 List<Accessory> kxpjzmList = Accessory.me.selectAybyIdType(id, "申报单位研发能力证明材料");
-                if(kxpjzmList.size()==0)
-                {
-                    msg.append( "\n申报单位研发能力证明材料还未上传;");
+                if (kxpjzmList.size() == 0) {
+                    msg.append("\n申报单位研发能力证明材料还未上传;");
                 }
                 List<Accessory> jspjzmList = Accessory.me.selectAybyIdType(id, "申报单位研发投入证明材料");
-                if(jspjzmList.size()==0)
-                {
-                    msg.append( "\n申报单位研发投入证明材料还未上传;");
+                if (jspjzmList.size() == 0) {
+                    msg.append("\n申报单位研发投入证明材料还未上传;");
                 }
                 //企业责任声明
                 String Recommended = p.getStr("Recommended") + "";
                 if ("null".equals(Recommended) || "".equals(Recommended)) {
-                    msg.append( "\n企业责任声明还未上传;");
+                    msg.append("\n企业责任声明还未上传;");
                 }
 
 
