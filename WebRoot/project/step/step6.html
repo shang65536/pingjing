@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="${ctx_path}/css/styles.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+    <link href="${ctx_path}/js/showLoading/showLoading.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${ctx_path}/js/showLoading/jquery.showLoading.js"></script>
+    <!--[if lte IE 6]>
+    <script type="text/javascript" src="${ctx_path}/js/DD_belatedPNG_0.0.8a.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li , a, a:hover,h3,.caption, p');
+    </script>
+    <![endif]-->
+    <script type="text/javascript">
+        var isTrue = true;
+
+        //验证
+        function check() {
+            isTrue = true;
+            //获取所有 文件是否已选择
+            var file1 = document.getElementById("Recommended");
+            var ErrMsg = "";
+            if (file1.value == "") {
+                ErrMsg = "请上传文件，不能为空!";
+            } else {
+                var type = ".jpg,.gif,.pdf";//允许上传的文件类型 0为无限制 每个扩展名后边要加一个"," 小写字母表示
+
+                var fileName = file1.value.substr(file1.value.lastIndexOf(".")).toLowerCase();
+                if (type.indexOf(fileName) == -1)//判断文件类型是否允许上传
+                {
+                    ErrMsg = "\n该文件类型不允许上传。请上传 " + type + " 类型的文件，当前文件类型为" + fileName;
+                }
+            }
+            if (ErrMsg != "") {
+                alert(ErrMsg);
+                isTrue = false;
+            }
+
+        }
+
+        function load() {
+            //申报状态是否已结束  如果结束 不能提交操作
+            /*   var StatusSb='${prize.StatusSb!}';
+              if(StatusSb=='0')  //结束  隐藏申报按钮
+              {
+                $(document.getElementById("add")).hide();
+                $(document.getElementById("Recommended")).hide();
+              } */
+            var status = '${project.Status!}'; //等于0未提交 3形式审查未审核通过的项目 才能操作
+            if (status != '0' && status != '3') {
+                $(document.getElementById("add")).hide();
+                $(document.getElementById("Recommended")).hide();
+            }
+        }
+
+        $(function () {
+            //上传
+            $("#add").click(function () {
+                check();
+                if (isTrue) {
+                    $("#container_12").showLoading();
+                    $('#addForm').submit();
+                }
+
+            });
+            //删除
+            $("#del").click(function () {
+                if (confirm("确认删除?")) {
+                    $.ajax({
+                        type: "POST",
+                        url: "${ctx_path}/project/delRecommended",
+                        data: {
+                            'id': ${project.id!},
+                        },
+                        success: function (result) {
+                            if (result.success) {
+                                $("#recommended1").hide();
+                            }
+                        }
+                    });
+                }
+
+
+            });
+        });
+    </script>
+</head>
+
+<body onload="load()">
+
+<#include "/common/_header.html"/>
+<@header username=user.Username detailUrl="${ctx_path}/company/detail"/>
+
+<div class="container_12" id="container_12">
+
+    <#include "/project/_step_topmenu.html"/>
+
+    <div class="clearfix">&nbsp;</div>
+    <div>
+        <h5><b>企业责任声明模板下载（下载模板后请填写相关内容，打印盖章后扫描上传）</b>
+            <a href="${ctx_path}/project/rcNoteOut" class="register" title="下载模板" style="float: right; margin-top: -10px">下载模板</a>
+        </h5>
+
+        <div style="clear: both">
+        </div>
+    </div>
+
+    <form id="addForm" action="${ctx_path}/project/apply?id=${id}&step=6" method="post" enctype="multipart/form-data"
+          onsubmit="return check()">
+
+        <p>
+        <div>
+            <div style="float: left;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="file" name="Recommended" id="Recommended"/>  <!-- 以后添加上传功能 -->
+            </div>
+            <a href="#" id="add" class="register" style="margin-top: -5px;" title="打印盖章扫描版上传">打印盖章扫描版上传</a>
+        </div>
+        </p>
+        <div id="recommended1">
+            <#if project.Recommended??>
+            &nbsp; &nbsp; &nbsp;<span style="color: red;"><b>已上传文件：</b>${recommended}</span>&nbsp; &nbsp; &nbsp;
+            <#if project.Status==0 || project.Status==3>
+            <a href="#" id="del" title="删除">删除</a>
+        </#if>
+    </#if>
+</div>
+</p>
+</form>
+</div>
+</body>
+</html>
