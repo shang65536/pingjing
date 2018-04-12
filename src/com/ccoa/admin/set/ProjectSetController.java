@@ -201,67 +201,72 @@ public class ProjectSetController extends BaseController {
         content = content.replaceAll("project.applytime", applytime);
 
         //单位名称
-        String unit_name = project.getStr("unit_name") == null ? "" : project.getStr("unit_name");
+        String unit_name = enterprise.getStr("unit_name") == null ? "" : enterprise.getStr("unit_name");
         content = content.replaceAll("project.unit_name", unit_name);
 
         //联系人姓名
-        String contact_name = project.getStr("contact_name") == null ? "" : project.getStr("contact_name");
+        String contact_name = enterprise.getStr("contact_name") == null ? "" : enterprise.getStr("contact_name");
         content = content.replaceAll("project.contact_name", contact_name);
 
         //联系人手机
-        String contact_phone = project.getStr("contact_phone") == null ? "" : project.getStr("contact_phone");
+        String contact_phone = enterprise.getStr("contact_phone") == null ? "" : enterprise.getStr("contact_phone");
         content = content.replaceAll("project.contact_phone", contact_phone);
 
         //联系人职务
-        String contact_post = project.getStr("contact_post") == null ? "" : project.getStr("contact_post");
+        String contact_post = enterprise.getStr("contact_post") == null ? "" : enterprise.getStr("contact_post");
         content = content.replaceAll("project.contact_post", contact_post);
 
         //联系人邮箱
-        String contact_mail = project.getStr("contact_mail") == null ? "" : project.getStr("contact_mail");
+        String contact_mail = enterprise.getStr("contact_mail") == null ? "" : enterprise.getStr("contact_mail");
         content = content.replaceAll("project.contact_mail", contact_mail);
 
         //联系人传真
-        String contact_fax = project.getStr("contact_fax") == null ? "" : project.getStr("contact_fax");
+        String contact_fax = enterprise.getStr("contact_fax") == null ? "" : enterprise.getStr("contact_fax");
         content = content.replaceAll("project.contact_fax", contact_fax);
 
         //注册资本
-        String registered_capital = project.getStr("registered_capital") == null ? "" : project.getStr("registered_capital");
+        String registered_capital = enterprise.getStr("registered_capital") == null ? "" : enterprise.getStr("registered_capital");
         content = content.replaceAll("project.registered_capital", registered_capital);
 
         //法定负责人
-        String legal_person = project.getStr("legal_person") == null ? "" : project.getStr("legal_person");
+        String legal_person = enterprise.getStr("legal_person") == null ? "" : enterprise.getStr("legal_person");
         content = content.replaceAll("project.legal_person", legal_person);
 
         //单位注册地址
-        String unit_registration_address = project.getStr("unit_registration_address") == null ? "" : project.getStr("unit_registration_address");
+        String unit_registration_address = enterprise.getStr("unit_registration_address") == null ? "" : enterprise.getStr("unit_registration_address");
         content = content.replaceAll("project.unit_registration_address", unit_registration_address);
 
         //单位办公地址
-        String unit_office_address = project.getStr("unit_office_address") == null ? "" : project.getStr("unit_office_address");
+        String unit_office_address = enterprise.getStr("unit_office_address") == null ? "" : enterprise.getStr("unit_office_address");
         content = content.replaceAll("project.unit_office_address", unit_office_address);
 
         //三证合一码
-        String organization_code = project.getStr("organization_code") == null ? "" : project.getStr("organization_code");
+        String organization_code = enterprise.getStr("organization_code") == null ? "" : enterprise.getStr("organization_code");
         content = content.replaceAll("project.organization_code", organization_code);
 
         //单位性质
-        String unit_properties = project.getStr("unit_properties") == null ? "" : project.getStr("unit_properties");
+        //单位描述
+        String unit_properties_explain = enterprise.getStr("unit_properties_explain") == null ? "" : enterprise.getStr("unit_properties_explain");
+        content = content.replaceAll("project.unit_properties_explain", unit_properties_explain);
+
+        String unit_properties = enterprise.getStr("unit_properties") == null ? "" : enterprise.getStr("unit_properties");
         if (!("").equals(unit_properties)) {
             String[] temp = unit_properties.split(",");
             for (int i = 0; i < temp.length; i++) {
                 if (("1").equals(temp[i])) {
-                    content = content.replaceAll(" project.unit_properties1" + (i + 1), "☑");
+                    content = content.replaceAll(" project.unit_properties" + (i + 1), "☑");
                 } else {
-                    content = content.replaceAll(" project.InnovationField" + (i + 1), "□");
+                    content = content.replaceAll(" project.unit_properties" + (i + 1), "□");
                 }
             }
         }
-        //单位描述
-        String unit_properties_explain = project.getStr("unit_properties_explain") == null ? "" : project.getStr("unit_properties_explain");
-        content = content.replaceAll("project.unit_properties_explain", unit_properties_explain);
 
         //支撑类
-        String brace_business = project.getStr("brace_business") == null ? "" : project.getStr("brace_business");
+        //支撑类描述
+        String brace_business_explain = enterprise.getStr("brace_business_explain") == null ? "" : enterprise.getStr("brace_business_explain");
+        content = content.replaceAll("project.brace_business_explain", brace_business_explain);
+
+        String brace_business = enterprise.getStr("brace_business") == null ? "" : enterprise.getStr("brace_business");
         if (!("").equals(brace_business)) {
             String[] temp = brace_business.split(",");
             boolean isSelect = false;
@@ -279,12 +284,13 @@ public class ProjectSetController extends BaseController {
                 content = content.replaceAll(" project.brace_business", "□");
             }
         }
-        //支撑类描述
-        String brace_business_explain = project.getStr("brace_business_explain") == null ? "" : project.getStr("brace_business_explain");
-        content = content.replaceAll("project.brace_business_explain", brace_business_explain);
+
 
         //技术业务
-        String technology_business = project.getStr("technology_business") == null ? "" : project.getStr("technology_business");
+        //技术业务描述
+        String technology_business_explain = enterprise.getStr("technology_business_explain") == null ? "" : enterprise.getStr("technology_business_explain");
+        content = content.replaceAll("project.technology_business_explain", technology_business_explain);
+        String technology_business = enterprise.getStr("technology_business") == null ? "" : enterprise.getStr("technology_business");
         if (!("").equals(technology_business)) {
             String[] temp = technology_business.split(",");
             boolean isSelect = false;
@@ -302,12 +308,13 @@ public class ProjectSetController extends BaseController {
                 content = content.replaceAll(" project.technology_business", "□");
             }
         }
-        //技术业务描述
-        String technology_business_explain = project.getStr("technology_business_explain") == null ? "" : project.getStr("technology_business_explain");
-        content = content.replaceAll("project.technology_business_explain", technology_business_explain);
+
 
         //应用业务
-        String app_business = project.getStr("app_business") == null ? "" : project.getStr("app_business");
+        //应用业务描述
+        String app_business_explain = enterprise.getStr("app_business_explain") == null ? "" : enterprise.getStr("app_business_explain");
+        content = content.replaceAll("project.app_business_explain", app_business_explain);
+        String app_business = enterprise.getStr("app_business") == null ? "" : enterprise.getStr("app_business");
         if (!("").equals(app_business)) {
             String[] temp = app_business.split(",");
             boolean isSelect = false;
@@ -325,27 +332,25 @@ public class ProjectSetController extends BaseController {
                 content = content.replaceAll(" project.app_business", "□");
             }
         }
-        //应用业务描述
-        String app_business_explain = project.getStr("app_business_explain") == null ? "" : project.getStr("app_business_explain");
-        content = content.replaceAll("project.app_business_explain", app_business_explain);
+
 
         //是否是上市公司
-        String is_listed_company = project.getStr("is_listed_company") == null ? "" : project.getStr("is_listed_company");
+        String is_listed_company = enterprise.getStr("is_listed_company") == null ? "" : enterprise.getStr("is_listed_company");
         if (("1").equals(is_listed_company)) {
             content = content.replaceAll("project.is_listed_company1", "□");
             content = content.replaceAll("project.is_listed_company2", "☑");
 
             //上市时间
-            Date list_time = new Date(project.getStr("list_time"));
+            Date list_time = enterprise.getDate("list_time");
             String list_timeStr = df.format(applytimeDate);
             content = content.replaceAll("project.list_time", list_timeStr);
 
             //上市地点
-            String list_place = project.getStr("list_place") == null ? "" : project.getStr("list_place");
+            String list_place = enterprise.getStr("list_place") == null ? "" : enterprise.getStr("list_place");
             content = content.replaceAll("project.list_place", list_place);
 
             //股票代码
-            String stockcode = project.getStr("stockcode") == null ? "" : project.getStr("stockcode");
+            String stockcode = enterprise.getStr("stock_code") == null ? "" : enterprise.getStr("stock_code");
             content = content.replaceAll("project.stockcode", stockcode);
 
         } else {
@@ -354,13 +359,13 @@ public class ProjectSetController extends BaseController {
         }
 
         //是否有业务出口
-        String is_business_export = project.getStr("is_business_export") == null ? "" : project.getStr("is_business_export");
+        String is_business_export = enterprise.getStr("is_business_export") == null ? "" : enterprise.getStr("is_business_export");
         if (("1").equals(is_business_export)) {
             content = content.replaceAll("project.is_business_export1", "□");
             content = content.replaceAll("project.is_business_export2", "☑");
 
             //主要出口地点
-            String export_place = project.getStr("export_place") == null ? "" : project.getStr("export_place");
+            String export_place = enterprise.getStr("export_place") == null ? "" : enterprise.getStr("export_place");
             content = content.replaceAll("project.export_place", export_place);
 
 
@@ -370,7 +375,7 @@ public class ProjectSetController extends BaseController {
         }
 
         //高新技术企业
-        String honor_type1 = project.getStr("honor_type1") == null ? "" : project.getStr("honor_type1");
+        String honor_type1 = enterprise.getStr("honor_type1") == null ? "" : enterprise.getStr("honor_type1");
         if (!("").equals(honor_type1)) {
             String[] temp = honor_type1.split(",");
             boolean isSelect = false;
@@ -384,11 +389,11 @@ public class ProjectSetController extends BaseController {
             }
         }
         //高新技术企业(授予年份)
-        String honor_type1_year = project.getStr("honor_type1_year") == null ? "" : project.getStr("honor_type1_year");
+        String honor_type1_year = enterprise.getStr("honor_type1_year") == null ? "" : enterprise.getStr("honor_type1_year");
         content = content.replaceAll("project.honor_type1_year", honor_type1_year);
 
         //企业技术中心
-        String honor_type2 = project.getStr("honor_type2") == null ? "" : project.getStr("honor_type2");
+        String honor_type2 = enterprise.getStr("honor_type2") == null ? "" : enterprise.getStr("honor_type2");
         if (!("").equals(honor_type2)) {
             String[] temp = honor_type2.split(",");
             boolean isSelect = false;
@@ -402,11 +407,11 @@ public class ProjectSetController extends BaseController {
             }
         }
         //企业技术中心(授予年份)
-        String honor_type2_year = project.getStr("honor_type2_year") == null ? "" : project.getStr("honor_type2_year");
+        String honor_type2_year = enterprise.getStr("honor_type2_year") == null ? "" : enterprise.getStr("honor_type2_year");
         content = content.replaceAll("project.honor_type2_year", honor_type2_year);
 
         //重点实验室
-        String honor_type3 = project.getStr("honor_type3") == null ? "" : project.getStr("honor_type3");
+        String honor_type3 = enterprise.getStr("honor_type3") == null ? "" : enterprise.getStr("honor_type3");
         if (!("").equals(honor_type3)) {
             String[] temp = honor_type3.split(",");
             boolean isSelect = false;
@@ -420,59 +425,59 @@ public class ProjectSetController extends BaseController {
             }
         }
         //重点实验室(授予年份)
-        String honor_type3_year = project.getStr("honor_type3_year") == null ? "" : project.getStr("honor_type3_year");
+        String honor_type3_year = enterprise.getStr("honor_type3_year") == null ? "" : enterprise.getStr("honor_type3_year");
         content = content.replaceAll("project.honor_type3_year", honor_type3_year);
 
         //其他市级以上荣誉
-        String other_honor = project.getStr("other_honor") == null ? "" : project.getStr("other_honor");
+        String other_honor = enterprise.getStr("other_honor") == null ? "" : enterprise.getStr("other_honor");
         content = content.replaceAll("project.other_honor", other_honor);
 
         //研发能力
-        String capability = project.getStr("capability") == null ? "" : project.getStr("capability");
+        String capability = enterprise.getStr("capability") == null ? "" : enterprise.getStr("capability");
         content = content.replaceAll("project.capability", capability);
 
        //主营业务收入
-        String main_business_income = project.getStr("main_business_income") == null ? "" : project.getStr("main_business_income");
+        String main_business_income = enterprise.getStr("main_business_income") == null ? "" : enterprise.getStr("main_business_income");
         content = content.replaceAll("project.main_business_income", main_business_income);
 
         //研发投入
-        String dev_input = project.getStr("dev_input") == null ? "" : project.getStr("dev_input");
+        String dev_input = enterprise.getStr("dev_input") == null ? "" : enterprise.getStr("dev_input");
         content = content.replaceAll("project.dev_input", dev_input);
 
         //税金总额
-        String Tax = project.getStr("Tax") == null ? "" : project.getStr("Tax");
+        String Tax = enterprise.getStr("Tax") == null ? "" : enterprise.getStr("Tax");
         content = content.replaceAll("project.Tax", Tax);
 
         //净利润
-        String net_profit = project.getStr("net_profit") == null ? "" : project.getStr("net_profit");
+        String net_profit = enterprise.getStr("net_profit") == null ? "" : enterprise.getStr("net_profit");
         content = content.replaceAll("project.net_profit", net_profit);
 
         //单位总人数
-        String unit_people = project.getStr("unit_people") == null ? "" : project.getStr("unit_people");
+        String unit_people = enterprise.getStr("unit_people") == null ? "" : enterprise.getStr("unit_people");
         content = content.replaceAll("project.unit_people", unit_people);
 
         //研发人员规模
-        String dev_people = project.getStr("dev_people") == null ? "" : project.getStr("dev_people");
+        String dev_people = enterprise.getStr("dev_people") == null ? "" : enterprise.getStr("dev_people");
         content = content.replaceAll("project.dev_people", dev_people);
 
         //人工只能业务收入
-        String ai_income = project.getStr("ai_income") == null ? "" : project.getStr("ai_income");
+        String ai_income = enterprise.getStr("ai_income") == null ? "" : enterprise.getStr("ai_income");
         content = content.replaceAll("project.ai_income", ai_income);
 
         //产品收入总额
-        String sort_type1_income = project.getStr("sort_type1_income") == null ? "" : project.getStr("sort_type1_income");
+        String sort_type1_income = enterprise.getStr("sort_type1_income") == null ? "" : enterprise.getStr("sort_type1_income");
         content = content.replaceAll("project.sort_type1_income", sort_type1_income);
 
         //信息技术服务收入总额
-        String sort_type2_income = project.getStr("sort_type2_income") == null ? "" : project.getStr("sort_type2_income");
+        String sort_type2_income = enterprise.getStr("sort_type2_income") == null ? "" : enterprise.getStr("sort_type2_income");
         content = content.replaceAll("project.sort_type2_income", sort_type2_income);
 
         //嵌入式系统软件收入总额
-        String sort_type3_income = project.getStr("sort_type3_income") == null ? "" : project.getStr("sort_type3_income");
+        String sort_type3_income = enterprise.getStr("sort_type3_income") == null ? "" : enterprise.getStr("sort_type3_income");
         content = content.replaceAll("project.sort_type3_income", sort_type3_income);
 
         //申报单位简介
-        String unit_explain = project.getStr("unit_explain") == null ? "" : project.getStr("unit_explain");
+        String unit_explain = enterprise.getStr("unit_explain") == null ? "" : enterprise.getStr("unit_explain");
         content = content.replaceAll("project.unit_explain", unit_explain);
 
         //起止日期
