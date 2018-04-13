@@ -7,7 +7,21 @@ $.validator.unobtrusive.adapters.add("dategreaterthan", ["otherpropertyname"], f
     options.messages["dategreaterthan"] = options.message;
 });
 
-$(document).ready(function(){
+//验证数据是否合法
+$.validator.addMethod('ISlegal', function (value, element, params) {
+    return value != "123";
+});
+$.validator.unobtrusive.adapters.add("ISlegal", function (options)
+{
+    options.rules["ISlegal"] = {
+
+    };
+    options.messages["ISlegal"] = options.message;
+});
+
+
+
+$(document).ready(function () {
     $("input[data-val=true]").blur(function () {
         var form = $(this).parents("form")[0];
         $(form).validate().element($(this));

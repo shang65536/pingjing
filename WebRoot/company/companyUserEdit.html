@@ -108,6 +108,13 @@
                             companyModel.CentralEnterprisesCode = ui.item.value;
                             $(this).val(ui.item.label);
                             return false;
+                        },
+                        change: function( event, ui ) {
+                            if(ui.item==null){
+                                alert("请输入正确的值");
+                                $(this).val("");
+                            }
+                            return false;
                         }
                     });
                 },
@@ -128,13 +135,20 @@
                         array.push(temp);
                     });
                     //初始化jQuery
-                    $("#AreaCode").autocomplete({
-                        max: 5,
-                        autoFill: true,
+                    $("#AreaCode").val(array[0].label);
+                    companyModel.AreaCode = array[0].value;
+                    $("#AreaCode").autocomplete(array,{
                         source: array,
                         select: function (event, ui) {
                             companyModel.AreaCode = ui.item.value;
                             $(this).val(ui.item.label);
+                            return false;
+                        },
+                        change: function( event, ui ) {
+                            if(ui.item==null){
+                                alert("请输入正确的值");
+                                $(this).val("");
+                            }
                             return false;
                         }
                     });
@@ -166,10 +180,16 @@
                 if (IsCentralEnterprises == 1) {
                     $("#SelectCentralEnterprises").show();
                     companyModel.IsCentralEnterprises = 1;
+                    $("#CentralEnterprises").attr("data-val","true");
                 } else {
                     $("#SelectCentralEnterprises").hide();
                     companyModel.IsCentralEnterprises = 0;
+                    $("#CentralEnterprises").attr("data-val","false");
                 }
+                var form = $("#formdata");
+                form.removeData('validator');
+                form.removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse(form);
             })
         })
     </script>
@@ -238,12 +258,13 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">确认密码</label>
             <div class="col-sm-6">
-                <input type="Password" class="form-control" id="Password2" data-val="false" value="${company.Password!}"
+                <input type="Password" class="form-control" id="Password2" data-val="true" value="${company.Password!}"
+                       name="Password2"
                        data-val-required="确认密码不能为空" placeholder="确认密码"
                        data-val-equalto="密码和确认密码不匹配。" data-val-equalto-other="company.Password"/>
             </div>
             <div class="col-sm-4">
-                <span class="field-validation-valid help-block" data-valmsg-for=""
+                <span class="field-validation-valid help-block" data-valmsg-for="Password2"
                       data-valmsg-replace="true"></span>
             </div>
         </div>
@@ -318,17 +339,20 @@
                 </label>
             </div>
             <div class="col-sm-4">
-                <span class="field-validation-valid help-block" data-valmsg-for="company.IsCentralEnterprises"
-                      data-valmsg-replace="true"></span>
             </div>
         </div>
         <!--选择央属子公司-->
         <div class="form-group" id="SelectCentralEnterprises" style="display: none;">
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-6">
-                <td><input type="text" id="CentralEnterprises" class="form-control"></td>
+                <td><input type="text" id="CentralEnterprises" class="form-control"
+                           name="company.CentralEnterprisesName" value="${company.CentralEnterprisesName!}"
+                           data-val="false"  data-val-required="央属子公司不能为空"/>
+                </td>
             </div>
             <div class="col-sm-4">
+                <span class="field-validation-valid help-block" data-valmsg-for="company.CentralEnterprisesName"
+                      data-valmsg-replace="true"></span>
             </div>
         </div>
         <div class="form-group">

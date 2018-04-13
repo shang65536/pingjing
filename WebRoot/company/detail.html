@@ -77,6 +77,13 @@
                             companyModel.CentralEnterprisesCode = ui.item.value;
                             $(this).val(ui.item.label);
                             return false;
+                        },
+                        change: function( event, ui ) {
+                            if(ui.item==null){
+                                alert("请输入正确的值");
+                                $(this).val("");
+                            }
+                            return false;
                         }
                     });
                 },
@@ -116,6 +123,13 @@
                             companyModel.AreaCode = ui.item.value;
                             $(this).val(ui.item.label);
                             return false;
+                        },
+                        change: function( event, ui ) {
+                            if(ui.item==null){
+                                alert("请输入正确的值");
+                                $(this).val("");
+                            }
+                            return false;
                         }
                     });
                 },
@@ -132,21 +146,34 @@
                 companyModel.CentralEnterprisesName = "${company.CentralEnterprisesName!}";
                 companyModel.CentralEnterprisesCode = "${company.CentralEnterprisesCode!}";
                 $("#CentralEnterprises").val("${company.CentralEnterprisesName!}");
+                $("#CentralEnterprises").attr("data-val","true");
             } else {
                 $(".IsCentralEnterprises[value=0]").prop("checked", true);
                 $("#SelectCentralEnterprises").hide();
                 companyModel.IsCentralEnterprises = 0;
             }
 
+            var form = $("#formdata");
+            form.removeData('validator');
+            form.removeData('unobtrusiveValidation');
+            $.validator.unobtrusive.parse(form);
+
             $('.IsCentralEnterprises').change(function () {
                 var IsCentralEnterprises = $(this).attr("value");
                 if (IsCentralEnterprises == 1) {
                     $("#SelectCentralEnterprises").show();
                     companyModel.IsCentralEnterprises = 1;
+                    $("#CentralEnterprises").attr("data-val","true");
+
                 } else {
                     $("#SelectCentralEnterprises").hide();
+                    $("#CentralEnterprises").prop("data-val","false");
                     companyModel.IsCentralEnterprises = 0;
                 }
+                var form = $("#formdata");
+                form.removeData('validator');
+                form.removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse(form);
             })
 
             $("#okbtn").bind("click", function () {
@@ -222,7 +249,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">确认密码</label>
             <div class="col-sm-5">
-                <input type="Password" class="form-control" id="Password2" data-val="false" value="${company.Password!}"
+                <input type="Password" class="form-control" id="Password2" data-val="true" value="${company.Password!}"
                        name = "Password2"
                        data-val-required="确认密码不能为空" placeholder="确认密码"
                        data-val-equalto="密码和确认密码不匹配。" data-val-equalto-other="company.Password"/>
@@ -312,17 +339,20 @@
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-5">
                 <td><input type="text" id="CentralEnterprises" class="form-control"
-                           name="company.CentralEnterprisesName" value="${company.CentralEnterprisesName!}">
+                           name="company.CentralEnterprisesName" value="${company.CentralEnterprisesName!}"
+                           data-val="false"  data-val-required="央属子公司不能为空"/>
                 </td>
             </div>
             <div class="col-sm-4">
+                <span class="field-validation-valid help-block" data-valmsg-for="company.CentralEnterprisesName"
+                      data-valmsg-replace="true"></span>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">所属子公司</label>
+            <label class="col-sm-2 control-label">所属地区</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control" id="AreaCode" data-val="true" value="${company.AreaCode!}"
-                       name="company.AreaCode" data-val-required="所属子公司不能为空" placeholder="所属子公司">
+                       name="company.AreaCode" data-val-required="所属地区不能为空" placeholder="所属地区">
             </div>
             <div class="col-sm-4">
                 <span class="field-validation-valid help-block" data-valmsg-for="company.AreaCode"
