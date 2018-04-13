@@ -68,11 +68,11 @@
 
                 <div id="navigation" class=" grid_7">
                     <ul>
-                        <li><a href="${ctx_path}/index" class="active">首页</a></li>
+                        <li><a href="${ctx_path}/index" >首页</a></li>
                         <li><a href="${ctx_path}/project">申报平台</a></li>
                         <li><a href="${ctx_path}/projectreview">专家平台</a></li>
                         <li><a href="${ctx_path}/technology/groupexpert/indexzj">管理平台</a></li>
-                        <li><a href="${ctx_path}/recommend">推荐单位平台</a></li>
+                        <li><a href="${ctx_path}/recommend" class="active">推荐单位平台</a></li>
                     </ul>
                 </div>
             </div>
@@ -96,7 +96,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">密码</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="PassWord" data-val="true" value="${recommend.PassWord!}"
+                <input type="password" class="form-control" id="PassWord" data-val="true" value="${recommend.PassWord!}"
                        name="recommend.PassWord" data-val-required="密码不能为空" placeholder="密码">
             </div>
             <div class="col-sm-4">
@@ -130,7 +130,7 @@
             <label class="col-sm-2 control-label">电子邮箱</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control" id="Email" data-val="true" value="${recommend.Email!}"
-                       name="recommend.Email" data-val-required="联系人姓名不能为空" placeholder="联系人姓名">
+                       name="recommend.Email" data-val-required="电子邮箱不能为空" placeholder="电子邮箱">
             </div>
             <div class="col-sm-4">
                 <span class="field-validation-valid help-block" data-valmsg-for="recommend.Email"

@@ -170,6 +170,27 @@ public class CompanyController extends Controller {
         }
     }
 
+    // 验证单位名称是否存在
+    public void checkCompanyName() {
+        try {
+            String Username = getPara("company.CompanyName");
+            long c = Company.me.checkCompanyName(Username);
+
+            if (c > 0) // 说明存在相同的用户
+            {
+                renderJson("false");
+            } else {
+                renderJson("true");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e);
+            renderJson("false");
+        }
+    }
+
+
     // 保存
     public void save() {
         try {

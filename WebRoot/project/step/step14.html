@@ -23,7 +23,7 @@ window.onload=ShowMessage();
      <#include "/project/_step_topmenu.html"/>
     
      <div class="clearfix">&nbsp;</div>
-      <h1 style="color:#e40202;"><b>您申报的项目“项目名称”已提交成功，您可以下载项目pdf版文件</b></h1>
+      <h1 style="color:#e40202;"><b>您申报的项目“${p.ProjectCN}”已提交成功，您可以下载项目pdf版文件</b></h1>
       <p><h6>您还可以</h6></p>
       <p><a href="${ctx_path}/admin/set/project/exp?id=${p.id!}" class="register01" title="下载申报书" >下载申报书</a></p>
       <!--<p style="color:#e40202;font-size: 20px;"><b>提示：</b></p>-->

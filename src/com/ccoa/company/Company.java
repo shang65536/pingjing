@@ -79,6 +79,12 @@ public class Company extends Model<Company> {
 		return Db.queryLong("select count(1) from company where Username=?",
 				Username);
 	}
+
+	//验证单位名称是否存在
+	public long checkCompanyName(String CompanyName) {
+		return Db.queryLong("select count(1) from company where CompanyName=?",
+				CompanyName);
+	}
 	
 	// 验证删除信息中是否存在已审核
 		public long checkStatus(String Status,String ids ) {

@@ -16,7 +16,11 @@ public class RecommendController extends Controller {
             redirect("/");
         } else {
             setAttr("recommend", user);
-            render("edit.html");
+            if (user.get("LinkUserName")==null ||user.get("LinkPhone")==null ||user.get("Email")==null ){
+                render("edit.html");
+            }else{
+                render("index.html");
+            }
         }
     }
 

@@ -204,7 +204,7 @@
                     data: companyModel,
                     success: function (data) {
                         alert("操作成功");
-                        location.href = "/";
+                        window.history.go(-1);
                     },
                     error:function (data) {
                         alert("error:"+JSON.stringify(data));
@@ -262,8 +262,8 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">单位名称</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="CompanyName" data-val="true" value="${company.CompanyName!}"
-                       name="company.CompanyName" data-val-required="单位名称不能为空" placeholder="单位名称">
+                <input type="text" class="form-control" id="CompanyName" disabled="disabled" data-val="false" value="${company.CompanyName!}"
+                       name="company.CompanyName" data-val-required="单位名称不能为空" placeholder="单位名称" />
             </div>
             <div class="col-sm-4">
                 <span class="field-validation-valid help-block" data-valmsg-for="company.CompanyName"

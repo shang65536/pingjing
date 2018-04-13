@@ -272,6 +272,7 @@
             <label class="col-sm-2 control-label">单位名称</label>
             <div class="col-sm-6">
                 <input type="text" class="form-control" id="CompanyName" data-val="true" value="${company.CompanyName!}"
+                       data-val-remote="该单位已经被注册！" data-val-remote-url="${ctx_path}/company/checkCompanyName"
                        name="company.CompanyName" data-val-required="单位名称不能为空" placeholder="单位名称">
             </div>
             <div class="col-sm-4">
