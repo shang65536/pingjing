@@ -474,20 +474,20 @@ public class ProjectController extends BaseController {
                             .set("Applytime", sdfdate.format(c.getTime())); // 申请时间
 
                     //推荐单位--  user
-                    Company company = Company.me.findById(user.get("id"));
-                    String rc = "";
-                    int rcCode = 0;
-                    if(company.get("IsCentralEnterprises")!=null&&company.get("IsCentralEnterprises").equals(1)){
-                        rc = company.get("CentralEnterprisesName");
-                        rcCode = company.get("CentralEnterprisesCode");
-                    }
-                    else{
-                        rcCode = company.get("AreaCode");
-                        Area _area = Area.me.findById(rcCode);
-                        rc = _area.get("AreaName");
-                    }
-                    project.set("RecommendCompany",rc);
-                    project.set("RecommendCompanyCode", String.valueOf(rcCode));
+//                    Company company = Company.me.findById(user.get("id"));
+//                    String rc = "";
+//                    int rcCode = 0;
+//                    if(company.get("IsCentralEnterprises")!=null&&company.get("IsCentralEnterprises").equals(1)){
+//                        rc = company.get("CentralEnterprisesName");
+//                        rcCode = company.get("CentralEnterprisesCode");
+//                    }
+//                    else{
+//                        rcCode = company.get("AreaCode");
+//                        Area _area = Area.me.findById(rcCode);
+//                        rc = _area.get("AreaName");
+//                    }
+//                    project.set("RecommendCompany",rc);
+//                    project.set("RecommendCompanyCode", String.valueOf(rcCode));
 
                     // 如果ID不为空 就修改 为空 就新增
                     int xmId;
