@@ -340,6 +340,7 @@ public class ProjectController extends BaseController {
                 if (ent == null) {
                     ent = new Enterprise();
                     String unit_name = user.get("CompanyName");
+                    ent.put("id", "");
                     ent.put("unit_name", unit_name);
                 }
                 setAttr("project", p);
@@ -473,7 +474,7 @@ public class ProjectController extends BaseController {
                     // 如果ID不为空 就修改 为空 就新增
                     int xmId;
                     if (null != id) {
-                        project.set("id",id);
+                        project.set("id", id);
                         project.update();
                         xmId = id;
                     } else {
@@ -542,8 +543,12 @@ public class ProjectController extends BaseController {
                     enterprise.set("sort_type1_income", getPara("sort_type1_income"));
                     enterprise.set("sort_type2_income", getPara("sort_type2_income"));
                     enterprise.set("sort_type3_income", getPara("sort_type3_income"));
+                    //推荐单位
 
-                    if (enterprise.get("id") != null) {
+//                    enterprise.set("RecommendCompany",user.get(""));
+//                    enterprise.set("","");
+
+                    if (enterprise.get("id") != null && !enterprise.get("id").equals("")) {
                         enterprise.update();
                     } else {
                         enterprise.remove("id");
