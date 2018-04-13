@@ -78,7 +78,7 @@
                 companyModel.LinkmanName = $("#LinkmanName").val();
                 companyModel.LinkmanPhone = $("#LinkmanPhone").val();
                 companyModel.Email = $("#Email").val();
-                companyModel.IsCentralEnterprises = $("#IsCentralEnterprises:checked").prop("value");
+                companyModel.IsCentralEnterprises = $("input[name='IsCentralEnterprises']:checked").attr("value");
                 if(companyModel.IsCentralEnterprises=="0"){
                     companyModel.CentralEnterprisesName = "";
                     companyModel.CentralEnterprisesCode = "";

@@ -116,7 +116,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            if("${project.Status}"!="0"){
+            if ("${project.Status}" != "0") {
                 $("#btn_seave").hide();
             }
 
@@ -128,6 +128,18 @@
             var up = $(".UnitProperties").zkty_checkoutgroup({
                 data: unit_properties
             });
+
+            var resetfrom = function () {
+                var form = $("#formdata");
+                form.removeData('validator');
+                form.removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse(form);
+
+                $("input[data-val=true]").blur(function () {
+                    var form = $(this).parents("form")[0];
+                    $(form).validate().element($(this));
+                });
+            }
 
 
             //数据回填
@@ -164,6 +176,7 @@
                 if ("${enterprise.is_listed_company!}" != "") {
                     if ("${enterprise.is_listed_company!}" == "1") {
                         $("input[name='is_listed_company'][value='1']").prop("checked", true);
+                        $(".isChick_listed_company").attr("data-val", "true");
                     } else {
                         $("input[name='is_listed_company'][value='0']").prop("checked", true);
                     }
@@ -173,6 +186,7 @@
                 if ("${enterprise.is_business_export!}" != "") {
                     if ("${enterprise.is_business_export!}" == "1") {
                         $("input[name='is_business_export'][value='1']").prop("checked", true);
+                        $(".isChick_business_export").attr("data-val", "true");
                     } else {
                         $("input[name='is_business_export'][value='0']").prop("checked", true);
                     }
@@ -204,9 +218,35 @@
                         }
                     })
                 }
+
+                resetfrom();
+
             };
 
             resultform();
+
+            $("input[name='is_listed_company']").change(function () {
+                var varchecked = $(this).prop("value");
+                if (varchecked == "1") {
+                    $(".isChick_listed_company").attr("data-val", "true");
+                } else {
+                    $(".isChick_listed_company").attr("data-val", "false");
+                }
+                resetfrom();
+            });
+
+            $("input[name='is_business_export']").change(function () {
+                var varchecked = $(this).prop("value");
+                if (varchecked == "1") {
+                    $(".isChick_business_export").attr("data-val", "true");
+                } else {
+                    $(".isChick_business_export").attr("data-val", "false");
+                }
+                resetfrom();
+            });
+
+
+
 
             //获取用户list的序列
             var Get_user_select = function (type, key, islist) {
@@ -252,7 +292,7 @@
                 var formpar = {
                     id: $("#id").val(),
                     step: 2,
-                    enterprise_id:"${enterprise.id}",
+                    enterprise_id: "${enterprise.id}",
                     project_id: $("#project_id").val(),
                     unit_name: $("#unit_name").val(),
                     contact_name: $("#contact_name").val(),
@@ -434,19 +474,22 @@
             </div>
             <label for="" class="col-sm-1 control-label">上市时间</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control Wdate" id="list_time"
+                <input type="text" class="form-control Wdate isChick_listed_company" id="list_time"
                        onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="enterprise.list_time"
-                       value='${enterprise.list_time!}'/>
+                       value='${enterprise.list_time!}' data-val="false"
+                       data-val-required="上市时间不能为空"/>
             </div>
             <label for="" class="col-sm-1 control-label">上市地点</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="list_place" name="enterprise.list_place"
-                       value='${enterprise.list_place!}'/>
+                <input type="text" class="form-control isChick_listed_company" id="list_place" name="enterprise.list_place"
+                       value='${enterprise.list_place!}' data-val="false"
+                       data-val-required="上市地点不能为空"/>
             </div>
             <label for="" class="col-sm-1 control-label">股票代码</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="stock_code" name="enterprise.stock_code"
-                       value='${enterprise.stock_code!}'/>
+                <input type="text" class="form-control isChick_listed_company" id="stock_code" name="enterprise.stock_code"
+                       value='${enterprise.stock_code!}' data-val="false"
+                       data-val-required="股票代码不能为空"/>
             </div>
         </div>
         <div class="form-group">
@@ -461,8 +504,9 @@
             </div>
             <label for="" class="col-sm-2 control-label">主要出口地点</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" id="export_place" name="enterprise.stock_code"
-                       value='${enterprise.stock_code!}'/>
+                <input type="text" class="form-control isChick_business_export" id="export_place" name="enterprise.export_place"
+                       value='${enterprise.export_place!}' data-val="false"
+                       data-val-required="主要出口地点不能为空"/>
             </div>
         </div>
         <div class="form-group">
@@ -608,7 +652,7 @@
                             <input type="text" class="form-control" id="sort_type1_income"
                                    name="enterprise.sort_type1_income"
                                    value='${enterprise.sort_type1_income!}' data-val="true"
-                                   data-val-required="产品收入总额不能为空" data-val-digits="只接受数字"/>
+                                   data-val-digits="只接受数字"/>
                         </div>
                     </div>
                     <br/>
@@ -618,7 +662,7 @@
                             <input type="text" class="form-control" id="sort_type2_income"
                                    name="enterprise.sort_type2_income"
                                    value='${enterprise.sort_type2_income!}' data-val="true"
-                                   data-val-required="信息技术服务收入总额不能为空" data-val-digits="只接受数字"/>
+                                   data-val-digits="只接受数字"/>
                         </div>
                     </div>
                     <br/>
@@ -628,7 +672,7 @@
                             <input type="text" class="form-control" id="sort_type3_income"
                                    name="enterprise.sort_type3_income"
                                    value='${enterprise.sort_type3_income!}' data-val="true"
-                                   data-val-required="嵌入式系统软件收入总额不能为空" data-val-digits="只接受数字"/>
+                                   data-val-digits="只接受数字"/>
                         </div>
                     </div>
                 </div>
@@ -724,8 +768,24 @@
                   data-valmsg-replace="true"></span>
                     </li>
                     <li>
-    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.unit_explain"
+    		<span class="field-validation-valid help-block" data-valmsg-for="enterprise.list_time"
                   data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+        <span class="field-validation-valid help-block" data-valmsg-for="enterprise.list_place"
+              data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+        <span class="field-validation-valid help-block" data-valmsg-for="enterprise.stock_code"
+              data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+        <span class="field-validation-valid help-block" data-valmsg-for="enterprise.export_place"
+              data-valmsg-replace="true"></span>
+                    </li>
+                    <li>
+        <span class="field-validation-valid help-block" data-valmsg-for="enterprise.unit_explain"
+              data-valmsg-replace="true"></span>
                     </li>
                 </ul>
             </div>

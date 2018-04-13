@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ccoa.area.Area;
 import com.ccoa.common.BaseController;
 import com.ccoa.common.PDFWaterPrint;
 import com.ccoa.common.Tools;
@@ -471,6 +472,23 @@ public class ProjectController extends BaseController {
                             .set("ApplyYear", sdf.format(c.getTime())) // 申报年度
                             .set("Step", "1") // 已完成步骤（1项目基本情况,2主要完成单位,3主要完成人,4基本情况页盖章回传,5项目简介,6项目详细内容,7应用情况,8经济效益,9社会效益,10知识产权表,11推荐单位意见,12上传附件）
                             .set("Applytime", sdfdate.format(c.getTime())); // 申请时间
+
+                    //推荐单位--  user
+                    Company company = Company.me.findById(user.get("id"));
+                    String rc = "";
+                    int rcCode = 0;
+                    if(company.get("IsCentralEnterprises")!=null&&company.get("IsCentralEnterprises").equals(1)){
+                        rc = company.get("CentralEnterprisesName");
+                        rcCode = company.get("CentralEnterprisesCode");
+                    }
+                    else{
+                        rcCode = company.get("AreaCode");
+                        Area _area = Area.me.findById(rcCode);
+                        rc = _area.get("AreaName");
+                    }
+                    project.set("RecommendCompany",rc);
+                    project.set("RecommendCompanyCode", String.valueOf(rcCode));
+
                     // 如果ID不为空 就修改 为空 就新增
                     int xmId;
                     if (null != id) {
@@ -519,7 +537,7 @@ public class ProjectController extends BaseController {
                     enterprise.set("app_business", getPara("app_business"));
                     enterprise.set("app_business_explain", getPara("app_business_explain"));
                     enterprise.set("is_listed_company", getPara("is_listed_company"));
-                    enterprise.set("list_time", getPara("list_time"));
+                    enterprise.set("list_time", getPara("list_time").equals("") ? null : getPara("list_time"));
                     enterprise.set("list_place", getPara("list_place"));
                     enterprise.set("stock_code", getPara("stock_code"));
                     enterprise.set("is_business_export", getPara("is_business_export"));
@@ -543,10 +561,6 @@ public class ProjectController extends BaseController {
                     enterprise.set("sort_type1_income", getPara("sort_type1_income"));
                     enterprise.set("sort_type2_income", getPara("sort_type2_income"));
                     enterprise.set("sort_type3_income", getPara("sort_type3_income"));
-                    //推荐单位
-
-//                    enterprise.set("RecommendCompany",user.get(""));
-//                    enterprise.set("","");
 
                     if (enterprise.get("id") != null && !enterprise.get("id").equals("")) {
                         enterprise.update();

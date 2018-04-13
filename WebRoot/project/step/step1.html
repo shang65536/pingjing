@@ -73,6 +73,7 @@
                     ///success
                     function (msg) {
                         window.location.href = "${ctx_path}" + msg.success;
+                        return false;
                     },
                     ///error
                     function (msg) {

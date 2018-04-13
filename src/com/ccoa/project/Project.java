@@ -65,7 +65,7 @@ public class Project extends Model<Project> {
      * 查询
      */
     public Page<Project> paginate(int pageNumber, int pageSize, Map params) {
-        String sql = "select p.id ,  p.ProjectCN, p.ProjectEN,p.RegisterNum, p.Category, p.ApplyYear ,p.Status,Note ,winning_results,recom_results,"
+        String sql = "select p.id , p.RecommendCompany, p.ProjectCN, p.ProjectEN,p.RegisterNum, p.Category, p.ApplyYear ,p.Status,Note ,winning_results,recom_results,"
                 + "(select Name from set_category sc where sc.id=p.Category) Category_name ";
 
         StringBuffer sqlStr = new StringBuffer();
