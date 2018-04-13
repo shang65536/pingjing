@@ -503,38 +503,40 @@ public class ProjectSetController extends BaseController {
         //content = content.replaceAll("project.ProjectCN", projectCN);
         for (int i = 4; i <= 12; i++) {
             if (i == index) {
-                content = content.replaceAll(" project.InnovationField" + i, "☑");
+                content = content.replaceAll("project.InnovationField" + i, "☑");
                 switch (index) {
                     case 4:
-                        content = content.replaceAll("  project.direction", "");
+                        content = content.replaceAll("project.direction", "方向1：核心基础产品");
                         break;
                     case 5:
-                        content = content.replaceAll("  project.direction", "");
+                        content = content.replaceAll("project.direction", "方向2：智能控制产品");
                         break;
                     case 6:
-                        content = content.replaceAll("  project.direction", "");
+                        content = content.replaceAll("project.direction", "方向3：智能理解产品");
                         break;
                     case 7:
-                        content = content.replaceAll("  project.direction", "");
+                        content = content.replaceAll("project.direction", "方向4：制造业智能化提升");
                         break;
                     case 8:
-                        content = content.replaceAll("  project.direction", "");
+                        content = content.replaceAll("project.direction", "方向5：产业智能升级");
                         break;
                     case 9:
-                        content = content.replaceAll("  project.direction", "");
+                        content = content.replaceAll("project.direction", "方向6：民生服务智能化");
                         break;
                     case 10:
-                        content = content.replaceAll("  project.direction", "");
+                        content = content.replaceAll("project.direction", "方向7：训练资源服务平台");
                         break;
                     case 11:
-                        content = content.replaceAll("  project.direction", "");
+                        content = content.replaceAll("project.direction", "方向8：标准测试评估体系");
                         break;
                     case 12:
-                        content = content.replaceAll("  project.direction", "");
+                        content = content.replaceAll("project.direction", "方向9：安全保障体系");
                         break;
+                        default:
+                            content = content.replaceAll("project.direction", "");
                 }
             } else {
-                content = content.replaceAll(" project.InnovationField" + i, "□");
+                content = content.replaceAll("project.InnovationField" + i, "□");
             }
 
         }
