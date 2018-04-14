@@ -8,8 +8,8 @@
     <link href="${ctx_path}/css/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx_path}/css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx_path}/css/formError.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="${ctx_path}/js/bootstrap/bootstrap.js"></script>
     <script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+    <script type="text/javascript" src="${ctx_path}/js/bootstrap/bootstrap.js"></script>
     <script type="text/javascript" src="${ctx_path}/js/validate/jquery.validate.min.js"></script>
     <script type="text/javascript" src="${ctx_path}/js/validate/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript" src="${ctx_path}/js/validate/validate.js"></script>
@@ -46,6 +46,8 @@
             });
         }
         $(document).ready(function () {
+
+
             var companyModel = {
                 id: "",
                 Username: "",
@@ -111,7 +113,7 @@
                         },
                         change: function( event, ui ) {
                             if(ui.item==null){
-                                alert("请输入正确的值");
+                                alert("请输入正确的所属央企名称");
                                 $(this).val("");
                             }
                             return false;
@@ -146,7 +148,7 @@
                         },
                         change: function( event, ui ) {
                             if(ui.item==null){
-                                alert("请输入正确的值");
+                                alert("请输入正确的所属地区");
                                 $(this).val("");
                             }
                             return false;
@@ -189,6 +191,7 @@
                 var form = $("#formdata");
                 form.removeData('validator');
                 form.removeData('unobtrusiveValidation');
+
                 $.validator.unobtrusive.parse(form);
             })
         })
@@ -281,10 +284,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">统一社会信用代码</label>
+            <label class="col-sm-2 control-label">统一社会信用代码（15或18位）</label>
             <div class="col-sm-6">
                 <input type="text" class="form-control" id="CreditCode" data-val="true" value="${company.CreditCode!}"
-                       name="company.CreditCode" data-val-required="统一社会信用代码不能为空" placeholder="统一社会信用代码">
+                       name="company.CreditCode" data-val-required="统一社会信用代码不能为空" data-val-checkCreditCode="统一社会信用代码长度必须为15或18位"  placeholder="统一社会信用代码">
             </div>
             <div class="col-sm-4">
                 <span class="field-validation-valid help-block" data-valmsg-for="company.CreditCode"
@@ -329,14 +332,14 @@
             <label class="col-sm-2 control-label">是否央企下属子公司</label>
             <div class="col-sm-6">
                 <label class="radio-inline">
-                    <input type="radio" name="IsCentralEnterprises" checked="checked" class="IsCentralEnterprises"
-                           id="IsCentralEnterprises_false" value="0">
-                    不是
-                </label>
-                <label class="radio-inline">
                     <input type="radio" name="IsCentralEnterprises" class="IsCentralEnterprises"
                            id="IsCentralEnterprises_true" value="1">
                     是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="IsCentralEnterprises" checked="checked" class="IsCentralEnterprises"
+                           id="IsCentralEnterprises_false" value="0">
+                    否
                 </label>
             </div>
             <div class="col-sm-4">
@@ -348,7 +351,7 @@
             <div class="col-sm-6">
                 <td><input type="text" id="CentralEnterprises" class="form-control"
                            name="company.CentralEnterprisesName" value="${company.CentralEnterprisesName!}"
-                           data-val="false"  data-val-required="央属子公司不能为空"/>
+                           data-val="false"  data-val-required="央属子公司不能为空"  placeholder="央企名称"/>
                 </td>
             </div>
             <div class="col-sm-4">
@@ -360,7 +363,7 @@
             <label class="col-sm-2 control-label">所属地区</label>
             <div class="col-sm-6">
                 <input type="text" class="form-control" id="AreaCode" data-val="true" value="${company.AreaCode!}"
-                       name="company.AreaCode" data-val-required="所属子公司不能为空" placeholder="所属子公司">
+                       name="company.AreaCode" data-val-required="所属地区不能为空" placeholder="所属地区">
             </div>
             <div class="col-sm-4">
                 <span class="field-validation-valid help-block" data-valmsg-for="company.AreaCode"

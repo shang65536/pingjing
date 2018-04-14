@@ -25,7 +25,7 @@
             if (file1.value == "") {
                 ErrMsg = "请上传文件，不能为空!";
             } else {
-                var type = ".jpg,.gif,.pdf";//允许上传的文件类型 0为无限制 每个扩展名后边要加一个"," 小写字母表示
+                var type = ".jpg,.gif,.pdf,.png";//允许上传的文件类型 0为无限制 每个扩展名后边要加一个"," 小写字母表示
 
                 var fileName = file1.value.substr(file1.value.lastIndexOf(".")).toLowerCase();
                 if (type.indexOf(fileName) == -1)//判断文件类型是否允许上传

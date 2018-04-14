@@ -132,7 +132,7 @@ font-size:14px;
 	              	
 	              </#if> 
 	            <!-- <#if x.Status ==0>
-	              <input type="submit" id="projectTj" onclick="projectTj(${x.id})" class="submit01" value="提交" />                                      
+	              <input type="submit" id="projectTj" onclick="projectTj(${x.id})" class="submit01" value="提交" />
 	             <#else> 已提交的项目
 	                <#if x.recom_results?? >  如果管理员推荐了的项目  获奖结果为空  就显示评审进行中  如果没有推荐的项目 就显示未得奖
 	                   <#if x.winning_results?? >
@@ -145,7 +145,7 @@ font-size:14px;
 	                </#if>
 	             </#if>   -->
 	           </td>
-           <td scope="col"><a href="${ctx_path}/admin/set/project/exp?id=${x.id!}" class="submit01" >申报资料下载</a></td>
+           <td scope="col"><a href="${ctx_path}/admin/set/project/exp?id=${x.id!}&type=1" class="submit01" >申报资料下载(pdf)</a><a href="${ctx_path}/admin/set/project/exp?id=${x.id!}&type=2" class="submit01" >申报资料下载(doc)</a></td>
         </tr>   
          </#list>  
         

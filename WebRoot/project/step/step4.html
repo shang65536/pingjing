@@ -114,15 +114,18 @@
         <input type="hidden" name="id" value='${id}'/>
 
         <h5><b>（一）项目实施方案</b></h5>
+        <span>（项目适用场景、服务对象、技术建设方案、服务推广及成果转化、保障措施、进度安排、预期目标、效益分析、风险分析、成长性分析等。）</span>
         <textarea id="content11" name="ImplementationPlans" style="width:1010x;height:400px;visibility:hidden;">${project.ImplementationPlans!}</textarea>
 
         <h5><b>（二）项目实施现状</b></h5>
+        <span>（已开展工作情况；目前存在哪些问题和难点，计划如何解决。）</span>
         <textarea id="content12" name="CurrentSituation" style="width:1010x;height:400px;visibility:hidden;">${project.CurrentSituation!}</textarea>
 
         <h5><b>（三）项目实施计划</b></h5>
+        <span>（下一步项目建设的主要内容和实施计划，项目实施预期目标）</span>
         <textarea id="content13" name="StartingPlan" style="width:1010x;height:400px;visibility:hidden;">${project.StartingPlan!}</textarea>
 
-        <div class="anniu"><input type="submit" id="add" class="register" value="保存">
+        <div class="anniu"><input type="submit" id="add" class="register" value="保存，下一步">
             <a href="javascript:history.go(-1)" class="register" title="返回">返回</a>
             <!-- <a href="" class="register" title="导出" >导出</a> -->
         </div>

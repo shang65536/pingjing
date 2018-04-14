@@ -110,6 +110,7 @@ public class ProjectSetController extends BaseController {
         try {
             // 要写入wrod的html文件路径 及被写入的wrod路径
             Project pp = new Project();
+            int fileType=Integer.parseInt(getPara("type")) ;
             if (null != getPara("id") && !"".equals(getPara("id"))) {
                 // 先给项目基础信息模板动态赋值
                 long id = Long.parseLong(getPara("id"));
@@ -147,6 +148,11 @@ public class ProjectSetController extends BaseController {
                 //替换字符串
                 String contentAfter = replaceProject(content, pp, acList, enterprise);
                 boolean flag = this.writeWordFile(fileWrodPath, contentAfter);
+                if(fileType==2)
+                {
+                    renderFile(new File(fileWrodPath));
+                    return;
+                }
                 //doc转换成pdf
                 wordToPDF(fileWrodPath, pDFfile1);
                 log.error(new Exception("临时pdf路径:" + pDFfile1));

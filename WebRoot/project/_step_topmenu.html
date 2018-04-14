@@ -41,6 +41,10 @@
             if (id == undefined) {
                 alert("请先把项目信息填写完整后，再进行提交");
             } else {
+                if(!confirm("是否确认提交"))
+                {
+                    return;
+                }
                 $.ajax({
                     type: "POST",
                     url: "${ctx_path}/project/projectYz",

@@ -23,9 +23,10 @@ window.onload=ShowMessage();
      <#include "/project/_step_topmenu.html"/>
     
      <div class="clearfix">&nbsp;</div>
-      <h1 style="color:#e40202;"><b>您申报的项目“${p.ProjectCN}”已提交成功，您可以下载项目pdf版文件</b></h1>
-      <p><h6>您还可以</h6></p>
-      <p><a href="${ctx_path}/admin/set/project/exp?id=${p.id!}" class="register01" title="下载申报书" >下载申报书</a></p>
+      <h1 style="color:#e40202;"><b>您申报的项目“${p.ProjectCN}”已提交成功，您可以下载项目pdf或doc版文件</b></h1>
+      <p><span>您还可以</span>
+     <a href="${ctx_path}/admin/set/project/exp?id=${p.id!}&type=1" class="register01" title="下载申报书" >下载申报书(pdf)</a>
+     <a href="${ctx_path}/admin/set/project/exp?id=${p.id!}&type=2" class="register01" title="下载申报书" >下载申报书(doc)</a></p>
       <!--<p style="color:#e40202;font-size: 20px;"><b>提示：</b></p>-->
       <!--<p><span style="color:#e40202;">${p.ProjectCN!}</span>项目已经申报完成，请您尽快将申报材料打印并寄往中国航空学会奖励书，以下是关于申报材料的注意事项:</p>-->
       <!--<p>${prize.Note!}</p>-->

@@ -329,8 +329,8 @@
                     honor_type2: Get_honor_type("honor_type2"),
                     honor_type3: Get_honor_type("honor_type3"),
                     honor_type1_year: $("#honor_type1_year").val(),
-                    honor_type2_year: $("#honor_type1_year").val(),
-                    honor_type3_year: $("#honor_type1_year").val(),
+                    honor_type2_year: $("#honor_type2_year").val(),
+                    honor_type3_year: $("#honor_type3_year").val(),
                     dev_input: $("#dev_input").val(),
                     main_business_income: $("#main_business_income").val(),
                     capability: $("#capability").val(),
@@ -361,6 +361,15 @@
             $("#btn_return").bind('click', function () {
                 window.history.go(-1);
             })
+
+            $("input:radio[name='type']").change(function () {
+                alert("123");
+            });
+
+            $('#unit_explain').keyup(function () {
+                $('#show').text( '最多输入400个字，当前已经输入'+$('#unit_explain').val().length+'字');
+            });
+            $('#show').text( '最多输入400个字，当前已经输入'+$('#unit_explain').val().length+'字');
         })
     </script>
 
@@ -515,14 +524,14 @@
                 <div class="relatedhonor">
                     <div class="relatedhonor_node row">
                         <div class="col-sm-2">
-                            <label class="checkbox-inline">高新技术产业</label>
+                            <label class="checkbox-inline">高新技术企业</label>
                         </div>
                         <div class="col-sm-4">
                             <label class="checkbox-inline">
-                                <input type="checkbox" id="honor_type1_guo" name="honor_type1"> 国家级
+                                <input type="radio" id="honor_type1_guo" name="honor_type1"> 国家级
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" id="honor_type1_sheng" name="honor_type1"> 省市级
+                                <input type="radio" id="honor_type1_sheng" name="honor_type1"> 省市级
                             </label>
                         </div>
                         <div class="col-sm-6">
@@ -539,10 +548,10 @@
                         </div>
                         <div class="col-sm-4">
                             <label class="checkbox-inline">
-                                <input type="checkbox" id="honor_type2_guo" name="honor_type2" value="option2"> 国家级
+                                <input type="radio" id="honor_type2_guo" name="honor_type2" value="option2"> 国家级
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" id="honor_type2_sheng" name="honor_type2" value="option3"> 省市级
+                                <input type="radio" id="honor_type2_sheng" name="honor_type2" value="option3"> 省市级
                             </label>
                         </div>
                         <div class="col-sm-6">
@@ -559,10 +568,10 @@
                         </div>
                         <div class="col-sm-4">
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="honor_type3" value="option2"> 国家级
+                                <input type="radio" name="honor_type3" value="option2"> 国家级
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="honor_type3" value="option3"> 省市级
+                                <input type="radio" name="honor_type3" value="option3"> 省市级
                             </label>
                         </div>
                         <div class="col-sm-6">
@@ -585,21 +594,21 @@
             <label for="" class="col-sm-2 control-label">研发能力<br/>提供证明材料</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="capability" name="enterprise.capability"
-                       value='${enterprise.capability!}' data-val="true" data-val-required="研发能力不能为空"/>
+                       value='${enterprise.capability!}' data-val="true" data-val-required="研发能力不能为空" placeholder="提供证明材料" />
             </div>
         </div>
         <div class="form-group">
-            <label for="" class="col-sm-2 control-label">主营业务收入<br/>提供证明材料</label>
+            <label for="" class="col-sm-2 control-label">主营业务收入(万元)<br/>提供证明材料</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="main_business_income" name="enterprise.main_business_income"
-                       value='${enterprise.main_business_income!}' data-val="true" data-val-required="主营业务收入不能为空"/>
+                       value='${enterprise.main_business_income!}' data-val="true" data-val-required="主营业务收入不能为空" placeholder="提供证明材料"/>
             </div>
         </div>
         <div class="form-group">
-            <label for="" class="col-sm-2 control-label">研发投入<br/>提供证明材料</label>
+            <label for="" class="col-sm-2 control-label">研发投入(万元)<br/>提供证明材料</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="dev_input" name="enterprise.dev_input"
-                       value='${enterprise.dev_input!}' data-val="true" data-val-required="研发投入不能为空"/>
+                       value='${enterprise.dev_input!}' data-val="true" data-val-required="研发投入不能为空" placeholder="提供证明材料"/>
             </div>
         </div>
         <div class="form-group">
@@ -681,14 +690,17 @@
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">申报单位简介</label>
             <div class="col-sm-10">
+                <span>发展历程、主营业务、市场销售、资源整合共享能力、技术成果转化能力等方面基本情况，不超过400字</span>
                 <textarea class="form-control" style="height:200px;resize:none;" id="unit_explain"
                           name="enterprise.unit_explain" data-val="true" data-val-required="申报单位简介不能为空">${enterprise.unit_explain!}</textarea>
+                <span id="show">最多输入400个字，当前已经输入0字</span>
             </div>
+
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label"></label>
             <div class="col-sm-6 text-center">
-                <span class="btn btn-default" id="btn_seave">保存</span>
+                <span class="btn btn-default" id="btn_seave">保存，下一步</span>
                 <span class="btn btn-default" id="btn_return">返回</span>
             </div>
             <div class="col-sm-4">

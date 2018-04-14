@@ -19,6 +19,18 @@ $.validator.unobtrusive.adapters.add("ISlegal", function (options)
     options.messages["ISlegal"] = options.message;
 });
 
+$.validator.addMethod("checkCreditCode",function(value,element,params){
+    return this.optional(element)||(value.length==15)||(value.length==18);
+},"统一社会信用代码长度必须为15或18位");
+
+$.validator.unobtrusive.adapters.add("checkCreditCode", function (options)
+{
+    options.rules["checkCreditCode"] = {
+
+    };
+    options.messages["checkCreditCode"] = options.message;
+});
+
 
 
 $(document).ready(function () {

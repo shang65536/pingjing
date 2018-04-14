@@ -55,6 +55,8 @@
         }
         $(document).ready(function () {
 
+
+
             zkty_GetData(
                 "centralenertprises/getCentralEnerprises",
                 {param: ""},
@@ -157,6 +159,7 @@
             form.removeData('validator');
             form.removeData('unobtrusiveValidation');
             $.validator.unobtrusive.parse(form);
+
 
             $('.IsCentralEnterprises').change(function () {
                 var IsCentralEnterprises = $(this).attr("value");
@@ -271,10 +274,11 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">统一社会信用代码</label>
+            <label class="col-sm-2 control-label">统一社会信用代码（15或18位）</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="CreditCode" data-val="true" value="${company.CreditCode!}"
-                       name="company.CreditCode" data-val-required="统一社会信用代码不能为空" placeholder="统一社会信用代码">
+                <input type="text" class="form-control" id="CreditCode" disabled="disabled"  data-val="true" value="${company.CreditCode!}"
+                       name="company.CreditCode" data-val-required="统一社会信用代码不能为空" data-val-checkCreditCode="统一社会信用代码长度必须为15或18位"
+                       placeholder="统一社会信用代码">
             </div>
             <div class="col-sm-4">
                 <span class="field-validation-valid help-block" data-valmsg-for="company.CreditCode"
@@ -319,14 +323,14 @@
             <label class="col-sm-2 control-label">是否央企下属子公司</label>
             <div class="col-sm-5">
                 <label class="radio-inline">
-                    <input type="radio" name="IsCentralEnterprises" checked="checked" class="IsCentralEnterprises"
-                           id="IsCentralEnterprises_false" value="0">
-                    不是
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="IsCentralEnterprises" class="IsCentralEnterprises"
+                    <input type="radio" name="IsCentralEnterprises" disabled="disabled"  class="IsCentralEnterprises"
                            id="IsCentralEnterprises_true" value="1">
                     是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="IsCentralEnterprises" disabled="disabled"  checked="checked" class="IsCentralEnterprises"
+                           id="IsCentralEnterprises_false" value="0">
+                    否
                 </label>
             </div>
             <div class="col-sm-4">
@@ -338,7 +342,7 @@
         <div class="form-group" id="SelectCentralEnterprises" style="display: none;">
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-5">
-                <td><input type="text" id="CentralEnterprises" class="form-control"
+                <td><input type="text" id="CentralEnterprises" class="form-control" disabled="disabled"
                            name="company.CentralEnterprisesName" value="${company.CentralEnterprisesName!}"
                            data-val="false"  data-val-required="央属子公司不能为空"/>
                 </td>
@@ -351,7 +355,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">所属地区</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="AreaCode" data-val="true" value="${company.AreaCode!}"
+                <input type="text" class="form-control" id="AreaCode" data-val="true" disabled="disabled"  value="${company.AreaCode!}"
                        name="company.AreaCode" data-val-required="所属地区不能为空" placeholder="所属地区">
             </div>
             <div class="col-sm-4">

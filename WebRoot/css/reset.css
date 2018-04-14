@@ -131,7 +131,7 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 .dl_loginform{ width:325px; margin:0 auto;} 
 .dl_loginform p{}
 .dl_loginform .username{ width:325px; height:45px; line-height:45px; background:url(../images/usename.png) 10px no-repeat; color:#a5a5a5; border:1px solid #d4d2d2; text-indent:50px; _width:285px; _text-indent:0px; _padding-left:40px; _margin-left:4px; }
-.dl_loginform .password{ width:325px; height:45px; line-height:45px; background:url(../images/password.png) 10px no-repeat; color:#a5a5a5; border:1px solid #d4d2d2; border-top:0; text-indent:50px; _width:285px; _text-indent:0px; _padding-left:40px; _margin-left:4px;}
+.dl_loginform .password{ width:325px; height:45px; line-height:45px; background:url(../images/password.png) 16px no-repeat; color:#a5a5a5; border:1px solid #d4d2d2; border-top:0; text-indent:50px; _width:285px; _text-indent:0px; _padding-left:40px; _margin-left:4px;}
 .dl_cen_cen{ width:232px; margin:0 auto;}
 .dl_loginform .login{ background:#3391B0; width:132px; height:32px; line-height:32px; margin-left:20px; _margin-left:15px; border:1px solid #00769D; outline:none; display:block; float:left; color:#fff; cursor:pointer; text-align:center; margin-bottom:20px; -webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px; }
 .dl_loginform .login:hover{ color:#fff; background:#00769D;}
