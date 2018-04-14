@@ -179,6 +179,7 @@
                         $(".isChick_listed_company").attr("data-val", "true");
                     } else {
                         $("input[name='is_listed_company'][value='0']").prop("checked", true);
+                        $(".isChick_listed_company").removeAttr("disabled");
                     }
 
                 }
@@ -189,6 +190,7 @@
                         $(".isChick_business_export").attr("data-val", "true");
                     } else {
                         $("input[name='is_business_export'][value='0']").prop("checked", true);
+                        $(".isChick_listed_company").removeAttr("disabled");
                     }
                 }
                 //高新技术产业
@@ -229,8 +231,10 @@
                 var varchecked = $(this).prop("value");
                 if (varchecked == "1") {
                     $(".isChick_listed_company").attr("data-val", "true");
+                    $(".isChick_listed_company").removeAttr("disabled");
                 } else {
                     $(".isChick_listed_company").attr("data-val", "false");
+                    $(".isChick_listed_company").attr("disabled","disabled");
                 }
                 resetfrom();
             });
@@ -239,8 +243,10 @@
                 var varchecked = $(this).prop("value");
                 if (varchecked == "1") {
                     $(".isChick_business_export").attr("data-val", "true");
+                    $(".isChick_business_export").removeAttr("disabled");
                 } else {
                     $(".isChick_business_export").attr("data-val", "false");
+                    $(".isChick_business_export").attr("disabled","disabled");
                 }
                 resetfrom();
             });
@@ -484,19 +490,19 @@
             <label for="" class="col-sm-1 control-label">上市时间</label>
             <div class="col-sm-2">
                 <input type="text" class="form-control Wdate isChick_listed_company" id="list_time"
-                       onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="enterprise.list_time"
+                       onFocus="WdatePicker({isShowClear:false,readOnly:true})" disabled="disabled" name="enterprise.list_time"
                        value='${enterprise.list_time!}' data-val="false"
                        data-val-required="上市时间不能为空"/>
             </div>
             <label for="" class="col-sm-1 control-label">上市地点</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control isChick_listed_company" id="list_place" name="enterprise.list_place"
+                <input type="text" class="form-control isChick_listed_company" disabled="disabled" id="list_place" name="enterprise.list_place"
                        value='${enterprise.list_place!}' data-val="false"
                        data-val-required="上市地点不能为空"/>
             </div>
             <label for="" class="col-sm-1 control-label">股票代码</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control isChick_listed_company" id="stock_code" name="enterprise.stock_code"
+                <input type="text" class="form-control isChick_listed_company" disabled="disabled" id="stock_code" name="enterprise.stock_code"
                        value='${enterprise.stock_code!}' data-val="false"
                        data-val-required="股票代码不能为空"/>
             </div>
@@ -513,7 +519,7 @@
             </div>
             <label for="" class="col-sm-2 control-label">主要出口地点</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control isChick_business_export" id="export_place" name="enterprise.export_place"
+                <input type="text" class="form-control isChick_business_export" disabled="disabled" id="export_place" name="enterprise.export_place"
                        value='${enterprise.export_place!}' data-val="false"
                        data-val-required="主要出口地点不能为空"/>
             </div>

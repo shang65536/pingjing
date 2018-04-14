@@ -199,6 +199,26 @@ $.fn.extend({
         self.html('');
         var SelectionContent = $('<div class="SelectionContent"></div>');
         self.append(SelectionContent);
+        
+        var inputradioreset = function (object) {
+            var input = $(object);
+            var inputcontent = input.parents(".checkboxList");
+            if ($.trim(input.val()).length > 0) {
+                inputcontent.find("input[type='radio']").prop("checked",false);
+            }
+        }
+        
+        var inputreset = function (object) {
+            //找到上级的ul
+            var input = $(object);
+            var inputcontent = input.parents(".checkboxList");
+            //找所有的input type = radio 的。
+            var selectradio = inputcontent.find("input[type='radio']:checked");
+            if (selectradio.length > 0) {
+                inputcontent.find("input").last().val("");
+            }
+        }
+
         var initialPage = function () {
             $.each(_option.data, function (i, dom) {
                 //容器
@@ -222,12 +242,20 @@ $.fn.extend({
                         li = $('<li><label class="radio-inline"></label></li>')
                         var input = $('<input type="radio" name = "radio_"' + dom.key + '"/>');
                         li.find('label').append(input);
+                        input.change(function () {
+                            inputreset(this);
+                        })
                     }
                     li.find('label').append(cdom);
                     mainnode.find('ul').append(li);
                 })
                 //其他输入的项
                 var other = $('<li class="input">其他（请注明):<input type="text" class="form-control" id="" /></li>');
+                if (dom.Type != "checkbox") {
+                    other.change(function () {
+                        inputradioreset(this);
+                    })
+                }
                 mainnode.find('ul').append(other);
                 SelectionContent.append(ssnode);
             });
