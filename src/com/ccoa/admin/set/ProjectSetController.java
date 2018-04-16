@@ -324,7 +324,7 @@ public class ProjectSetController extends BaseController {
         if (!("").equals(app_business)) {
             String[] temp = app_business.split(",");
             boolean isSelect = false;
-            for (int i = 0; i < temp.length; i++) {
+            for (int i = temp.length-1; i >=0; i--) {
                 if (("1").equals(temp[i])) {
                     isSelect = true;
                     content = content.replaceAll("project.app_business" + (i + 1), "☑");
@@ -362,6 +362,14 @@ public class ProjectSetController extends BaseController {
         } else {
             content = content.replaceAll("project.is_listed_company2", "□");
             content = content.replaceAll("project.is_listed_company1", "☑");
+
+            content = content.replaceAll("project.list_time", "");
+
+            //上市地点
+            content = content.replaceAll("project.list_place", "");
+
+            //股票代码
+            content = content.replaceAll("project.stockcode", "");
         }
 
         //是否有业务出口
@@ -378,6 +386,7 @@ public class ProjectSetController extends BaseController {
         } else {
             content = content.replaceAll("project.is_business_export2", "□");
             content = content.replaceAll("project.is_business_export1", "☑");
+            content = content.replaceAll("project.export_place", "");
         }
 
         //高新技术企业
@@ -390,7 +399,7 @@ public class ProjectSetController extends BaseController {
                     isSelect = true;
                     content = content.replaceAll("project.honor_type1_" + (i + 1), "☑");
                 } else {
-                    content = content.replaceAll(" project.honor_type1_" + (i + 1), "□");
+                    content = content.replaceAll("project.honor_type1_" + (i + 1), "□");
                 }
             }
         }
@@ -408,7 +417,7 @@ public class ProjectSetController extends BaseController {
                     isSelect = true;
                     content = content.replaceAll("project.honor_type2_" + (i + 1), "☑");
                 } else {
-                    content = content.replaceAll(" project.honor_type2_" + (i + 1), "□");
+                    content = content.replaceAll("project.honor_type2_" + (i + 1), "□");
                 }
             }
         }
@@ -426,7 +435,7 @@ public class ProjectSetController extends BaseController {
                     isSelect = true;
                     content = content.replaceAll("project.honor_type3_" + (i + 1), "☑");
                 } else {
-                    content = content.replaceAll(" project.honor_type3_" + (i + 1), "□");
+                    content = content.replaceAll("project.honor_type3_" + (i + 1), "□");
                 }
             }
         }

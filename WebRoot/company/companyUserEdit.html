@@ -137,8 +137,8 @@
                         array.push(temp);
                     });
                     //初始化jQuery
-                    $("#AreaCode").val(array[0].label);
-                    companyModel.AreaCode = array[0].value;
+                    // $("#AreaCode").val(array[0].label);
+                    // companyModel.AreaCode = array[0].value;
                     $("#AreaCode").autocomplete(array,{
                         source: array,
                         select: function (event, ui) {
@@ -238,7 +238,9 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">用户名</label>
             <div class="col-sm-6">
-                <input type="text"  class="form-control" data-val-remote="用户名已经被注册！" data-val-remote-url="${ctx_path}/company/checkName"
+                <input type="text"  class="form-control" data-val-remote="用户名已经被注册！" data-val-regex="只允许使用数字、字母、‘_’"
+                       data-val-regex-pattern="[\w]*"
+                       data-val-remote-url="${ctx_path}/company/checkName"
                        id="Username" data-val="true" value="${company.Username!}"
                        name="company.Username" data-val-required="用户名不能为空" placeholder="用户名">
             </div>
