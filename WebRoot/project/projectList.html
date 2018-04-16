@@ -145,7 +145,11 @@ font-size:14px;
 	                </#if>
 	             </#if>   -->
 	           </td>
-           <td scope="col"><a href="${ctx_path}/admin/set/project/exp?id=${x.id!}&type=1" class="submit01" >申报资料下载(pdf)</a><a href="${ctx_path}/admin/set/project/exp?id=${x.id!}&type=2" class="submit01" >申报资料下载(doc)</a></td>
+           <td scope="col" id="tableoption">
+			   <#if x.Status != 0>
+			   <a href="${ctx_path}/admin/set/project/exp?id=${x.id!}&type=1" class="submit01" >申报资料下载(pdf)</a>
+			   <a href="${ctx_path}/admin/set/project/exp?id=${x.id!}&type=2" class="submit01" >申报资料下载(doc)</a></td>
+		      </#if>
         </tr>   
          </#list>  
         
