@@ -8,8 +8,9 @@
     <link href="${ctx_path}/css/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx_path}/css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx_path}/css/formError.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="${ctx_path}/js/bootstrap/bootstrap.js"></script>
     <script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+    <script type="text/javascript" src="${ctx_path}/js/bootstrap/bootstrap.js"></script>
+
     <script type="text/javascript" src="${ctx_path}/js/zkty_tools.js"></script>
     <script type="text/javascript" src="${ctx_path}/js/validate/jquery.validate.min.js"></script>
     <script type="text/javascript" src="${ctx_path}/js/validate/jquery.validate.unobtrusive.min.js"></script>
@@ -234,7 +235,7 @@
                     $(".isChick_listed_company").removeAttr("disabled");
                 } else {
                     $(".isChick_listed_company").attr("data-val", "false");
-                    $(".isChick_listed_company").attr("disabled","disabled");
+                    $(".isChick_listed_company").attr("disabled", "disabled");
                 }
                 resetfrom();
             });
@@ -246,12 +247,10 @@
                     $(".isChick_business_export").removeAttr("disabled");
                 } else {
                     $(".isChick_business_export").attr("data-val", "false");
-                    $(".isChick_business_export").attr("disabled","disabled");
+                    $(".isChick_business_export").attr("disabled", "disabled");
                 }
                 resetfrom();
             });
-
-
 
 
             //获取用户list的序列
@@ -355,7 +354,8 @@
                     formpar,
                     ///success
                     function (msg) {
-                        window.location.href = "${ctx_path}" + msg.success;
+                        //window.location.href = "${ctx_path}" + msg.success;
+                        return false;
                     },
                     ///error
                     function (msg) {
@@ -373,9 +373,9 @@
             });
 
             $('#unit_explain').keyup(function () {
-                $('#show').text( '最多输入400个字，当前已经输入'+$('#unit_explain').val().length+'字');
+                $('#show').text('最多输入400个字，当前已经输入' + $('#unit_explain').val().length + '字');
             });
-            $('#show').text( '最多输入400个字，当前已经输入'+$('#unit_explain').val().length+'字');
+            $('#show').text('最多输入400个字，当前已经输入' + $('#unit_explain').val().length + '字');
         })
     </script>
 
@@ -490,19 +490,22 @@
             <label for="" class="col-sm-1 control-label">上市时间</label>
             <div class="col-sm-2">
                 <input type="text" class="form-control Wdate isChick_listed_company" id="list_time"
-                       onFocus="WdatePicker({isShowClear:false,readOnly:true})" disabled="disabled" name="enterprise.list_time"
+                       onFocus="WdatePicker({isShowClear:false,readOnly:true})" disabled="disabled"
+                       name="enterprise.list_time"
                        value='${enterprise.list_time!}' data-val="false"
                        data-val-required="上市时间不能为空"/>
             </div>
             <label for="" class="col-sm-1 control-label">上市地点</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control isChick_listed_company" disabled="disabled" id="list_place" name="enterprise.list_place"
+                <input type="text" class="form-control isChick_listed_company" disabled="disabled" id="list_place"
+                       name="enterprise.list_place"
                        value='${enterprise.list_place!}' data-val="false"
                        data-val-required="上市地点不能为空"/>
             </div>
             <label for="" class="col-sm-1 control-label">股票代码</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control isChick_listed_company" disabled="disabled" id="stock_code" name="enterprise.stock_code"
+                <input type="text" class="form-control isChick_listed_company" disabled="disabled" id="stock_code"
+                       name="enterprise.stock_code"
                        value='${enterprise.stock_code!}' data-val="false"
                        data-val-required="股票代码不能为空"/>
             </div>
@@ -519,7 +522,8 @@
             </div>
             <label for="" class="col-sm-2 control-label">主要出口地点</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control isChick_business_export" disabled="disabled" id="export_place" name="enterprise.export_place"
+                <input type="text" class="form-control isChick_business_export" disabled="disabled" id="export_place"
+                       name="enterprise.export_place"
                        value='${enterprise.export_place!}' data-val="false"
                        data-val-required="主要出口地点不能为空"/>
             </div>
@@ -600,21 +604,24 @@
             <label for="" class="col-sm-2 control-label">研发能力<br/>提供证明材料</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="capability" name="enterprise.capability"
-                       value='${enterprise.capability!}' data-val="true" data-val-required="研发能力不能为空" placeholder="提供证明材料" />
+                       value='${enterprise.capability!}' data-val="true" data-val-required="研发能力不能为空"
+                       placeholder="提供证明材料"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">主营业务收入(万元)<br/>提供证明材料</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="main_business_income" name="enterprise.main_business_income"
-                       value='${enterprise.main_business_income!}' data-val="true" data-val-required="主营业务收入不能为空" placeholder="提供证明材料"/>
+                       value='${enterprise.main_business_income!}' data-val="true" data-val-required="主营业务收入不能为空"
+                       placeholder="提供证明材料"/>
             </div>
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">研发投入(万元)<br/>提供证明材料</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="dev_input" name="enterprise.dev_input"
-                       value='${enterprise.dev_input!}' data-val="true" data-val-required="研发投入不能为空" placeholder="提供证明材料"/>
+                       value='${enterprise.dev_input!}' data-val="true" data-val-required="研发投入不能为空"
+                       placeholder="提供证明材料"/>
             </div>
         </div>
         <div class="form-group">
@@ -807,7 +814,8 @@
                     </li>
                 </ul>
             </div>
-    </form>
+        </div>
+
     <style>
         .Wdate {
             height: auto;
@@ -825,7 +833,6 @@
             padding: 3px 20px;
         }
     </style>
-</div>
 </form>
 </div>
 </body>

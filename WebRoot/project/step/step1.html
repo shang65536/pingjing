@@ -8,8 +8,8 @@
     <link href="${ctx_path}/css/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx_path}/css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx_path}/css/formError.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="${ctx_path}/js/bootstrap/bootstrap.js"></script>
     <script type="text/javascript" src="${ctx_path}/js/jquery.js"></script>
+    <script type="text/javascript" src="${ctx_path}/js/bootstrap/bootstrap.js"></script>
     <script type="text/javascript" src="${ctx_path}/js/zkty_tools.js"></script>
     <script type="text/javascript" src="${ctx_path}/js/validate/jquery.validate.min.js"></script>
     <script type="text/javascript" src="${ctx_path}/js/validate/jquery.validate.unobtrusive.min.js"></script>
@@ -67,13 +67,14 @@
                     InnovationField: linkage.getSelected(),
                     Introduction: $("#Introduction").val()
                 };
-
+                console.log("保存按鈕點擊");
                 $.zkty_commun_post("${ctx_path}/project/apply",
                     formpar,
                     ///success
                     function (msg) {
                         // alert("${ctx_path}");
                         // alert(msg.success);
+                        console.log("保存成功");
                         window.location.href = "${ctx_path}" + msg.success;
                         return false;
                     },
